@@ -94,3 +94,19 @@ Additional可以定义其他表来支持其他平台，例如OpenType，或提�
 请注意，searchRange，entrySelector和rangeShift都乘以16，代表目录条目的大小。
 
 **表4：** 偏移量子表
+
+|类型|名称(Name)|描述|
+|-|-|-|
+|uint32 32整型|scaler type 缩放器类型|一个标签，指示用于光栅化此字体的OFA缩放器；有关详细信息，请参阅下面的缩放器类型上的注释。|
+|uint16 16整型|numTables 数字表|表的序号|
+|uint16 16整型|searchRange 搜索范围|最大 2的numTables次幂*16  `2^numTables*16`|
+|uint16 16整型|entrySelector 入口选择器|log2(最大 2的numTables次幂*16) `log2(2^numTables*16)`|
+|uint16	16整型|rangeShift 位移范围|numTables*16-searchRange|
+
+## 缩放器类型
+
+OS X和iOS使用缩放器类型来确定对此字体使用哪个缩放器，即，确定如何从字体中提取字形数据。 不同的字体缩放器在TrueType字体的基本结构内包装不同的字体格式。 字体目录的偏移量子表中的缩放器类型用于指示特定字体应使用哪种缩放器。 （与TrueType字体具有相同结构的非TrueType字体被称为“ sfnt容纳的字体”。）
+
+OS X和iOS将值'true'（0x74727565）和0x00010000识别为是指TrueType字体。 值'typ1'（0x74797031）被识别为是指sfnt包装器中包含的PostScript字体的旧样式。 值“ OTTO”（0x4F54544F）表示具有PostScript轮廓的OpenType字体（即，“ CFF”表而不是“ glyf”表）。 当前不支持其他值。
+
+仅针对OS X或iOS生成具有TrueType轮廓的字体，建议缩放比例类型值使用'true'（0x74727565）。 Windows或Adobe产品的字体必须使用0x00010000。
