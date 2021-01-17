@@ -110,3 +110,5 @@ OS X和iOS使用缩放器类型来确定对此字体使用哪个缩放器，即�
 OS X和iOS将值'true'（0x74727565）和0x00010000识别为是指TrueType字体。 值'typ1'（0x74797031）被识别为是指sfnt包装器中包含的PostScript字体的旧样式。 值“ OTTO”（0x4F54544F）表示具有PostScript轮廓的OpenType字体（即，“ CFF”表而不是“ glyf”表）。 当前不支持其他值。
 
 仅针对OS X或iOS生成具有TrueType轮廓的字体，建议缩放比例类型值使用'true'（0x74727565）。 Windows或Adobe产品的字体必须使用0x00010000。
+
+## 表目录
