@@ -112,3 +112,38 @@ OS X和iOS将值'true'（0x74727565）和0x00010000识别为是指TrueType字体
 仅针对OS X或iOS生成具有TrueType轮廓的字体，建议缩放比例类型值使用'true'（0x74727565）。 Windows或Adobe产品的字体必须使用0x00010000。
 
 ## 表目录
+
+表目录位于offset子表之后。 表目录中的条目必须按标签升序排列。 字体文件中的每个表都必须具有自己的表目录条目。 表5说明了表目录的结构。
+
+表5：表目录
+
+|类型|名称(Name)|描述|
+|-|-|-|
+|uint32 32整型|tag 标签|4-byte identifier 4字节标识符|
+|uint32 32整型|checkSum |checksum for this table 该表的校验和|
+|uint32 32整型|offset|offset from beginning of sfnt 从sfnt开始的偏移量|
+|uint32 32整型|length|length of this table in byte (actual length not padded length) 该表的长度（以字节为单位）（实际长度未填充长度）|
+
+表目录包含checkSum，这是一个数字，可用于验证其关联的带标签表中数据的身份和完整性。 表校验和是表中long的无符号和。 以下C函数可用于确定给定表的校验和：
+
+```C
+uint32 CalcTableChecksum(uint32 *table, uint32 numberOfBytesInTable)
+	{
+	uint32 sum = 0;
+	uint32 nLongs = (numberOfBytesInTable + 3) / 4;
+	while (nLongs-- > 0)
+		sum += *table++;
+	return sum;
+	}
+```
+
+要计算“头”表的checkSum，该表本身包括整个字体的checkSumAdjustment条目，请执行以下操作：
+
+* 将checkSumAdjustment设置为0。
+* 计算所有表（包括“ head”表）的校验和，并将该值输入到表目录中。
+* 计算整个字体的校验和。
+* 从十六进制值B1B0AFBA中减去该值。
+* 将结果存储在checkSumAdjustment中。
+现在'head表的checkSum错误，其中包括整个字体的checkSumAdjustment条目。 那不是问题。 请勿更改。 试图验证“ head”表未更改的应用程序应通过不包括checkSumAdjustment值来计算该表的checkSum，并将结果与表目录中的条目进行比较。
+
+表目录还包括从字体文件的开头到标签表的偏移量以及该表的长度。
