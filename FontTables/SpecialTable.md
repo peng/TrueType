@@ -45,3 +45,58 @@ variable|fsHeader|特定于格式的标头（以下各节中描述了每个标�
 6|单表格式。 查找数据是<glyph index，lookup value>对的排序列表。
 8|整理后的数组格式。 查找数据是由字形索引索引的简单修剪数组。
 10|扩展的修剪数组格式。 查找数据是由字形索引索引的简单修剪数组。
+
+### 简单数组格式0查找表
+
+格式为0的查找表的fsHeader字段提供了一个查找值数组，该查找值由字形索引索引。 这些值表示的内容取决于您要使用的查找表的字体表。
+
+### 段单一格式2查找表
+
+格式2查找表的fsHeader字段将字形索引的某些部分划分为连续的范围或段。 段单一格式2查找表的格式如下：
+
+|类型|名称|描述|
+|-|-|-|
+|BinSrchHeader|binSrchHeader|此二进制搜索的单位为LookupSegment类型，并且始终具有最小长度6。
+|LookupSegment|segments[]|实际的段（segments）。 必须已经根据每个单词中的第一个单词（每个段中的最后一个字形）对它们进行了排序。
+
+格式2 LookupSegment的格式如下：
+
+|类型|名称|描述|
+|-|-|-|
+|uint16|lastGlyph|该段中的最后一个字形索引
+|uint16|firstGlyph|该段中的第一个字形索引
+|variable|value|查找值（仅一个）
+
+对于格式2查找表，单个查找值将均匀地应用于段中的所有字形。
+
+### 段数组格式4查找表
+
+格式4查找表的fsHeader字段将字形索引的某些部分划分为连续的范围或段。 段数组格式4查找表的格式如下：
+
+|类型|名称|描述|
+|-|-|-|
+|BinSrchHeader|binSrchHeader|此二进制搜索的单位为LookupSegment类型，并且始终具有最小长度6。
+|LookupSegment|segments[]|实际的段（segments）。 必须已经根据每个单词中的第一个单词（每个段中的最后一个字形）对它们进行了排序。
+
+格式4 lookupSegment的格式如下：
+
+|类型|名称|描述|
+|-|-|-|
+|uint16|lastGlyph|该段中的最后一个字形索引
+|uint16|firstGlyph|该段中的第一个字形索引
+|uint16|value|从表开始到数据的16位偏移(A 16-bit offset from the start of the table to the data)
+
+单表格式6查找表
+格式6查找表的fsHeader字段将查找数据存储为字形索引及其查找结果对的排序列表。 单个表Format 6查找表的格式如下：
+
+|类型|名称|描述|
+|-|-|-|
+|BinSrchHeader|binSrchHeader|此二进制搜索的单位为LookupSegment类型，并且始终具有最小长度4。
+|LookupSingle|entries[]|实际条目，按字形索引排序。
+
+格式6 LookupSingle的格式如下：
+
+|类型|名称|描述|
+|-|-|-|
+|uint16|glyph|字形索引
+|variable|value|查询值
