@@ -100,3 +100,28 @@ variable|fsHeader|特定于格式的标头（以下各节中描述了每个标�
 |-|-|-|
 |uint16|glyph|字形索引
 |variable|value|查询值
+
+## 剪裁(Trimmed Array)数组格式8查找表
+
+格式8查找表的fsHeader字段将查找数据存储为由字形索引索引的简单剪裁数组(Trimmed Array)。 它与[扩展见剪裁数组(Trimmed Array)格式10查找表](https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6Tables.html#LookupFormat10)的不同之处在于，查找值的大小必须为两个字节。
+
+修剪后的数组格式8查找表的格式如下：
+
+|类型|名称|描述|
+|-|-|-|
+|uint16|firstGlyph|剪裁数组中包含的第一个字形索引。|
+|uint16|glyphCount|字形总数（等于最后一个字形减去firstGlyph的值加1）。|
+|variable|valueArray[]|查找值（由字形索引索引减去firstGlyph的值）。 值数组中的条目必须为两个字节。|
+
+## 扩展剪裁数组格式10查找表
+
+格式10查找表的fsHeader字段将查找数据存储为由字形索引索引的简单剪裁数组。 它与剪裁数组格式8查找表的不同之处在于，它允许查找值大小，而不是两个字节。
+
+扩展的剪裁数组格式10查找表的格式如下：
+
+|类型|名称|描述|
+|-|-|-|
+|uint16|unitSize|此查找表的查找单元的大小（以字节为单位）。 允许的值为1、2、4和8。
+|uint16|firstGlyph|剪裁数组中包含的第一个字形索引。
+|uint16|glyphCount|字形总数（等于最后一个字形减去firstGlyph的值加1）。
+|variable|valueArray[]|查找值（由字形索引索引减去firstGlyph的值）。
