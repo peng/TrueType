@@ -37,3 +37,20 @@
 |variable|glyphs[numberOfAccentedGlyphs]|
 |variable|ext[numberOfGlyphsWithMoreThan2Components]|
 |variable|accents[numberOfSecondaryGlyphs]|
+
+## 格式0描述
+
+|类型|名称|描述|
+|-|-|-|
+|uint1|description|值= 0表示只有两个部分。|
+|uint15|primaryGlyphIndex|数据列（列的数据结构为number）。
+|uint8|primaryAttachmentPoint|主附件控制点编号。|
+|uint8|secondaryInfoIndex|次要附件控制点编号。|
+
+## 格式1说明
+
+|类型|名称|描述|
+|-|-|-|
+|uint1|description|值= 1表示存在两个以上的组件|
+|uint15|primaryGlyphIndex|主字形索引号。|
+|uint16|extensionOffset|扩展子表开头的字节偏移量。|
