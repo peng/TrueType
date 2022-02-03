@@ -27,8 +27,8 @@ indexToLocFormat 值指示索引到 loc ('loca') 表中使用的偏移格式类�
 |uint32|magicNumber|设置为 0x5F0F3CF5|
 |uint16|flags|bit 0 - y 值为 0 指定基线<br>bit 1 - 最左边黑色位的 x 位置是 LSB<br>bit 2 - 缩放后的点大小和实际点大小会有所不同（即 24 点字形不同于按因子 2 缩放的 12 点字形）<br>bit 3 - 使用整数缩放而不是小数<br>bit 4 - （由 Microsoft 实现的 TrueType 缩放器使用）<br>bit 5 - 该位应该在旨在垂直布局的字体中设置，并且其中的字形已经绘制为 0 的 x 坐标对应于所需的垂直基线。<br>bit 6 - 该位必须设置为零。<br>bit 7 - 如果字体需要布局以进行正确的语言渲染（例如阿拉伯字体），则应设置该位。<br>bit 8 - 应为具有一个或多个默认发生的变形效果的 AAT 字体设置该位。<br>bit 9 - 如果字体包含任何从右到左的强字形，则应设置该位。<br>bit 10 - 如果字体包含印度风格的重新排列效果，则应设置该位。<br>bits 11-13 - 由 Adobe 定义。<br>bit 14 - 如果字体中的字形只是代码点范围的通用符号，例如最后使用的字体，则应设置该位。
 |uint16|unitsPerEm|范围从 64 到 16384|
-|longDateTime|created|国际日期|
-|longDateTime|modified|国际日期|
+|longDateTime|created|国际日期（自 1904 年 1 月 1 日 GMT/UTC 时区午夜 12:00 开始的秒数。）|
+|longDateTime|modified|国际日期（自 1904 年 1 月 1 日 GMT/UTC 时区午夜 12:00 开始的秒数。）|
 |FWord|xMin|对于所有字形边界框|
 |FWord|yMin|对于所有字形边界框|
 |FWord|xMax|对于所有字形边界框|
