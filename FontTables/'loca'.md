@@ -1,4 +1,4 @@
-# <center>'loca'表 (locations)</center>
+# <center>'loca'表 (glyph location table)</center>
 
 ## 一般表信息
 
