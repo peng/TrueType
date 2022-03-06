@@ -79,6 +79,8 @@
 
 flags 数组中的每个条目的大小都是一个字节。与该字节中的每个位相关联的含义在下面的表 16 中给出。
 
+从逻辑上讲，每个点都有一个标志字节元素、一个 x 坐标和一个 y 坐标。 坐标点的数量由 endPtsOfContours 数组中的最大一项确定（opentype endPtsOfContours 是按升序排列的，最大点即最后一项）。
+
 表 16：大纲标志(Outline flags)
 
 |Flags|Bit (0 is lsb)|描述|
