@@ -81,17 +81,19 @@ flags 数组中的每个条目的大小都是一个字节。与该字节中的�
 
 从逻辑上讲，每个点都有一个标志字节元素、一个 x 坐标和一个 y 坐标。 坐标点的数量由 endPtsOfContours 数组中的最大一项确定（opentype endPtsOfContours 是按升序排列的，最大点即最后一项）。
 
-表 16：大纲标志(Outline flags)
+**表 16：大纲标志(Outline flags)**
 
-|Flags|Bit (0 is lsb)|描述|
-|-|-|-|
-|On Curve|0|如果设置，则该点在曲线上；<br>否则，它是偏离曲线的。|
-|x-Short Vector|1|如果设置，则对应的 x 坐标为 1 个字节长；<br>否则，对应的 x 坐标为 2 个字节长|
-|y-Short Vector|2|如果设置，对应的y坐标为1字节长；<br>否则，对应的 y 坐标为 2 个字节长|
-|Repeat|3|如果设置，下一个字节指定这组标志要重复的额外次数。 这样，列出的标志数可以小于字符中的点数。|
-|This x is same (Positive x-Short vector)|4|此标志具有两种含义之一，具体取决于 x-Short Vector 标志的设置方式。<br>如果设置了 x-Short Vector 位，则该位描述值的符号，值 1 等于正值，零值等于负值。<br>如果未设置 x-short Vector 位，而设置了该位，则当前 x 坐标与前一个 x 坐标相同。<br>如果 x-short Vector 位未设置，且该位未设置，则当前 x 坐标是有符号的 16 位增量向量。 在这种情况下，增量向量是 x 的变化
-|This y is same (Positive y-Short vector)|5|此标志具有两种含义之一，具体取决于 y-Short Vector 标志的设置方式。<br>如果设置了 y-Short Vector 位，则该位描述值的符号，值 1 等于正值，零值等于负值。<br>如果未设置 y-short Vector 位，而设置了该位，则当前 y 坐标与前一个 y 坐标相同。<br>如果 y-short Vector 位未设置，且该位未设置，则当前 y 坐标是一个带符号的 16 位增量向量。 在这种情况下，增量向量是 y 的变化|
-|Reserved|6 - 7|设置为零|
+|Mask|Flags|Bit (0 is lsb)|描述|
+|-|-|-|-|
+|0x01|On Curve|0|如果设置，则该点在曲线上；<br>否则，它是偏离曲线的。|
+|0x02|x-Short Vector|1|如果设置，则对应的 x 坐标为 1 个字节长；<br>否则，对应的 x 坐标为 2 个字节长|
+|0x04|y-Short Vector|2|如果设置，对应的y坐标为1字节长；<br>否则，对应的 y 坐标为 2 个字节长|
+|0x08|Repeat|3|如果设置，下一个字节指定这组标志要重复的额外次数。 这样，列出的标志数可以小于字符中的点数。|
+|0x10|This x is same (Positive x-Short vector)|4|此标志具有两种含义之一，具体取决于 x-Short Vector 标志的设置方式。<br>如果设置了 x-Short Vector 位，则该位描述值的符号，值 1 等于正值，零值等于负值。<br>如果未设置 x-short Vector 位，而设置了该位，则当前 x 坐标与前一个 x 坐标相同。<br>如果 x-short Vector 位未设置，且该位未设置，则当前 x 坐标是有符号的 16 位增量向量。 在这种情况下，增量向量是 x 的变化
+|0x20|This y is same (Positive y-Short vector)|5|此标志具有两种含义之一，具体取决于 y-Short Vector 标志的设置方式。<br>如果设置了 y-Short Vector 位，则该位描述值的符号，值 1 等于正值，零值等于负值。<br>如果未设置 y-short Vector 位，而设置了该位，则当前 y 坐标与前一个 y 坐标相同。<br>如果 y-short Vector 位未设置，且该位未设置，则当前 y 坐标是一个带符号的 16 位增量向量。 在这种情况下，增量向量是 y 的变化|
+|0x80|Reserved|6 - 7|设置为零|
+
+**如何理解**
 
 ## 复合字形
 
