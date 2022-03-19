@@ -1,0 +1,15 @@
+{
+  "name": "TrueType",
+  "version": "1.0.0",
+  "description": "font docs",
+  "main": "index.js",
+  "repository": "git@github.com:peng/TrueType.git",
+  "author": "peng <414326615@qq.com>",
+  "devDependencies": {
+    "vuepress": "^1.9.7"
+  },
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  }
+}
