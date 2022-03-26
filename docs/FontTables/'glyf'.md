@@ -106,13 +106,15 @@ Bit 列中的数字代表8位二进制的数值索引，从低位到高位；0�
 <br>
 
 **表 17**：组件字形部分说明
-<!-- |类型|名称|描述|
+
+<!--|类型|名称|描述|
 |-|-|-|
 |uint16|flags|组件标志|
 |uint16|glyphIndex|组件的字形索引|
 int16, uint16, int8 or uint8|argument1|组件或点编号的 X 偏移； 类型取决于组件标志中的位 0 和 1
 int16, uint16, int8 or uint8|argument2|组件或点编号类型的 Y 偏移取决于组件标志中的位 0 和 1
-transformation option|--|One of the transformation options from Table 19 -->
+transformation option|--|One of the transformation options from Table 19-->
+
 <table>
   <tr>
     <th>类型</th>
@@ -209,8 +211,7 @@ transformation option|--|One of the transformation options from Table 19 -->
 
 ![公式](./images/Formulas_glyf.png)
 
-144 / 5000
-翻译结果
+
 a、b、c和d的值如表19a中所示获得。 e 和 f 的值如下面的伪代码所示： 
 
 ```
@@ -229,8 +230,6 @@ else if (!ARG_1AND_2_ARE_WORDS && !ARGS_ARE_XY_VALUES)
 ```
 
 
-298 / 5000
-翻译结果
 最后，m和n计算如下：
 
 首先，让 m₀ = max(|a|, |b|) 和 n₀ = max(|c|, |d|)。
