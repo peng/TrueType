@@ -150,19 +150,20 @@ transformation option|--|One of the transformation options from Table 19-->
 <br>
 
 **表 18**：组件标志
-|Flags|Bit|描述|
-|-|-|-|
-|ARG_1_AND_2_ARE_WORDS|0|如果设置，则参数为单词；<br>如果未设置，则它们是字节。|
-|ARGS_ARE_XY_VALUES|1|如果设置，则参数为 xy 值；<br>如果未设置，则为点。|
-|ROUND_XY_TO_GRID|2|如果设置，则将 xy 值四舍五入到网格；<br>如果未设置，则不将 xy 值舍入到网格（仅与设置的位 1 相关）|
-|WE_HAVE_A_SCALE|3|如果设置，则组件有一个简单的比例。<br>如果未设置，比例为 1.0。|
-|（此位已废弃）|4|（已过时；设置为零）|
-|MORE_COMPONENTS|5|如果设置，则至少有一个额外的字形跟随此字形。|
-|WE_HAVE_AN_X_AND_Y_SCALE|6|如果设置 x 方向将使用与 y 方向不同的比例。|
-|WE_HAVE_A_TWO_BY_TWO|7|如果设置，则将使用 2×2 转换来缩放组件。|
-|WE_HAVE_INSTRUCTIONS|8|如果设置，则组件字符的说明位于最后一个组件之后。|
-|USE_MY_METRICS|9|将此组件中的度量用于复合字形。|
-|OVERLAP_COMPOUND|10|如果设置，此复合字形的组件将重叠。|
+
+|Mask 16进制|Flags|Bit|描述|
+|-|-|-|-|
+|0x0001|ARG_1_AND_2_ARE_WORDS|0|如果设置，则参数为单词16-bit (uint16 或 int16)；<br>如果未设置，则它们是字节。(uint8 or int8)|
+|0x0002|ARGS_ARE_XY_VALUES|1|如果设置，则参数为有符号 xy 值；<br>如果未设置，则为无符号点。|
+|0x0004|ROUND_XY_TO_GRID|2|如果设置，则将 xy 值四舍五入到网格；<br>如果未设置，则不将 xy 值舍入到网格（仅与设置的位 1 相关）|
+|0x0008|WE_HAVE_A_SCALE|3|如果设置，则组件有一个简单的比例。<br>如果未设置，比例为 1.0。|
+|0x0010|（此位已废弃）|4|（已过时；设置为零）|
+|0x0020|MORE_COMPONENTS|5|如果设置，则至少有一个额外的字形跟随此字形。|
+|0x0040|WE_HAVE_AN_X_AND_Y_SCALE|6|如果设置 x 方向将使用与 y 方向不同的比例。|
+|0x0080|WE_HAVE_A_TWO_BY_TWO|7|如果设置，则将使用 2×2 转换来缩放组件。|
+|0x0100|WE_HAVE_INSTRUCTIONS|8|如果设置，则组件字符的说明位于最后一个组件之后。|
+|0x0200|USE_MY_METRICS|9|将此组件中的度量用于复合字形。|
+|0x0400|OVERLAP_COMPOUND|10|如果设置，此复合字形的组件将重叠。|
 
 <br>
 
