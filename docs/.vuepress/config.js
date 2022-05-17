@@ -4,6 +4,10 @@ module.exports = {
   themeConfig: {
     sidebar: [
       {
+        title: '数字化字体设计',
+        path: '/Digitizing_Letterform_Designs'
+      },
+      {
         title: '字体表',   // 必要的
         path: '/FontTables/FontTables',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
         collapsable: true, // 可选的, 默认值是 true,
