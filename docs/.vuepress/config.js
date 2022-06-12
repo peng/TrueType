@@ -8,6 +8,10 @@ module.exports = {
         path: '/Digitizing_Letterform_Designs'
       },
       {
+        title: '字体引擎',
+        path: '/Font_Engine'
+      },
+      {
         title: '字体表',   // 必要的
         path: '/FontTables/FontTables',      // 可选的, 标题的跳转链接，应为绝对路径且必须存在
         collapsable: true, // 可选的, 默认值是 true,
