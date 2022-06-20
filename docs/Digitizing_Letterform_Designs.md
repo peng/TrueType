@@ -12,7 +12,7 @@
 <!-- <cite>p<sub>0</sub></cite> -->
 <!-- <cite>p<sub>1</sub></cite> -->
 <!-- <cite>p<sub>2</sub></cite> -->
-这种曲线的定义可以正式如下：给定三个点 <cite>p<sub>0</sub></cite>、<cite>p<sub>1</sub></cite>、<cite>p<sub>2</sub></cite>，它们定义了一条从点 <cite>p<sub>0</sub></cite> 到点 <cite>p<sub>2</sub></cite> 的曲线，其中 <cite>p<sub>1</sub></cite> 是偏离曲线的点。 控制点 <cite>p<sub>1</sub></cite> 位于曲线的切线在点 <cite>p<sub>0</sub></cite> 和 <cite>p<sub>2</sub></cite> 的交点处。 因此 <cite>p<sub>0</sub></cite>, <cite>p<sub>1</sub></cite> 在点 <cite>p<sub>0</sub></cite> 处与曲线相切。 类似地，<cite>p<sub>2</sub></cite>，<cite>p<sub>1</sub></cite> 在点 <cite>p<sub>2</sub></cite> 处与曲线相切。 这三个点指定的曲线由参数方程定义。 对于 0 到 1 的 t，p(t) 的位置如图所示：
+这种曲线的定义可以正式如下：给定三个点 <cite>p<sub>0</sub></cite>、<cite>p<sub>1</sub></cite>、<cite>p<sub>2</sub></cite>，它们定义了一条从点 <cite>p<sub>0</sub></cite> 到点 <cite>p<sub>2</sub></cite> 的曲线，其中 <cite>p<sub>1</sub></cite> 是偏离曲线的点。 控制点 <cite>p<sub>1</sub></cite> 位于曲线的切线在点 <cite>p<sub>0</sub></cite> 和 <cite>p<sub>2</sub></cite> 的交点处。 因此 <cite>p<sub>0</sub></cite>, <cite>p<sub>1</sub></cite> 在点 <cite>p<sub>0</sub></cite> 处与曲线相切。 类似地，<cite>p<sub>2</sub></cite>，<cite>p<sub>1</sub></cite> 在点 <cite>p<sub>2</sub></cite> 处与曲线相切。 这三个点指定的曲线由参数方程定义。 t 的值为 0~1，p(t) 的位置如图所示：
 
 <center>p(t) = (1-t)<sup>2</sup><cite>p<sub>0</sub></cite> + 2t(1-t)<cite>p<sub>1</sub></cite> + t<sup>2</sup><cite>p<sub>2</sub></cite></center>
 
