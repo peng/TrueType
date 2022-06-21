@@ -70,7 +70,7 @@
 **表 15**：简单的字形定义
 |类型|名称|描述|
 |-|-|-|
-|uint16|endPtsOfContours[n]|每个轮廓的最后一个点的数组； n 是轮廓的数量； 数组条目是点索引|
+|uint16|endPtsOfContours[n]|每个轮廓的最后一个点的数组； n 是轮廓的数量； 数组的项是点索引|
 |uint16|instructionLength|指令所需的总字节数(每个指令所占空间为一个字节。或者说是指令总数)|
 |uint8|instructions[instructionLength]|此字形的指令数组|
 |uint8|flags[variable]|flags数组
