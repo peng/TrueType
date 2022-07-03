@@ -778,3 +778,286 @@ TrueType 语言提供了多种方法来协调单个字形内和字体中字形�
 
 请注意，表 28 中显示的差异是缩放控制值表条目与缩放轮廓距离之间的差异。 切入是 F26DOT6 值，即以像素为单位。
 
+**表 28** MIAP[] 中的cut-in 使用示例
+
+|CVT Value|原始轮廓值(Original Outline Value)|`|Difference|`|切入(Cut-in)|使用值(Value used)|
+|-|-|-|-|-|
+|93|80|13|68/64|outline|
+|100|99 20/64|44/64|68/64|table|
+|97|95 60/64|68/64|68/64|table|
+
+下面的图 25 说明了切入的使用。 在所示字体的主轮廓中，大写字母 J 低于基线。 在每个 em 大小的小像素下，无法显示这种微妙之处。 在 18 ppem 时，即使低于基线 1 个像素也太大了。 当角色被网格拟合时，曲线通过间接指令保持在基线上，只要基线下方的实际距离小于切入点。 当距离差超过切入值68/64时，恢复原值。 在这种特殊情况下，曲线通过每 em 81 个像素保持在基线上，但在每 em 82 个像素时恢复到其原始设计，如图所示。
+
+**图 25** 过冲和切入
+
+![图25](./images/FE23.gif)
+
+切入的效果随其值而变化。 减小切入值会导致轮廓以较小的 ppem 值恢复到原始设计。 增加切入值将导致轮廓恢复到原始设计，并具有更高的 ppem 值。
+
+表 29 展示了更改切入的一些效果。
+
+**表 29** 改变切入值
+
+
+|切入(cut-in)|大纲值(outline value)|CVT value|difference|价值用途(value uses)|
+|-|-|-|-|-|
+|64/64 = 1|98 60/64|100|68/64|outline|
+|64/64 = 1|99|100|64/64 = 1|CVT|
+|64/64 = 1|101|100|64/64= 1|CVT|
+|64/64 = 1|101|4/64|100|68/64|outline|
+|68/64|98 56/64|100|72/64/16|outline|
+|17/16|98 15/16|100|17/16|CVT|
+|17/16|101 1/16|100|17/16|CVT|
+|17/16|101 2/16|100|18/16|outline|
+|18/16|98 13/16|100|19/16|outline|
+|18/16|98 14/16|100|18/16|CVT|
+|18/16|101 2/16|100|18/16|CVT|
+|18/16|101 3/16|100|19/16|outline|
+
+#### 单宽值和单宽切入
+
+单宽度切入是解释器将忽略轮廓值和控制值表条目以支持单宽度值的距离差。 它允许所需的特征恢复到单个预定大小。 单一宽度和单一宽度切入的默认值都是零像素。 除非将默认值设置为另一个值，否则它不会产生任何影响。
+单宽度切入与 MIRP[] 和 MDRP[] 一起使用。
+
+这对于非常小的网格尺寸可能很有用，其中强制所有受控字形特征假定相同的尺寸在某些字体中可能是一个优势。 当单宽值与原始轮廓值的绝对差值小于单宽切入时，使用单宽值。
+
+**表 30** 变化单幅值
+
+单宽切入(single width cut-in)|大纲值(outline value)|单一宽度值(single width value)|difference|价值用途(value uses)
+|-|-|-|-|-|
+|0|99|100|1|outline|
+|0|100|100|0|outline|
+|1|98 15/16|100|1 4/64|outline|
+|1|99|100|1|single width|
+|1|101|100|1|single width|
+|1|101 1/16|100|1 4/64|outline|
+
+### 操作顺序
+
+指令有时会移动一个点，计算一个值，补偿值的颜色，根据圆形状态进行圆形，然后应用切入测试。 这些操作的执行顺序很重要，在此给出。
+
+**表 31** 移动指令中的操作顺序
+
+<table>
+  <tr>
+    <th rowspan="6" >MIRP[]</th>
+    <td>检查单宽切入(check single width cut-in)</td>
+  </tr>
+  <tr>
+    <td>检查控制值切入(check control value cut-in)</td>
+  </tr>
+  <tr>
+    <td>补偿距离的颜色(compensate for the color of the distance)</td>
+  </tr>
+  <tr>
+    <td>环绕距离(round the distance)</td>
+  </tr>
+  <tr>
+    <td>检查最小距离(check the minimum distance)</td>
+  </tr>
+  <tr>
+    <td>移动点(move the point)</td>
+  </tr>
+  <tr>
+    <th rowspan="5" >MDRP[]</th>
+    <td>检查单宽切入(check single width cut-in)</td>
+  </tr>
+  <tr>
+    <td>补偿距离的颜色(compensate for the color of the distance)</td>
+  </tr>
+  <tr>
+    <td>环绕距离(round the distance)</td>
+  </tr>
+  <tr>
+    <td>检查最小距离(check the minimum distance)</td>
+  </tr>
+  <tr>
+    <td>移动点(move the point)</td>
+  </tr>
+  <tr>
+    <th rowspan="3" >MIAP[]</th>
+    <td>检查控制值切入(check control value cut-in)</td>
+  </tr>
+  <tr>
+    <td>四舍五入(round the value)</td>
+  </tr>
+  <tr>
+    <td>移动点(move the point)</td>
+  </tr>
+  <tr>
+    <th>MSIRP[]</th>
+    <td>移动点(move the point)</td>
+  </tr>
+  <tr>
+    <th rowspan="2" >MDAP[]</th>
+    <td>四舍五入(round the value)</td>
+  </tr>
+  <tr>
+    <td>移动点(move the point)</td>
+  </tr>
+</table>
+
+### 尺寸特定说明
+
+到目前为止提到的所有说明都不是特定于大小的。 它们的动作总是被应用，除非条件语句导致序列中的某些代码不执行。 有时需要以特定的 ppem 值更改轮廓以产生所需的结果。 DELTA 指令使这成为可能。
+
+由于 DELTA 指令是由其他指令执行的网格拟合的例外，因此在确定所有其他指令之后将它们添加到字形指令是很重要的。 对其他指令的任何更改都可能改变 DELTA 的效果或使其无用。
+
+有两种不同类型的 DELTA 指令。 第一种类型，DELTAP，通过直接指定要应用异常的点号来工作。 第二种类型，DELTAC，通过指定要应用异常的控制值表条目号来工作。
+
+**表 32** DELTA 指令
+
+|助记符|指令|
+|-|-|
+|DELTA 异常 P1|DELTAP1[]|
+|DELTA 异常 P2|DELTAP2[]|
+|DELTA 异常 P3|DELTAP3[]|
+|DELTA 异常 C1|DELTAC1[]|
+|DELTA 异常 C2|DELTAC2[]|
+|DELTA 异常 C3|DELTAC3[]|
+
+DELTA 指令的 8 位 arg 组件分为两部分。 前 4 位表示应用异常的每个 em 的相对像素数。 第二个 4 位表示要进行的更改的幅度。 arg 的结构如图 26 所示。
+
+**图 26** DELTA 指令的 arg 参数
+
+```
+--------------------------- arg = | rel ppem | magnitude | ---------------------------
+```
+
+应用 DELTA 的每个 em 的相对像素数是 delta 基数和 DELTA 指令选择的函数。 下面的表 33 总结了各种说明适用的大小。
+
+**表 33** Delta 指令范围
+
+<table>
+  <tr>
+    <td>DELTAC1</td>
+    <td>DELTAP1</td>
+    <td>(delta_base) through (delta_base + 15)</td>
+  </tr>
+  <tr>
+    <td>DELTAC2</td>
+    <td>DELTAP2</td>
+    <td>(delta_base + 16) through (delta_base + 31)</td>
+  </tr>
+  <tr>
+    <td>DELTAC3</td>
+    <td>DELTAP3</td>
+    <td>(delta_base + 32) through (delta_base + 47)</td>
+  </tr>
+</table>
+
+由 DELTA 指令产生的变化幅度是一个像素值，取决于 delta 移位状态变量的当前值。 可能的步数是 2 到幂增量偏移。 每个步骤的大小都比该数字大 1。
+
+由于只有四位可用于存储异常大小，因此对点位置所做的更改幅度在存储到异常规范中之前会被重新映射。 下表将异常中的步骤数映射到应存储为 argi 的第二部分的数。
+
+**表 34：** 幅度值映射到移动的步数
+
+<table>
+  <tr>
+    <th>Magnitude</th>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+  </tr>
+  <tr>
+    <th>Number of steps</th>
+    <td>-8</td>
+    <td>-7</td>
+    <td>-6</td>
+    <td>-5</td>
+    <td>-4</td>
+    <td>-3</td>
+    <td>-2</td>
+    <td>-1</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+  </tr>
+</table>
+
+#### 一个 DELTAP 示例
+在下面的示例中，DELTAP1 以每 em 9 个像素应用于点 12。 假设 delta shift 已设置为 6。将点 p 移动一个像素的 -3/64，以防止左侧显示的丢失。 该指令将期望参数 1（异常数量）和 $05 可以分解为字节 0、每个 em 值的相对像素和表示幅度 -3 步长的字节 5（但在表中存储为异常 5 以上）。
+**图 27** 使用 DELTAP 指令填充 dropout
+
+![图27](./images/FE24.gif)
+
+一个DELTAC例子
+
+在下面的示例中，假设控制值表条目 4 和 11 指的是大小接近并预计会一起增长的特征。 在 12 ppem 和 14 ppem 时，这些特征将一起舍入（假设舍入状态是舍入到网格）。 在 13 ppem 时，这两个值将以相反的方向四舍五入。 实际数字如表 3 所示。
+
+**表 3** 比例控制值表条目值
+
+<table>
+  <tr>
+    <th>控制值表</th>
+    <th colspan="4" >控制值表值（以每 em 像素为单位）</th>
+  </tr>
+  <tr>
+    <td>入口号码</td>
+    <td>FUnit 中的值</td>
+    <td>12 ppem</td>
+    <td>13 ppem</td>
+    <td>14 ppem</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>120</td>
+    <td>45/64</td>
+    <td>49/64</td>
+    <td>53/64</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>125</td>
+    <td>47/64</td>
+    <td>51/64	</td>
+    <td>55/64</td>
+  </tr>
+</table>
+
+DELTAC 指令可用于强制将这些值四舍五入。 在默认增量基数 9 时，异常将在 ppem 值 13 处发生。异常值 8 表示一步。 在默认的 delta shift 值下，这将意味着 4/64 像素的移动。
+
+<table>
+  <tr>
+    <td>PUSHB[]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>控制值表的数量，异常对。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>控制值表条目号</td>
+  </tr>
+  <tr>
+    <td>72</td>
+    <td>例外 72 = 0100 10002 表示每 em 值的相对像素为 4，幅度为 8。</td>
+  </tr>
+  <tr>
+    <td>DELTAC1[]</td>
+    <td>为控制值表条目创建增量异常。</td>
+  </tr>
+</table>
+
+实际在控制值表中或作为指令一部分的值以粗体显示。 提供的其他值严格用于帮助理解示例。
+
+为了这个例子，假设 delta base 是 9，产生从 9 到 24 个像素/em 的范围。 进一步假设 delta shift 为 4，使得最小可能移动等于像素的 1/16。
