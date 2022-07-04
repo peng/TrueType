@@ -8,6 +8,10 @@ module.exports = {
         path: '/Digitizing_Letterform_Designs'
       },
       {
+        title: '字体教程',
+        path: 'instructing_fonts'
+      },
+      {
         title: '字体引擎',
         path: '/Font_Engine'
       },
