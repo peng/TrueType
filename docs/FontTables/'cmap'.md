@@ -64,7 +64,149 @@ platformID 和 platformSpecificID 字段使用与“名称”表中的等效字�
   </tr>
 </table>
 
-**Unicode 编码**
+### Unicode 编码
 
 当 platformID 为 0 (Unicode) 时，platformSpecificID 解释如下：
 
+**Unicode 平台特定的编码标识符**
+
+|特定于平台的 ID 代码(Platform-specific ID code)|含义|
+|0| 版本1.0	(Version 1.0 semantics)|
+|1| 版本1.1	(Version 1.1 semantics)|
+|2|	ISO 10646 1993 semantics (deprecated)|
+|3|	Unicode 2.0 or later semantics (BMP only)|
+|4|	Unicode 2.0 or later semantics (non-BMP characters allowed)|
+|5|	Unicode 变化序列 (Unicode Variation Sequences)|
+|6|	Last Resort|
+
+允许使用除 0、1 或 3 以外的 platformID 值，但使用它们的 cmap 将被忽略。
+
+Unicode 平台的 platform-specific ID 6 旨在将“cmap”子表标记为最后使用的字体。 这不是任何 Apple 平台所要求的。
+
+### Mac系统编码
+
+当 platformID 为 1 (Mac系统) 时，platformSpecificID 是 QuickDraw 脚本代码。 有关这些列表，请参阅 'name' 表文档。
+
+目前不鼓励使用 Macintosh platformID。 具有 Macintosh platformID 的子表仅在与 QuickDraw 向后兼容时才需要，并且如果需要，将从基于 Unicode 的子表合成。
+
+### Windows系统编码
+
+当 platformID 为 3（Windows）时，platformSpecificID 为 a 的解释如下：
+
+**Windows 平台特定的编码标识符**
+
+|Platform-specific ID 编码|含义|
+|-|-|
+|0|Symbol|
+|1|Unicode BMP-only (UCS-2)|
+|2|Shift-JIS|
+|3|PRC|
+|4|BigFive|
+|5|Johab|
+|10|Unicode UCS-4|
+
+### 子表要求
+
+编码子表有三种基本类型：
+
+* Unicode 子表
+* Unicode 变体序列子表
+* 非 Unicode 子表（其他）
+
+Unicode 子表是支持 Unicode 文本编码标准的子表。 此类子表具有 Unicode platformID 和非 14 的 platformSpecificID，或 Microsoft platformID 和 1 或 10 的 platformSpecificID。
+
+Unicode 变体序列子表是一个具有 Unicode platformID 和 14 platformSpecificID 的子表。
+
+**Unicode 子表要求**
+
+大多数字体应该有一个 Unicode 编码子表。 带有 Windows/Symbol 编码子表 (3/0) 的字体应该没有 Unicode cmap。
+
+如果一个字体有多个 Unicode 编码子表，每个字符应该被它出现的每个 Unicode 子表映射到同一个字形。
+
+**Unicode 变体序列子表要求**
+
+字体不应有多个 Unicode 变体序列子表。 如果一种字体确实有多个变体序列子表，则只使用一个而忽略其他的。 使用哪一个没有定义。
+
+带有 Unicode 变体序列子表的字体需要格式 4 或 12 的 Unicode 编码子表。
+
+**非 Unicode 子表要求**
+带有 Windows/Symbol 编码子表 (3/0) 的字体应该没有 Unicode cmap。
+
+不推荐使用带有 Macintosh platformID 的子表。
+
+### 子表搜索顺序
+
+除了 Unicode 变体序列子表之外，只有一个编码子表将用于将字符映射到字形。 搜索编码子表以寻找最适合使用的子表，由它们的平台/平台特定 ID 值确定。 Apple 不保证以任何特定顺序查找 Unicode 编码子表。 然而：
+
+* Unicode 编码子表优先于非 Unicode 编码子表使用。
+* 优先使用不受 BMP 限制的 Unicode 编码子表，而不是限制为 BMP 的子表。
+* 如果存在另一个类型 4 或 12 的 Unicode cmap，则始终处理 Unicode 变体序列子表。
+
+例如，如果字体同时具有 0/4（Unicode、UCS-4）cmap 和 0/3（Unicode/BMP-only）cmap，则将使用前者而忽略后者。 尽管如此，它们对于 Unicode 的 BMP 应该具有相同的映射。
+
+如果字体具有 3/10 cmap（Windows，UCS-4），它也应该具有 3/1（Windows，仅限 BMP）cmap，以便与 Windows XP 向后兼容。 Apple 平台没有同等要求。
+
+有关 Windows 平台的更多要求，请参阅 OpenType 规范。
+
+请注意，由于编码子表使用任何平台/平台特定 ID 的实际数据的偏移量，因此类型 0/4 和类型 3/10 的 cmap 可能具有相同的实际数据，而不仅仅是相同的数据。
+
+# “cmap”表和语言代码
+
+每个“cmap”子表都有一个与之关联的两字节语言代码。 此语言代码仅用于具有 Mac 系统 platformID 的子表。 对于此类子表，它被解释为比 QuickDraw 语言代码多一，如果子表与语言无关，则解释为零。 在所有其他子表中，它应该为零。
+
+请注意，目前不推荐使用 Mac系统 platformID。 具有 Mac系统 platformID 的子表仅在与 QuickDraw 向后兼容时才需要，并且如果需要，将从基于 Unicode 的子表合成。
+
+# 'cmap' 格式
+
+每个“cmap”子表都是当前可用的九种格式之一。 这些是格式 0、格式 2、格式 4、格式 6、格式 8、格式 10、格式 12、格式 13 和格式 14，将在下一节中介绍。
+
+格式 0 支持 Mac系统 标准字符到字形映射。格式 2 支持对日语、中文和韩语有用的混合 8或16 位映射。 格式 4 用于 16 位映射。 格式 6 用于密集的 16 位映射。
+
+格式 8、10 和 12、13 和 14 用于混合 16或32 位和纯 32 位映射。 这支持在 Unicode 2.0 及更高版本中使用代理项编码的文本。
+
+许多 cmap 格式要么已过时，要么旨在满足从未实现的预期需求。 现代字体生成工具可能不需要能够以 4 和 12 以外的格式编写通用 cmap。格式 13 和 14 都用于专门用途。 格式 13 在结构上与格式 12 相同（但对数据的解释不同），因此对它的支持（如果需要）相对容易提供。 与 Unicode 变体选择器一起使用需要支持格式 14 编码子表。
+
+Apple 平台支持除 0、8 和 10 之外的所有 cmap 格式。有关其他平台上的编码子表格式支持的信息，请参阅 OpenType 规范。
+
+## 'cmap' 格式 0
+
+格式 0 适用于字符代码和字形索引限制为单个字节的字体。 这是在引入 TrueType 时非常常见的情况，但现在很少遇到。
+
+**'cmap' 格式 0**
+
+|类型|名称|描述|
+|-|-|-|
+|UInt16|format|设置为0|
+|UInt16|length|子表的字节长度（格式 0 设置为 262）(Length in bytes of the subtable (set to 262 for format 0))|
+|UInt16|language|语言编码(看上边)(Language code (see above))
+|UInt8|glyphIndexArray[256]|将字符代码映射到字形索引值的数组(An array that maps character codes to glyph index values)|
+
+## 'cmap' 格式 2
+
+格式 2 映射子表类型用于包含日文、中文或韩文字符的字体。 亚洲的 Mac 系统支持此表中使用的代码标准。 这些字体包含混合的 8或16 位编码，其中保留了某些字节值来表示 2 字节字符的第一个字节。 这些特殊值作为 2 字节字符的第二个字节也是合法的。
+
+下表显示了格式 2 编码子表的格式。 subHeaderKeys 数组将每个可能的高字节映射到 suborders 数组的特定成员中。 这允许确定是否使用了第二个字节。 在任何一种情况下，路径都通向 glyphIndexArray，从中获取映射的字形索引。 操作顺序如下：
+
+考虑一个高字节 i，指定 0 到 255 之间的整数。值 subHeaderKeys[i] 除以 8，是 subHeaders 数组中的索引 k。 k 等于 0 的值是特殊的。 这意味着 i 是一个单字节代码，不会引用第二个字节。 如果 k 为正，则 i 是双字节代码的高字节，其第二个字节 j 将被消耗。
+
+**'cmap' 格式 2**
+
+|类型|名称|描述|
+|-|-|-|
+|UInt16|format|设置为2|
+|UInt16|length|表总长度（以字节为单位）|
+|UInt16|language|语言编码（见上文|
+|UInt16|subHeaderKeys[256]|将高字节映射到 subHeaders 的数组：值为 index * 8|
+|UInt16 * 4|subHeaders[variable]|subHeader 结构的可变长度数组|
+|UInt16|glyphIndexArray[variable]|包含子数组的可变长度数组|
+
+subHeader 数据类型是由如下所示的 C 语言结构定义的 4 字结构：
+
+```C
+typedef struct {
+	UInt16	firstCode;
+	UInt16	entryCount;
+	int16	idDelta;
+	UInt16	idRangeOffset;
+} subheader;
+```
