@@ -210,3 +210,78 @@ typedef struct {
 	UInt16	idRangeOffset;
 } subheader;
 ```
+
+如果 k 为正，则属于 subheaders[k] 的四个值按如下方式使用，firstCode 和 entryCount 定义了第二个字节 j 的允许范围：
+
+firstCode <= j < (firstCode + entryCount)
+
+如果 j 超出此范围，则返回索引 0（缺少的字符字形）。 否则，idRangeOffset 用于标识 glyphIndexArray 内的关联范围。 glyphIndexArray 紧跟 subHeaders 数组，可以粗略地视为它的扩展。 idRangeOffset 的值是超过 idRangeOffset 字的实际位置的字节数，其中出现对应于 firstCode 的 glyphIndexArray 元素。 如果 p 为零，则直接返回。 如果 p 不为零，则返回 p = p + idDelta。 如有必要，总和以 65536 为模减少。
+
+对于 k = 0 的单字节情况，结构 subHeaders[0] 将显示 firstCode = 0、entryCount = 256 和 idDelta = 0。如前所述，idRangeOffset 将指向 glyphIndexArray 的开头。 将 i 个单词索引到该数组中会得到返回值 p = glyphIndexArray[i]。
+
+格式 2 cmap 的目标是混合 8/16 位编码，例如 Big Five 和 Shift-JIS。 这种编码仍然被广泛使用，即使格式 2 cmap 不存在，Apple 平台也会正确支持它们。
+
+## 'cmap' 格式 4
+
+格式 4 是一种两字节编码格式。 当字体的字符代码落在几个连续的范围内时，应该使用它，可能在一些或所有范围内有孔。 也就是说，某个范围内的某些代码可能与字体中的字形无关。 密集映射的两字节字体应使用格式 6。
+
+该表以格式编号、长度和语言开头。 格式相关的数据如下。 它分为三个部分：
+
+* 一个四字标题，提供优化搜索段列表所需的参数
+* 描述段的四个并行数组（每个连续的代码范围一个段）
+* 字形 ID 的可变长度数组
+
+**'cmap' 格式 4**
+
+|类型|名称|描述|
+|-|-|-|
+|UInt16|format|格式编号设置为 4
+|UInt16|length|子表的长度（以字节为单位）
+|UInt16|language|语言代码（见上文）
+|UInt16|segCountX2|2 * segCount
+|UInt16|searchRange|2 * (2**FLOOR(log2(segCount)))
+|UInt16|entrySelector|log2(searchRange/2)
+|UInt16|rangeShift|(2 * segCount) - searchRange
+|UInt16|endCode[segCount]|每个段的结束字符代码，last = 0xFFFF。
+|UInt16|reservedPad|此值应为零
+|UInt16|startCode[segCount]|每个段的起始字符代码
+|UInt16|idDelta[segCount]|段中所有字符代码的增量
+|UInt16|idRangeOffset[segCount]|字形 indexArray 的字节偏移量，或 0
+|UInt16|glyphIndexArray[variable]|字形索引数组
+
+段数由变量 segCount 指定。 此变量未在格式 4 表中明确使用，但它是派生所有表参数的数字。 segCount 是字体中连续代码范围的数量。 searchRange 值是小于或等于 segCount 的 2 的最大幂的两倍。
+
+searchRange、entrySelector 和 rangeShift 字段不在 Apple 平台上使用，但应正确设置以与其他平台兼容。
+
+示例格式 4 子表值如下表所示：
+
+|segCount|39|Not calculated; determined from the organization of the glyph indices|
+|-|-|-|
+|searchRange|64|(2 * (largest power of 2 <= 39)) = 2 * 32
+|entrySelector|5|(log2(the largest power of 2 < segCount))
+|rangeShift|14|(2 * segCount) - searchRange = (2 * 39) - 64
+
+每个段由 startCode、endCode、idDelta 和 idRangeOffset 描述。 这些用于映射段中的字符代码。 这些段按 endCode 值递增的顺序排序。
+
+要使用这些数组，需要搜索第一个大于或等于要映射的字符码的endCode。 如果对应的 startCode 小于等于字符码，则使用对应的 idDelta 和 idRangeOffset 将字符码映射到字形索引。 否则，将返回缺少的字符字形。 为确保搜索将终止，最终的 endCode 值必须为 0xFFFF。 该段不需要包含任何有效的映射。 它可以简单地将单个字符代码 0xFFFF 映射到缺少的字符字形，字形 0。
+
+如果段的 idRangeOffset 值不为 0，则字符代码的映射依赖于 glyphIndexArray。 startCode 的字符代码偏移量被添加到 idRangeOffset 值。 此总和用作与 idRangeOffset 本身内的当前位置的偏移量，以索引出正确的 glyphIdArray 值。 此索引方法有效，因为 glyphIdArray 紧跟在字体文件中的 idRangeOffset 之后。 字形索引的地址由以下等式给出：
+
+glyphIndexAddress = idRangeOffset[i] + 2 * (c - startCode[i]) + (Ptr) &idRangeOffset[i]
+
+该等式中需要乘以 2 才能将值转换为字节。
+
+或者，可以使用如下表达式：
+
+glyphIndex = *( &idRangeOffset[i] + idRangeOffset[i] / 2 + (c - startCode[i]) )
+
+这种形式取决于 idRangeOffset 是 UInt16 的数组。
+
+字形索引操作完成后，将检查指定地址处的字形 ID。 如果它不为 0（也就是说，如果它不是缺少的字形），则将该值添加到 idDelta[i] 以获取要使用的实际字形 ID。
+
+如果 idRangeOffset 为 0，则直接将 idDelta 值添加到字符代码中，得到对应的字形索引：
+
+glyphIndex = idDelta[i] + c
+
+注意：所有 idDelta[i] 算术都是模 65536。
+
