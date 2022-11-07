@@ -285,3 +285,4 @@ glyphIndex = idDelta[i] + c
 
 注意：所有 idDelta[i] 算术都是模 65536。
 
+下表给出了将字符 10-20、30-90 和 100-153 映射到连续范围的字形索引所需的参数示例。 此示例的参数 segCount = 4。 此表提供了格式 4 子表示例的映射变量参数值。 示例数据演示了如何计算字符到字形索引映射值。 该表的假设是 segCountX2 为 8，searchRange 为 8，entrySelector 为 2，rangeShift 为 0。
