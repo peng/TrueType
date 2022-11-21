@@ -387,4 +387,137 @@ Type 6 cmaps 主要用于仅 BMP 的 Unicode 字体。
 |UInt32|language|语言代码（见上文）|
 |UInt32|nGroups|后面的分组数|
 
+下面是各个组，每个组都有以下格式：
+
+|类型|名称|描述|
+|-|-|-|
+|UInt32|startCharCode|该组中的第一个字符代码|
+|UInt32|endCharCode|该组中的最后一个字符代码|
+|UInt32|startGlyphCode|起始字符代码对应的字形索引； 后续字符映射到连续字形|
+
+同样，使用 endCharCode 而不是计数，因为组匹配的比较通常是在现有字符代码上完成的，并且明确地使用 endCharCode 可以节省每个组添加的必要性。
+
+Windows 上覆盖 U+FFFF 以上字符的 Unicode 字体需要格式 12。 它是最有用的支持 32 位的 cmap 格式。
+
+## 'cmap' 格式 13 – 多对一映射
+
+格式 13 是类型 12 'cmap' 子表的修改版本，由 Apple 在内部用作其最后的手段字体和 Unicode 的最后手段字体。 一般而言，它不适用于除万不得已的字体以外的任何字体。
+
+在结构上，格式 13 和 12 是相同的。 唯一的区别在于每个范围内的字形代码的解释。 在格式 13 'cmap' 子表中，范围内的所有字形都映射到相同的字形代码，而在类型 12 'cmap' 子表中，它们映射到顺序字形代码，从给定的代码开始。
+
+为了说明，假设我们在格式 12 'cmap' 表和格式 13 'cmap' 子表中都有以下组：
+
+|类型|名称|值|描述|
+|-|-|-|-|
+|UInt32|startCharCode|0x4E00|该组中的第一个字符代码|
+|UInt32|endCharCode|0x9FCB|该组中的最后一个字符代码|
+|UInt32|glyphCode|47|该组的字形索引|
+
+在类型 12 'cmap' 子表中，U+4E95 将映射到字形 (0x4E95 - 0x4E00) + 47 = 196。在格式 13 'cmap' 子表中，它将映射到字形 47。
+
+Type 13 cmaps 仅适用于对 Unicode 块中的所有字符使用相同字形的字体——也就是说，只有类似 Last Resort 的字体才可能需要一个。
+
+## 格式 14：Unicode 变体序列
+
+子表格式 14 指定字体支持的 Unicode 变体序列 (UVSes)。 根据 Unicode 标准，变体序列包含一个基本字符，后跟一个变体选择器； 例如 <U+82A6, U+E0101>。
+
+子表将字体支持的 UVS 分为两类：“默认”和“非默认”UVS。 给定一个 UVS，如果通过在 Unicode 编码子表（即 UCS-4 或 BMP 编码子表）中查找该序列的基本字符获得的字形是用于该序列的字形，则该序列是“默认的” ”紫外线； 否则它是一个“非默认”UVS，并且用于该序列的字形在格式 14 子表本身中指定。
+
+下面的示例显示了字体供应商如何将格式 14 用于支持 JIS-2004 的字体。
+
+（注意在所使用的结构中存在 24 位整数。类型 14 的“cmap”子表不会使数据对齐到四字节边界。这也是唯一一个不独立且不独立的“cmap”子表 完全独立于所有其他；'cmap' 可能不包含单独的类型 14 子表。）
+
+
+**格式 14 头部（header）**
+
+|类型|名称|描述|
+|-|-|-|
+|uint16|format|子表格式。 设置为 14。
+|uint32|length|此子表的字节长度（包括此表头）
+|uint32|numVarSelectorRecords|变体选择器记录数
+
+紧随其后的是“numVarSelectorRecords”变体选择器记录。
+
+**变体选择器记录**
+
+|类型|名称|描述|
+|-|-|-|
+|uint24|varSelector|变化选择器
+|uint32|defaultUVSOffset|默认 UVS 表的偏移量。 可能为 0。
+|uint32|nonDefaultUVSOffset|非默认 UVS 表的偏移量。 可能为 0。
+
+变体选择器记录按“varSelector”的递增顺序排序。 没有两个记录可能具有相同的“varSelector”。 记录中的所有偏移量都相对于格式 14 编码子表的开头。
+
+变体选择器记录及其偏移指向的数据指定字体支持的那些 UVS，变体选择器是记录的“varSelector”值。 UVS 的基本字符存储在偏移量指向的表中。 UVS 根据它们是默认还是非默认 UVS 进行分区。
+
+用于非默认 UVS 的字形 ID 在非默认 UVS 表中指定。
+
+### 默认 UVS 表
+
+默认 UVS 表只是 Unicode 标量值的范围压缩列表，表示使用关联变体选择器记录的 varSelector 的默认 UVS 的基本字符。
+
+**默认 UVS 表头**
+|类型|名称|描述|
+|-|-|-|
+|uint32|numUnicodeValueRanges|后面的范围数
+
+紧随其后的是 numUnicodeValueRanges Unicode 值范围，每个范围代表一个连续的 Unicode 值范围。
+
+**Unicode 值范围**
+|类型|名称|描述|
+|-|-|-|
+|uint24|startUnicodeValue|此范围内的第一个值
+|BYTE|additionalCount|此范围内附加值的数量
+
+例如，范围 U+4E4D–U+4E4F（3 个值）会将 startUnicodeValue 设置为 0x004E4D 并将 additionalCount 设置为 2。单例范围会将 additionalCount 设置为 0。
+
+(startUnicodeValue + additionalCount) 不得超过 0xFFFFFF。
+
+Unicode 值范围按 startUnicodeValue 的递增顺序排序。 范围不得重叠； 即，(startUnicodeValue + additionalCount) 必须小于以下范围的 startUnicodeValue（如果有）。
+
+## 非默认 UVS 表
+
+非默认 UVS 表是 Unicode 标量值和字形 ID 对的列表。 Unicode 值表示所有非默认 UVS 的基本字符，这些 UVS 使用相关变体选择器记录的“varSelector”，字形 ID 指定要用于 UVS 的字形 ID。
+
+**非默认 UVS 表头**
+|类型|名称|描述|
+|-|-|-|
+|uint32|numUVSMappings|跟随的 UVS 映射数
+紧随其后的是“numUVSMappings”UVS 映射。
+
+**UVS表**
+|类型|名称|描述|
+|-|-|-|
+|uint24|unicodeValue|UVS 的基本 Unicode 值
+|uint16|glyphID|UVS 的字形 ID
+
+UVS 映射按 unicodeValue 的递增顺序排序。 此表中的任何两个映射都不能具有相同的 unicodeValue 值。
+
+# 例子
+下面是一个示例，说明如何在识别 JIS-2004 变体字形的字体中使用格式 14 编码子表。 本例中的 CID（字符 ID）指的是 Adobe Character Collection“Adobe-Japan1”中的那些，并且可以假定与我们示例中字体中的字形 ID 相同。
+
+JIS-2004 更改了一些代码点的默认字形变体。 例如：
+
+JIS-90：U+82A6 ⇒ CID 1142
+JIS-2004：U+82A6 ⇒ CID 7961
+
+这两种字形变体都通过使用 UVSes 得到支持，如 Unicode 的 UVS 注册表中的以下示例所示：
+
+U+82A6 U+E0100 ⇒ CID 1142
+U+82A6 U+E0101 ⇒ CID 7961
+
+如果字体默认支持 JIS-2004 变体，它将：
+
+* 在 Unicode 编码子表中的 U+82A6 编码字形 ID 7961，
+* 在 UVS 编码子表的默认 UVS 表中指定 <U+82A6，U+E0101>（“varSelector”将为 0x0E0101，“defaultUVSOffset”将指向包含 0x0082A6 Unicode 值的数据）
+* 在 UVS 编码子表的非默认 UVS 表中指定 <U+82A6，U+E0100> ⇒ 字形 ID 1142（“varSelector”将为 0x0E0100，“nonDefaultBaseUVOffset”将指向包含“unicodeValue”0x0082A6 和“glyphID”1142 的数据 ).
+但是，如果字体希望默认支持 JIS-90 变体，它将：
+
+* 在 Unicode 编码子表中的 U+82A6 编码字形 ID 1142，
+* 在UVS编码子表的Default UVS Table中指定<U+82A6, U+E0100>
+* 在 UVS 编码子表的非默认 UVS 表中指定 <U+82A6, U+E0101> ⇒ 字形 ID 7961
+
+## 特定于平台的信息
+
+Apple 平台不支持格式 0、8 或 10 编码子表。
 
