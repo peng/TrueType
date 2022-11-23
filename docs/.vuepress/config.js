@@ -32,6 +32,7 @@ module.exports = {
           [`/FontTables/'kern'`, `'kern'`],
           [`/FontTables/'loca'`, `'loca'`],
           [`/FontTables/'maxp'`, `'maxp'`],
+          [`/FontTables/'cmap'`, `'cmap'`],
         ]
       }
     ]
