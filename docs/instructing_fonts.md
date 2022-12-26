@@ -492,3 +492,163 @@ SHP[] 指令可以协调左上外侧衬线与左下外侧衬线的长度。 点 
 此时，指示从字形的右外侧部分向左进行。
 
 右侧外侧衬线长度的控制方式与左侧外侧衬线相似。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/H11.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01100]</td>
+    <td>移动点 43，直到它与 rp0（点 39）的距离是控制值表条目 34 中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0（第 39 点）</td>
+  </tr>
+  <tr>
+    <td>o 不改变 rp0。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个灰色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 43。</td>
+  </tr>
+</table>
+使用 SHP[] 指令将上部外侧衬线与下部外侧衬线对齐。
+
+<table>
+  <tr>
+    <td rowspan="3" >
+      <img src='./images/H12.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>SRP[0]</td>
+    <td>位移点 34 已经移动了 rp2 的量（点 43）。</td>
+  </tr>
+</table>
+右主杆粗细的控制方式与左杆大致相同。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/H13.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>50</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[11101]</td>
+    <td>移动点 50 直到它与 rp0（点 39）的距离是控制值表条目 4 中的值，即大写字干宽度。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 更改为点 50</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 50。</td>
+  </tr>
+</table>
+上杆上的关键点与下杆上的关键点对齐。 该点可能已在控制词干宽度时移动。
+
+<table>
+  <tr>
+    <td rowspan="3" >
+      <img src='./images/H14.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>ALIGNRP[]</td>
+    <td>将点 27 与 rp0（点 50）对齐。</td>
+  </tr>
+</table>
+右侧内衬线的控制方式与左侧相同。 在某些情况下，最好在随后的 MIRP[] 指令中关闭最小距离布尔值。 效果是使内部衬线消失而不是在小尺寸时发生碰撞。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/H15.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>45</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01100]</td>
+    <td>移动点 45 直到它与 rp0（点 50）的距离是控制值表条目 34 中的值</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>不要改变rp0</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个灰色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 45。</td>
+  </tr>
+</table>
