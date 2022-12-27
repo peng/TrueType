@@ -932,3 +932,127 @@ ALIGNRP[] 指令将先前移动的点与右衬线上的对应点对齐。
 </table>
 由于字形的顶部和底部可能已经改变了位置，因此需要从整体上控制横条与字形的关系。 设置参考点以用于控制横杆高度。
 
+<table>
+  <tr>
+    <td rowspan="3" >
+      <img src='./images/H25.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>SRP2[]</td>
+    <td>将 rp2 设置为点 8。</td>
+  </tr>
+</table>
+crossbar 的高度在 baseline 和 cap height 之间插值，以保持其在字形顶部和底部之间的相对位置。
+
+<table>
+  <tr>
+    <td rowspan="3" >
+      <img src='./images/H26.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>IP[]</td>
+    <td>在 rp1（点 17）和 rp2（点 8）之间插入点 25。</td>
+  </tr>
+</table>
+现在它已经被插值，连接横杆和左杆的点被圆化到网格并被触摸以防止它被未来的插值移动。
+
+<table>
+  <tr>
+    <td rowspan="4" >
+      <img src='./images/H27.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>25</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >MDAP[1]</td>
+    <td>圆形和接触点 25。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 25</td>
+  </tr>
+</table>
+使用控制值表条目控制横杆的高度。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/H28.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP11101]</td>
+    <td>移动点 0，直到它与 rp0 的距离为控制值表条目 6 中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0 (点25)</td>
+  </tr>
+  <tr>
+    <td>将 rp0 更改为点 0。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 0。</td>
+  </tr>
+</table>
+
+最后，所做的所有更改将分布在未受先前指令影响的点中。 IUP[] 通过插入每个未触摸点相对于最近的一对触摸点的位置来工作，每个触摸点沿着轮廓位于未触摸点的任一侧。 有关 IUP[] 指令的更多信息，请参见指令部分。
+
+注意插值是先在x方向，再在y方向进行的，这样可以在两个方向上调整未接触点的位置。
+
+<table>
+  <tr>
+    <td>IUP[1]</td>
+    <td>在 x 中插值。</td>
+  </tr>
+  <tr>
+    <td>IUP[0]</td>
+    <td>在 y 中插值。</td>
+  </tr>
+</table>
+
+## 纽约：大写字母 O
+
+New York O 是大写圆形字形的一个例子。 O 以及 New York 面中的其他一些大写字母圆，如图 12 所示。
+
+**图 12** 大写圆
+
+![图12](./images/fig3-12.gif)
+
+在指示这些字形时面临的特殊问题之一是，它们不是位于基线上，而是与基线重叠。 在每 em 像素尺寸较小的情况下，将没有足够的位来允许这样的悬垂。 对于较大的尺寸，必须保留原始设计。
