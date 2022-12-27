@@ -652,3 +652,283 @@ SHP[] 指令可以协调左上外侧衬线与左下外侧衬线的长度。 点 
     <td>将 rp2 设置为点 45。</td>
   </tr>
 </table>
+移位指令用于对齐上下衬线。
+
+<table>
+  <tr>
+    <td rowspan="3" >
+      <img src='./images/H16.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>SHP[0]</td>
+    <td>移动点 32，但移动量为 rp2（点 45）</td>
+  </tr>
+</table>
+x 方向的指令现已完成。 其余指令在 y 方向上工作。 第一步是将自由度和投影矢量重置为 y 轴。
+
+<table>
+  <tr>
+    <td>SVTCA[0]</td>
+    <td>将自由向量和投影向量设置为 y 轴</td>
+  </tr>
+</table>
+MIAP[]指令用于控制关键点与基线的关系。 设置了布尔值，表示控制值切入和回合状态都用于确定所采取的动作。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/H17.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>将点 6 移动到控制值表条目 8 中切入的位置。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 6。</td>
+  </tr>
+</table>
+ALIGNRP[] 指令将先前移动的点与右衬线上的对应点对齐。
+
+<table>
+  <tr>
+    <td rowspan="3" >
+      <img src='./images/H18.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>ALIGNRP[]</td>
+    <td>将点 44 与 rp0（点 6）对齐。</td>
+  </tr>
+</table>
+从下到上，下一组指令控制底部衬线的高度。 首先处理左下角的衬线。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/H19.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[11101]</td>
+    <td>移动点 8，直到它与 rp0（点 6）的距离为控制值表条目 32（衬线高度）中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 设置为 8。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 8。</td>
+  </tr>
+</table>
+一旦建立了单个衬线高度，就可以使用对齐指令将其应用于所有较低的衬线。
+
+<table>
+  <tr>
+    <td rowspan="8">
+      <img src = "./images/H20.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>循环变量的值。</td>
+  </tr>
+  <tr>
+    <td>SLOOP[]	</td>
+    <td>将循环计数设置为 3。</td>
+  </tr>
+  <tr>
+    <td>PUSHB[002]</td>
+    <td>将三个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>46</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>43</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>ALIGNRP[]</td>
+    <td>将点 5、46 和 43 与 rp0（点 8）对齐。 这将对齐两个较低衬线的高度。</td>
+  </tr>
+</table>
+下一组指令使用间接指令和控制值表条目来控制 H 顶部与大写字母高度的关系。
+
+<table>
+  <tr>
+    <td rowspan="8">
+      <img src = "./images/H21.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="2">MIAP[1]	</td>
+    <td>如果切入测试成功，将点 18 移动到控制值表条目 2（上限高度）中指定的位置。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 18。</td>
+  </tr>
+</table>
+对左上角衬线所做的更改现在应用到右侧。
+
+<table>
+  <tr>
+    <td rowspan="3" >
+      <img src='./images/H22.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>33</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>ALIGNRP[]</td>
+    <td>将点 33 与 rp0（点 18）对齐。 这会将右侧与大写高度对齐。</td>
+  </tr>
+</table>
+从字形顶部向下，指令用于控制上部衬线的高度。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/H23.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[11101]</td>
+    <td>移动点 17，直到它与 rp0（点 18）的距离为控制值表条目 32（衬线高度）中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0（第 18 点）</td>
+  </tr>
+  <tr>
+    <td>将 rp0 更改为第 17 点。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 17。</td>
+  </tr>
+</table>
+
+现在，所有上部衬线的底部都可以对齐，以符合先前 MIRP[] 指令所做的更改。
+
+<table>
+  <tr>
+    <td rowspan="8">
+      <img src = "./images/H24.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>循环变量的值。</td>
+  </tr>
+  <tr>
+    <td>SLOOP[]	</td>
+    <td>将循环计数设置为 3。</td>
+  </tr>
+  <tr>
+    <td>PUSHB[002]</td>
+    <td>将三个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>34</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td>ALIGNRP[]</td>
+    <td>将点 20、31 和 34 与 rp0（点 17）对齐以控制顶部衬线的高度</td>
+  </tr>
+</table>
+由于字形的顶部和底部可能已经改变了位置，因此需要从整体上控制横条与字形的关系。 设置参考点以用于控制横杆高度。
+
