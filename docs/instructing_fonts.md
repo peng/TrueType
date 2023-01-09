@@ -1222,7 +1222,7 @@ New York O 是大写圆形字形的一个例子。 O 以及 New York 面中的�
 <table>
   <tr>
     <td rowspan="10">
-      <img src = "./images/O-3.gif" />
+      <img src = "./images/O-4.gif" />
     </td>
     <td>PUSHB[001]</td>
     <td>将一个字节压入堆栈。</td>
@@ -1252,5 +1252,89 @@ New York O 是大写圆形字形的一个例子。 O 以及 New York 面中的�
   </tr>
   <tr>
     <td>将 rp2 设置为点 3。</td>
+  </tr>
+</table>
+
+右圆杆的控制方式与左杆类似。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/O-5.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 17，直到它与 rp0（点 11）的距离是控制值表条目 12 中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>不要更改 rp0。</td>
+  </tr>
+  <tr>
+    <td>使用最小距离</td>
+  </tr>
+  <tr>
+    <td>舍入和切入适用。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 17。</td>
+  </tr>
+</table>
+
+字形的右侧方位由控制值表条目控制，就像之前控制左侧方位一样。 不遵守最小距离，因此，该距离可能会在每个 em 像素值较小时消失。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/O-6.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>前进宽度位置的点号。</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>控制值表位置。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 17，直到它与 rp0（点 11）的距离是控制值表条目 12 中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>不要更改 rp0。</td>
+  </tr>
+  <tr>
+    <td>使用最小距离</td>
+  </tr>
+  <tr>
+    <td>舍入和切入适用。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 17。</td>
   </tr>
 </table>
