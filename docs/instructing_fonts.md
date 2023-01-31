@@ -1312,7 +1312,7 @@ New York O 是大写圆形字形的一个例子。 O 以及 New York 面中的�
     <td>前进宽度位置的点号。</td>
   </tr>
   <tr>
-    <td>12</td>
+    <td>13</td>
     <td>控制值表位置。</td>
   </tr>
   <tr>
@@ -1336,5 +1336,28 @@ New York O 是大写圆形字形的一个例子。 O 以及 New York 面中的�
   </tr>
   <tr>
     <td>将 rp2 设置为点 17。</td>
+  </tr>
+</table>
+
+如果您选择不在其向前宽度内指示字形的位置，请首先将点 3 舍入到网格并将其锁定到位。 然后继续指导左杆、整体宽度，最后是右杆。
+
+<table>
+  <tr>
+    <td rowspan="4" >
+      <img src='./images/O-7.gif' />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>点号</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >MDAP[1]</td>
+    <td>将 rp0 设置为 26。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 3</td>
   </tr>
 </table>
