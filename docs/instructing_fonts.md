@@ -1361,3 +1361,165 @@ New York O 是大写圆形字形的一个例子。 O 以及 New York 面中的�
     <td>将 rp0 和 rp1 设置为点 3</td>
   </tr>
 </table>
+
+在指示垂直距离之前，将自由度和投影矢量设置为 y 轴。
+
+<table>
+  <tr>
+    <td>SVTCA[0]</td>
+    <td>将自由向量和投影向量设置为 y 轴。</td>
+  </tr>
+</table>
+
+下一组指令用于控制基线重叠。 间接指令 (MIAP[]) 用于将字形连接到小尺寸的基线，同时一旦有足够数量的可用像素就允许重叠返回。
+
+这里发生了两件事。 常见的圆形被设置为有些重叠。 对于某些磅值集，控制值程序将重叠设置为零。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/O-8.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>将点 0 移动到控制值表条目 9 中指定的位置，以切入为准。</td>
+  </tr>
+  <tr>
+    <td>该值是四舍五入的。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 0。</td>
+  </tr>
+</table>
+
+MIRP[] 用于控制下方水平圆杆的高度。 设置最小距离布尔值可防止此水平杆消失。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/O-9.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 14，直到它与 rp0（点 0）的距离为控制值表条目 11 中的值（大写水平圆字干宽度）。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>rp0 不变。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>舍入和切入适用。</td>
+  </tr>
+  <tr>
+    <td>距离是黑色的。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 14。</td>
+  </tr>
+</table>
+
+使用大写圆形的控制值表条目控制字形的大写高度。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/O-10.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>将点 6 移动到控制值表 8 中切入的位置。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 6。</td>
+  </tr>
+</table>
+
+
+水平字干宽度由 MIRP[] 指令控制。
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/O-11.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 20，直到它与 rp0（点 6）的距离是控制值表条目 11 中的值（大写水平圆杆宽度）。</td>
+  </tr>
+  <tr>
+    <td>rp0 不变。</td>
+  </tr>
+  <tr>
+    <td>舍入和切入适用。</td>
+  </tr>
+  <tr>
+    <td>距离是黑色的。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 设置为 rp1。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 20。</td>
+  </tr>
+</table>
+
+所有未接触点的位置都通过x方向的插值和y方向的插值进行调整。
+
+<table>
+  <tr>
+    <td>IUP[1]</td>
+    <td>在 x 中插值</td>
+  </tr>
+  <tr>
+    <td>IUP[0]</td>
+    <td>在 y 中插值</td>
+  </tr>
+</table>
