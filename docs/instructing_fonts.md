@@ -1610,3 +1610,102 @@ Geneva B 的说明如下所示。 说明中提到的点编号如图 19 所示。
 
 MIRP[] 指令用于控制主干宽度。 该值使用控制值表条目与其他类似值协调。 该技术可确保当切入测试失败时，词干权重将以相同的每 em 像素值中断。
 
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B2.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 27 直到它与 rp0（点 8）的水平距离是控制值表条目 2（大写词干）中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>rp0 不变。</td>
+  </tr>
+  <tr>
+    <td>舍入和切入适用。</td>
+  </tr>
+  <tr>
+    <td>距离是黑色的。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 27。</td>
+  </tr>
+</table>
+
+下一条指令确保两个计数器的左侧对齐。 优先使用移位指令而不是 ALIGNRP[] 指令，因为 SHP[0] 将 rp0 保持在点 8 以用于下一条移动指令。 ALIGNRP[] 需要将 rp0 移动到点 27。SHP[0] 不需要。 这节省了一条 SRP0[] 指令。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B3.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MDAP[1]</td>
+    <td>舍入点 8 并触摸它，使其不受未来插值的影响。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 8。</td>
+  </tr>
+</table>
+
+下一条指令为经过舍入的字形保留原始轮廓黑体宽度。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B4.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>点号。</td>
+  </tr>
+    <td rowspan="7" >MDRP[10101]</td>
+    <td>移动点 3，直到它与点 rp0（点 8）的距离为原始轮廓距离，进行四舍五入和引擎补偿。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 设置为点 3。</td>
+  </tr>
+  <tr>
+    <td>不要使用最小距离</td>
+  </tr>
+  <tr>
+    <td>圆形的。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色的距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 3。</td>
+  </tr>
+</table>
+
+下面的圆形垂直词干被“mirped”到与左直词干相同的控制值表条目。
+
