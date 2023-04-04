@@ -1709,3 +1709,85 @@ MIRP[] 指令用于控制主干宽度。 该值使用控制值表条目与其他
 
 下面的圆形垂直词干被“mirped”到与左直词干相同的控制值表条目。
 
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B5.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>31</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 31，直到它与 rp0（点 3）的距离是控制值表条目 2 中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0</td>
+  </tr>
+  <tr>
+    <td>不要更改 rp0。</td>
+  </tr>
+  <tr>
+    <td>舍入和切入适用。</td>
+  </tr>
+  <tr>
+    <td>距离是黑色的。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 31。</td>
+  </tr>
+</table>
+
+使用 MDRP[] 恢复点 14 和 13 之间的原始轮廓距离，以圆形状态为准。
+
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B6.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MDRP[10100]</td>
+    <td>移动点 14，直到它与点 rp0（点 3）的距离为原始轮廓距离，进行四舍五入引擎补偿。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 移动到点 14</td>
+  </tr>
+  <tr>
+    <td>不要使用最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形的</td>
+  </tr>
+  <tr>
+    <td>这是一个灰色距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 14。</td>
+  </tr>
+</table>
+
+使用控制值表条目 2 控制上部圆形垂直词干，该词条用于其他词干。
+
