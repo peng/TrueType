@@ -1791,3 +1791,366 @@ MIRP[] 指令用于控制主干宽度。 该值使用控制值表条目与其他
 
 使用控制值表条目 2 控制上部圆形垂直词干，该词条用于其他词干。
 
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B7.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 22，直到它与 rp0（点 14）的距离是控制值表条目 2 中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>rp0 不变。</td>
+  </tr>
+  <tr>
+    <td>舍入和切入应用。</td>
+  </tr>
+  <tr>
+    <td>距离是黑色的</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 22。</td>
+  </tr>
+</table>
+
+参考点 1 被重置，为即将到来的插补做准备。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B8.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SRP1[]</td>
+    <td>先前的 MIRP[] 指令将 rp2 设置为指向 22。现在将 rp1 设置为 27 以准备 IP[] 指令。</td>
+  </tr>
+</table>
+
+在点 14 和 27 之间插入点 0 可确保其在这些点之间的相对位置恢复到原始轮廓中的位置。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B9.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >IP[]</td>
+    <td>在 rp1 (14) 和 rp2(27) 之间插入点 0</td>
+  </tr>
+</table>
+
+x 方向的指令完成后，自由向量和投影向量被设置为 y 方向。
+
+<table>
+  <tr>
+    <td>SVTCA[0]</td>
+    <td>将自由度和投影矢量设置为 y 轴。</td>
+  </tr>
+</table>
+
+通过将点 7 链接到控制值表条目 1 中的值，点 7 保持在基线上。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B10.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>控制值表项编号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>将点 7 移动到控制值表条目 1 中指定的位置。</td>
+  </tr>
+  <tr>
+    <td>将值四舍五入。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 7。</td>
+  </tr>
+</table>
+
+水平杆的高度通过将其链接到控制值表条目 3（水平杆高度）中的值来控制。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B11.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 27，使其与 rp0（点 7）的距离为控制值表条目 3 中的值</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>不要改变rp0</td>
+  </tr>
+  <tr>
+    <td>使用最小距离</td>
+  </tr>
+  <tr>
+    <td>舍入值并使用切入</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色的距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 27。</td>
+  </tr>
+</table>
+
+B 的高度使用与控制值表位置 2（大写字母高度）相关联的间接指令进行控制。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B12.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>控制值表项编号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>移动点 10 使其位于控制值表位置 0，接受切入测试。</td>
+  </tr>
+  <tr>
+    <td>在移动点之前将控制值表值四舍五入。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 10。</td>
+  </tr>
+</table>
+
+上部水平杆使用与下部相同的控制值表条目进行控制。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B13.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>26</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>超过点 26，使其与 rp0（点 10）的距离为控制值表条目 3 中的值。</td>
+  </tr>
+  <tr>
+    <td>设置 rp1 等于 rp0。</td>
+  </tr>
+  <tr>
+    <td>不要更改 rp0。</td>
+  </tr>
+  <tr>
+    <td>使用最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色的距离。</td>
+  </tr>
+  <tr>
+    <td>设置 rp2 等于点 26</td>
+  </tr>
+</table>
+
+参考点 rp1 设置为点 27，准备用于重新建立点 17 相对于点 26 和 27 的位置的插值。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B14.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>27</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SRP1</td>
+    <td>将 rp1 设置为点 27。</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B15.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >IP</td>
+    <td>在 rp1（点 27）和 rp2（26）之间插入点 17</td>
+  </tr>
+</table>
+
+一旦调整了点 17 的位置，它就会被四舍五入到网格中并被涉及，这样它就不会被未来的插值移动。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B16.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MDAP[1]</td>
+    <td>将点 17 的位置四舍五入并触摸它，使其不受未来插值的影响</td>
+  </tr>
+  <tr>
+    <td>rp0 和 rp1 设置为点 17</td>
+  </tr>
+</table>
+
+横杆杆的宽度使用水平杆的控制值表条目进行控制。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B17.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 36，直到它与 rp0（点 17）的距离是控制值表条目 3 中的值。</td>
+  </tr>
+  <tr>
+    <td>设置 rp1 等于 rp0。</td>
+  </tr>
+  <tr>
+    <td>不要更改 rp0。</td>
+  </tr>
+  <tr>
+    <td>舍入和切入适用。</td>
+  </tr>
+  <tr>
+    <td>距离是黑色的</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 36。</td>
+  </tr>
+</table>
+
+点 0 在点 17 和 36 之间插值。这调整了该点的垂直位置，就像之前的插值调整了它的水平位置一样。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/B18.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >IP[]</td>
+    <td>在 rp1（点 17）和 rp2（点 36）之间插入点 0。</td>
+  </tr>
+</table>
+
+调整所有未接触点相对于已受指令影响的点的位置。 首先在 x 方向进行调整，然后在 y 方向进行调整。
+
+<table>
+  <tr>
+    <td>IUP[1]</td>
+    <td>在 x 中插值</td>
+  </tr>
+  <tr>
+    <td>IUP[0]</td>
+    <td>在 x 中插值</td>
+  </tr>
+</table>
+
