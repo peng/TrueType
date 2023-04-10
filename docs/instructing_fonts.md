@@ -2231,28 +2231,25 @@ B 的高度使用与控制值表位置 2（大写字母高度）相关联的间�
 <table>
   <tr>
     <td rowspan="10">
-      <img src = "./images/B17.gif" />
+      <img src = "./images/K2.gif" />
     </td>
     <td>PUSHB[000]</td>
     <td>将两个字节压入堆栈。</td>
   </tr>
   <tr>
-    <td>36</td>
+    <td>10</td>
     <td>点号。</td>
   </tr>
   <tr>
-    <td>3</td>
+    <td>7</td>
     <td>控制值表条目号。</td>
   </tr>
   <tr>
     <td rowspan="7" >MIRP[01101]</td>
-    <td>移动点 36，直到它与 rp0（点 17）的距离是控制值表条目 3 中的值。</td>
+    <td>移动点 10，直到它与 rp0（点 1）的距离为控制值表条目 7 中的值。</td>
   </tr>
   <tr>
-    <td>设置 rp1 等于 rp0。</td>
-  </tr>
-  <tr>
-    <td>不要更改 rp0。</td>
+    <td>rp0 不变。</td>
   </tr>
   <tr>
     <td>舍入和切入适用。</td>
@@ -2261,6 +2258,95 @@ B 的高度使用与控制值表位置 2（大写字母高度）相关联的间�
     <td>距离是黑色的</td>
   </tr>
   <tr>
-    <td>将 rp2 设置为点 36。</td>
+    <td>将 rp2 设置为点 10。</td>
+  </tr>
+</table>
+
+连接主干和对角线的点在 x 方向上对齐。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K3.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SHP[0]</td>
+    <td>将点 4 移动 rp2（点 10）的移动量。</td>
+  </tr>
+</table>
+
+x 方向上对角线的内部（以及随后的黑体宽度）受到控制而不是外部，因为在这个 k 中，两个对角线笔划到达一个点的方式是一个重要特征。 重要的是在 x 方向上网格对齐该裤裆中的点，并控制 y 方向上的两个点以保持它们现有的关系。 随后将从笔画的那一侧控制对角杆重量。 第 4 点和第 10 点将不再移动。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K4.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MDRP[10101]</td>
+    <td>移动点 9，直到它与 rp0（点 1）的距离为原始轮廓距离，进行四舍五入和引擎补偿。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 9</td>
+  </tr>
+</table>
+
+9点和8点的相对关系是用偏移保存的。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K5.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SHP[0]</td>
+    <td>将点 8 移动 rp2（点 9）的移动量。</td>
+  </tr>
+</table>
+
+顶部对角线与底部对角线对齐。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K6.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MDRP[10100]</td>
+    <td>移动点 5，直到它与 rp2（点 9）的距离为原始轮廓距离，进行四舍五入和引擎补偿。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 5。</td>
+  </tr>
+  <tr>
+    <td>该指令的作用是保留点 5 与点 9 的原始关系（由先前的 MDRP[] 指令移动）。</td>
   </tr>
 </table>
