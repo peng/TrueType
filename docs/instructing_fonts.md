@@ -2350,3 +2350,100 @@ x 方向上对角线的内部（以及随后的黑体宽度）受到控制而不
     <td>该指令的作用是保留点 5 与点 9 的原始关系（由先前的 MDRP[] 指令移动）。</td>
   </tr>
 </table>
+
+第 6 点的移动与之前的第 8 点相同。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K7.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SHP[0]</td>
+    <td>将点 6 移动 rp2（点 5）的移动量。</td>
+  </tr>
+</table>
+
+调整 k 的叉柱以反映在对角线上发生的运动。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K8.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SHP[0]</td>
+    <td>将点 6 移动 rp2（点 5）的移动量。</td>
+  </tr>
+</table>
+
+自由和投影矢量设置为 y 轴，以便可以开始垂直方向的指令。
+
+<table>
+  <tr>
+    <td>SVTCA[0]</td>
+    <td>将自由度和投影向量设置为 y 轴</td>
+  </tr>
+</table>
+
+字形通过控制值表条目绑定到基线。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K9.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SHP[0]</td>
+    <td>将点 1 移动到控制值表条目 6 中切入的位置。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 1</td>
+  </tr>
+</table>
+
+点 8 和 9 对齐，以便在指示对角线之前它们将位于 x 方向和 y 方向的最终位置。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K10.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >ALIGNRP[]</td>
+    <td>将点 9 与 rp0（点 1）对齐</td>
+  </tr>
+</table>
+
