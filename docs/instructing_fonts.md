@@ -2447,3 +2447,419 @@ x 方向上对角线的内部（以及随后的黑体宽度）受到控制而不
   </tr>
 </table>
 
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K11.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >ALIGNRP[]</td>
+    <td>将点 8 与 rp0（点 1）对齐。</td>
+  </tr>
+</table>
+
+使用控制值表条目 0 将字形的顶部保持在大写高度。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K5.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>将点 3 移动到控制值表条目 4 中切入的位置。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 3</td>
+  </tr>
+</table>
+
+使用控制值表条目将点 5 与 x 高度对齐。 然后点 6 与点 5 对齐。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K13.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>将点 5 移动到控制值表条目 5 中切入的位置。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 5</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K14.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >ALIGNRP[]</td>
+    <td>将点 6 与 rp0（点 5）对齐。</td>
+  </tr>
+</table>
+
+点 4、7 和 10 的位置相对于基线（点 1）和 x 高度（点 5）使用 y 方向的插值进行调整。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K15.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SRP2[]</td>
+    <td>将 rp2 设置为点 1。</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K16.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>SLOOP[]</td>
+    <td>将循环变量设置为 3。</td>
+  </tr>
+  <tr>
+    <td>PUSHB[000]</td>
+    <td>将三个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>点编号。</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>IP[]</td>
+    <td>在 rp1（点 5）和 rp2（点 1）之间插入点 4、7 和 10</td>
+  </tr>
+</table>
+
+当x方向和y方向的指令全部完成后，就可以继续对角线的指令了。 改变投影矢量以垂直于下对角线移动。 运动将在 x 方向。
+
+<table>
+  <tr>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>点编号。</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>点数。</td>
+  </tr>
+  <tr>
+    <td>SPVTL[1]</td>
+    <td>设置投影向量垂直于点9到点10的直线</td>
+  </tr>
+  <tr>
+    <td>SFVTCA[1]</td>
+    <td>将自由向量设置为 x 轴。</td>
+  </tr>
+</table>
+
+首先指示下对角线。 移动点 8，直到下对角线的宽度等于小写直杆的宽度。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K17.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SRP0[]</td>
+    <td>将 rp0 设置为点 9。</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K18.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>控制值表位置</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 8，直到它与 rp0（点 9）的距离为控制值表条目 8 中的值。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色的距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 8。</td>
+  </tr>
+</table>
+
+下对角线上部的宽度以类似方式调整。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K19.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SRP0[]</td>
+    <td>将 rp0 设置为点 10。</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K20.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>控制值表位置</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 7，直到它与 rp0（点 10）的距离为控制值表条目 8 中的值。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色的距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 7。</td>
+  </tr>
+</table>
+
+现在指示上对角线。 投影向量被重置为垂直于上对角线。 其余指令模仿下对角线上使用的指令。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K21.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>控制值表位置</td>
+  </tr>
+  <tr>
+    <td>SPVTL[1]</td>
+    <td>设置垂直于点 4 和 5 定义的直线的投影矢量。</td>
+  </tr>
+  <tr>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>点数</td>
+  </tr>
+  <tr>
+    <td>SRP0[]</td>
+    <td>将 rp0 设置为点 5。</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K22.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>控制值表位置</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[01101]</td>
+    <td>移动点 7，直到它与 rp0（点 10）的距离为控制值表条目 8 中的值。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色的距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 7。</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/K23.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >SRP0[]</td>
+    <td>将 rp0 设置为点 4。</td>
+  </tr>
+</table>
+
+最后一个棘手的问题涉及需要移动点 7 来控制上对角线笔划粗细。 该点已经位于下对角线的正确位置。 如果自由矢量设置为与已控制的线平行，我们可以固定上对角线而不干扰下对角线。
+
+<table>
+  <tr>
+    <td rowspan="11">
+      <img src = "./images/K24.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>控制值表位置</td>
+  </tr>
+  <tr>
+    <td>SFVTL[0]</td>
+    <td>自由向量设置为平行于从点 7 到点 8 的直线。</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>点号。</td>
+  </tr>
+  <tr >
+    <td  rowspan="7">MIRP[01101]</td>
+    <td>移动点 7，直到它与 rp0 的距离为控制值表位置 7 中的值。</td>
+  </tr>
+  <tr>
+    <td>遵守最小距离。</td>
+  </tr>
+  <tr>
+    <td>圆形并使用切入。</td>
+  </tr>
+  <tr>
+    <td>这是一个黑色的距离。</td>
+  </tr>
+  <tr>
+    <td>将 rp2 设置为点 7。</td>
+  </tr>
+</table>
