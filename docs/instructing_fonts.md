@@ -3117,3 +3117,129 @@ x 方向上对角线的内部（以及随后的黑体宽度）受到控制而不
     <td>指令用于控制基线</td>
   </tr>
 </table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/I-3.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>将点 1 移动到控制值表条目 1（基线）中指定的位置。</td>
+  </tr>
+  <tr>
+    <td>将值四舍五入。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 1。</td>
+  </tr>
+</table>
+
+第二个 MIAP[] 用于控制大写高度。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/I-4.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>控制值表条目号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIAP[1]</td>
+    <td>将点 12 移动到控制值表条目 0（大写高度）中指定的位置。</td>
+  </tr>
+  <tr>
+    <td>将值四舍五入。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 和 rp1 设置为点 11。</td>
+  </tr>
+</table>
+
+MIRP[] 用于控制左衬线高度。 ALIGNRP[] 指令用于将右侧衬线的底部与左侧对齐。
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/I-5.gif" />
+    </td>
+    <td>PUSHB[001]</td>
+    <td>将两个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>控制值表位置编号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >MIRP[11101]</td>
+    <td>通过移动点 11 来控制衬线高度，直到它与 rp0（点 12）的距离是控制值表位置 2（衬线高度）中的值。</td>
+  </tr>
+  <tr>
+    <td>将 rp1 设置为 rp0。</td>
+  </tr>
+  <tr>
+    <td>将 rp0 更改为 11。</td>
+  </tr>
+  <tr>
+    <td>使用最小距离</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td rowspan="10">
+      <img src = "./images/I-6.gif" />
+    </td>
+    <td>PUSHB[000]</td>
+    <td>将一个字节压入堆栈。</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td>点号。</td>
+  </tr>
+  <tr>
+    <td rowspan="7" >ALIGNRP[]</td>
+    <td>将点 14 与 rp0 对齐（点 11）</td>
+  </tr>
+</table>
+
+在 x 方向和 y 方向上进行插值，以将对指令点所做的更改分配给那些不受指令影响的点。
+
+<table>
+  <tr>
+    <td>IUP[1]</td>
+    <td>在 x 方向上进行插值。</td>
+  </tr>
+  <tr>
+    <td>IUP[0]</td>
+    <td>在 y 方向插值。</td>
+  </tr>
+</table>
+
+## 示例控制值程序
+
+控制值程序是一组 TrueType 指令，在第一次访问字体时执行一次，并在字体、磅值或转换矩阵发生变化时再次执行。 控制值程序存储在“准备”表中。下面介绍了示例控制值程序。 它首先设置 scantype 的值并为控制值切入建立一个新值。
