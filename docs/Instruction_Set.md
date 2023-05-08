@@ -424,3 +424,479 @@ k 的零值或负值是错误的。
 
 从堆栈中弹出一个整数。 在解释器的非调试版本中，指令的执行将继续。 在可供字体开发人员使用的调试版本中，将调用依赖于实现的调试器。
 该指令仅用于调试目的，不应成为成品字体的一部分。 某些实现不支持此指令。
+
+### DELTAC1[] DELTA异常C1
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x73</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >pops 尾部弹出</td>
+    <td>n：异常规范和 CVT 条目号的对数 (uint32)</td>
+  </tr>
+  <tr>
+    <td>argn, cn, argn-1,cn-1, , arg1, c1：CVT 条目号和异常规范对（uint32 对）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>delta 转移, delta 基础</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>DELTAC2[ ], DELTAC3, DELTAP1, DELTAP2, DELTAP3</td>
+  </tr>
+</table>
+
+为一个或多个 CVT 值创建例外，每个 CVT 值都具有指定的磅值和指定的数量。
+
+弹出一个整数 n，后跟 n 对异常规范和控制值表条目号。 DELTAC1[] 更改每个 CVT 条目中指定的值，大小和像素数量在其成对参数中指定。
+
+DELTAC1[] 指令的 8 位 arg 组件分解为两部分。 最重要的 4 位表示应用异常的每个 em 的相对像素数。 最低有效 4 位表示要进行的更改的大小。
+
+每个 em 的相对像素数是参数中指定的值和增量基数的函数。 DELTAC1[] 指令以每 em 像素大小工作，从 delta base 到 delta_base + 15。要以更大的每 em 像素大小调用异常，请使用 DELTAC2[] 或 DELTAC3[] 指令，这会影响大小的变化 最多 delta_base + 47 或者，如果需要，增加 delta base 的值。
+
+移动的幅度在指令中以编码形式指定。 表 5 列出了异常值的映射和移动的幅度。步长的大小取决于增量偏移的值。
+
+**表 4：** 映射到移动步数的幅度值
+
+<table>
+  <tr>
+    <th>选择器</th>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+  </tr>
+  <tr>
+    <th>步数</th>
+    <td>-8</td>
+    <td>-7</td>
+    <td>-6</td>
+    <td>-5</td>
+    <td>-4</td>
+    <td>-3</td>
+    <td>-2</td>
+    <td>-1</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+  </tr>
+</table>
+
+有关 DELTA 指令的更多信息，请参阅 [字体教程](./instructing_fonts.md)。
+
+### DELTAC2[] DELTA异常C2
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x74</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >pops 尾部弹出</td>
+    <td>n：异常规范和 CVT 条目号的对数 (uint32)</td>
+  </tr>
+  <tr>
+    <td>argn, cn, argn-1,cn-1, , arg1, c1：CVT 条目号和异常规范对（uint32 对）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>delta 转移, delta 基础</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>DELTAC2[ ], DELTAC3[], DELTAP1[], DELTAP2[], DELTAP3[]</td>
+  </tr>
+</table>
+
+为一个或多个 CVT 值创建例外，每个 CVT 值都具有指定的磅值和指定的数量。
+弹出一个整数 n，后跟 n 对异常规范和 CVT 条目号。 DELTAC2[] 以其配对参数中指定的大小和数量更改每个 CVT 条目中的值。
+
+DELTAC2[] 指令与 DELTAC1[] 指令完全相同，除了以从 (delta_base + 16) 到 (delta_base + 31) 开始的每 em 像素大小操作。 要以每 em 大小的较小像素调用异常，请使用 DELTAC1[] 指令。 要以较小的每 em 像素大小调用异常，请使用 DELTAC3[] 指令，该指令可以影响最大 delta_base + 47 大小的更改，或者，如果需要，更改 delta base 的值。
+
+有关详细信息，请参阅 DELTAC1[] 或 [字体教程](./instructing_fonts.md) 的条目。
+
+### DELTAC3[] DELTA 异常 C3
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x75</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >pops 尾部弹出</td>
+    <td>n：CVT条目号和异常规范的对数（uint32）</td>
+  </tr>
+  <tr>
+    <td>argn, cn, argn-1,cn-1, , arg1, c1：CVT 条目号和异常规范对（uint32 对）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>delta 转移, delta 基础</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>DELTAC2[ ], DELTAC3[], DELTAP[], DELTAP2[], DELTAP3[]</td>
+  </tr>
+</table>
+
+为一个或多个 CVT 值创建例外，每个 CVT 值都具有指定的磅值和指定的数量。
+弹出一个整数 n，后跟 n 对异常规范和 CVT 条目号。 DELTAC3[] 以其配对参数中指定的大小和数量更改每个 CVT 条目中的值。
+
+DELTAC3[] 指令与 DELTAC1 指令完全相同，除了以从 (delta_base + 32) 到 (delta_base + 47) 开始的每 em 像素大小操作。
+
+有关详细信息，请参阅 DELTAC1[] 或 [字体教程](./instructing_fonts.md) 的条目。
+
+### DELTAP1[] DELTA异常P1
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x5D</td>
+  </tr>
+  <tr>
+    <td>Pops n：异常规范和点数对（uint32）</td>
+    <td>argn, pn, argn-1, pn-1, , arg1, p1：n 对异常规范和点（uint32 对）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0, delta base, delta shift, 自由向量, 投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>DELTAC2[ ], DELTAC3, DELTAP1, DELTAP2, DELTAP3</td>
+  </tr>
+</table>
+
+在一个或多个点位置创建异常，每个位置都具有指定的点大小和指定的数量。
+DELTAP1[] 作用于 zp0 引用的区域中的点。 它以配对参数中指定的大小和数量移动指定的点。 移动一个点可以打开或关闭位图中选定的像素，这些像素将在扫描转换受影响的轮廓时创建。 可以指定任意数量的点和参数。
+
+分组 [argi, pi] 可以执行 n 次。 argi 的值由一个字节组成，低四位表示异常的大小，高四位表示每个 em 值的相对像素。
+
+DELTAP 指令工作的实际每 em 像素大小是相对每 em 像素大小和 delta base 的函数。 DELTAP1[] 指令以每 em 像素大小工作，从 delta_base 到 delta_base + 15。要在每 em 更大像素大小上调用异常，请使用 DELTAP2[] 或 DELTAP3[] 指令，它们一起可以影响更改 大小最大为 delta_base + 47，或者，如果需要，增加 delta base 的值。
+
+移动的幅度在指令中以编码形式指定。 表 5 列出了从 DELTA 指令中使用的异常值到移动步长的映射。 步长的大小取决于增量偏移的值。
+
+**表 5：** 映射到移动步数的幅度值
+
+<table>
+  <tr>
+    <th>选择器</th>
+    <td>0</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+    <td>9</td>
+    <td>10</td>
+    <td>11</td>
+    <td>12</td>
+    <td>13</td>
+    <td>14</td>
+    <td>15</td>
+  </tr>
+  <tr>
+    <th>步数</th>
+    <td>-8</td>
+    <td>-7</td>
+    <td>-6</td>
+    <td>-5</td>
+    <td>-4</td>
+    <td>-3</td>
+    <td>-2</td>
+    <td>-1</td>
+    <td>1</td>
+    <td>2</td>
+    <td>3</td>
+    <td>4</td>
+    <td>5</td>
+    <td>6</td>
+    <td>7</td>
+    <td>8</td>
+  </tr>
+</table>
+
+### DELTAP2[] DELTA 异常 P2
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x71</td>
+  </tr>
+  <tr>
+    <td>Pops n：异常规范和点数对（uint32）</td>
+    <td>argn, pn, argn-1, pn-1, , arg1, p1：n 对异常规范和点（uint32 对）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0, delta shift, delta base, 自由向量, 投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>DELTAC2[ ], DELTAC3, DELTAP1, DELTAP2, DELTAP3</td>
+  </tr>
+</table>
+
+在一个或多个点位置创建异常，每个位置都具有指定的点大小和指定的数量。
+DELTAP2[] 作用于 zp0 引用的区域中的点。 它以配对参数中指定的大小和数量移动指定的点。 移动一个点可以打开或关闭位图中选定的像素，这些像素将在扫描转换受影响的轮廓时创建。 可以指定任意数量的点和参数。
+
+DELTAP2[] 指令与 DELTAP1[] 指令相同，除了以从 (delta_base + 16) 到 (delta_base + 31) 开始的每 em 像素大小进行操作。 要以每 em 大小的较小像素调用异常，请使用 DELTAP1[] 指令。 要以每 em 大小的较小像素调用异常，请使用 DELTAP3[] 指令。 如有必要，更改 delta_base 的值。
+
+### DELTAP3[] DELTA 异常 P3
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x71</td>
+  </tr>
+  <tr>
+    <td>Pops n：异常规范和点数对（uint32）</td>
+    <td>argn, pn, argn-1, pn-1, , arg1, p1：n 对异常规范和点（uint32 对）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0, delta shift, delta base, 自由向量, 投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>DELTAC2[ ], DELTAC3, DELTAP1, DELTAP2, DELTAP3</td>
+  </tr>
+</table>
+
+在一个或多个点位置创建异常，每个位置都具有指定的点大小和指定的数量。
+弹出一个整数 n，后跟 n 对异常规范和点。 DELTAP3[] 作用于 zp0 引用的区域中的点。 它以配对参数中指定的大小和数量移动指定的点。 移动一个点可以打开或关闭位图中选定的像素，这些像素将在扫描转换受影响的轮廓时创建。 可以指定任意数量的点和参数。
+
+DELTAP3[] 指令与 DELTAP1[] 指令相同，除了以从 (delta_base + 32) 到 (delta base + 47) 开始的每 em 像素大小进行操作。 要以每 em 大小的较小像素调用异常，请使用 DELTAP1[] 或 DELTAP2[] 指令。 如有必要，更改增量基数的值。
+
+### DEPTH[] 栈的深度
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x24</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>n：元素数量（int32）</td>
+  </tr>
+</table>
+
+将 n（当前在堆栈中的元素数）压入堆栈。
+
+### DIV[]除法
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x62</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pops</td>
+    <td>n2：小数 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>n1：最后一个小数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>(n1 * 64)/n2：商 (F26Dot6)</td>
+  </tr>
+</table>
+
+将堆栈顶部的第二个数除以堆栈顶部的数字。
+从堆栈中弹出两个 26.6 定点数 n1 和 n2，并将 n2 除以 n1 得到的商压入堆栈。 除法按以下方式进行，n1 左移六位，然后除以 2。
+
+### DUP[] DUPlicate 栈顶元素
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x20</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>e：堆栈元素（StkElt）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>e：堆栈元素（StkElt）</td>
+  </tr>
+  <tr>
+    <td>e：堆栈元素（StkElt）</td>
+    <td></td>
+  </tr>
+</table>
+
+复制栈顶元素。
+从堆栈中弹出一个元素 e，复制该元素并将其压入两次。
+
+### EIF[] End IF
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x59</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>IF[ ], ELSE[ ]</td>
+  </tr>
+</table>
+
+标记 IF 或 IF-ELSE 指令序列的结束。
+
+### ELSE[] ELSE 子句
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x1B</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>IF[ ], ELSE[ ]</td>
+  </tr>
+</table>
+
+标记当 IF 指令在堆栈上遇到 FALSE 值时要执行的指令序列的开始。 该指令序列以 EIF 指令结束。
+
+IF-ELSE-EIF 序列的 ELSE 部分是可选的。
+
+### ENDF[] END 函数定义
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x2D</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>FDEF[ ], IDEF[ ]</td>
+  </tr>
+</table>
+
+标记函数定义或指令定义的结尾。 函数定义和指令定义不能嵌套。
+
+### EQ[] 相等
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x54</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>e2：堆栈元素 e1：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>b：布尔值（[0,1]范围内的uint32）</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>NEQ[ ]</td>
+  </tr>
+</table>
+
+测试栈顶的两个数是否相等。
+从堆栈中弹出两个 32 位值 e2 和 e1 并比较它们。 如果它们相同，则将一个表示 TRUE 的值压入堆栈。 如果它们不相等，则将零（表示 FALSE）放入堆栈。
+
+### EVEN[] EVEN
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x57</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>e: 堆栈元素 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>b：布尔值（[0,1]范围内的uint32）</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>圆形状态</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>ODD[ ]</td>
+  </tr>
+</table>
