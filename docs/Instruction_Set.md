@@ -118,3 +118,309 @@
 |F26Dot6|32 位有符号固定数，低 6 位代表小数|
 |StkElt|任意 32 位数量|
 
+## 理解插图
+
+许多说明都附有插图。 这些插图中的大多数解释了指令对字形轮廓中点位置的影响。 图 1 列出了这些插图中使用的约定。 请记住，
+* 除非另有说明，否则距离是沿投影矢量测量的
+* 除非另有说明，指令沿自由向量移动点
+有关移动点的更多信息，请参阅 [字体教程](./instructing_fonts.md) 。
+
+**图 1** 图示要点
+
+![](./images/F025_instr1.gif)
+
+## 说明
+### AA[] 调整角度
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x7F</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>p：点数（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SANGW[ ]</td>
+  </tr>
+</table>
+
+从堆栈中弹出一个参数。 该指令是不合时宜的，没有其他作用。
+
+### ABS[] 绝对值
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x64</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>n：定点数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td >Pushes 推动</td>
+    <td>|n|：n 的绝对值 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td colspan="10" >用绝对值替换堆栈顶部的数字。</td>
+  </tr>
+</table>
+
+从堆栈弹出一个 26.6 定点数 n，并将 n 的绝对值压入堆栈。
+
+### ADD[] 添加
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x60</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>n2：定点数（F26Dot6） n1：定点数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td >Pushes 推动</td>
+    <td>总和：n1 + n2(F26Dot6)</td>
+  </tr>
+  <tr>
+    <td colspan="10" >将栈顶的两个数字相加。</td>
+  </tr>
+</table>
+
+从堆栈中弹出两个 26.6 定点数 n2 和 n1，并将这两个数字的和压入堆栈。
+
+### ALIGNPTS[] 对齐点
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x27</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>p2：点编号 (uint32) p1：点编号 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>带点 p2 的 zp0 和带点 p1 的 zp1、自由向量、投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>ALIGNRP[ ]</td>
+  </tr>
+</table>
+
+沿与投影向量正交的轴对齐编号为堆栈顶部两项的两个点。
+从堆栈中弹出两个点数 p2 和 p1，并通过将两个点沿自由向量移动到它们沿投影向量的投影的平均值，使它们之间的距离为零。
+
+在下图中，点 p1 和 p2 沿着自由向量移动，直到它们之间的投影距离减小为零。 从 A 到 B 的距离等于 d/2，这等于从 B 到 C 的距离。值 d/2 是 p1 和 p2 之间原始投影距离的一半。
+
+![图2](./images/F025_instr2.gif)
+
+### ALIGNRP[] 与参考点对齐
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x27</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>p1、p2、...、ploopvalue：点数 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>带点 p2 的 zp0 和带点 p1 的 zp1、自由向量、投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>ALIGNPTS[ ]</td>
+  </tr>
+</table>
+
+将编号位于堆栈顶部的点与 rp0 引用的点对齐。
+从堆栈中弹出点编号 p1、p2、...、ploopvalue，并通过移动每个点 pi 将这些点与 rp0 的当前位置对齐，从而使从 pi 到 rp0 的投影距离减小为零。 对齐的点数取决于状态变量循环的当前设置。
+
+在下图中，点 p 沿着自由向量移动，直到它与 rp0 的投影距离减小为零。
+
+![图3](./images/F025_instr3.gif)
+
+### AND[] 逻辑与
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x5A</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>e2：堆栈元素 (StkElt) e1：堆栈元素 (StkElt)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>(e1 and e2)：e1 和 e2 的逻辑与 (uint32)</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>带点 p2 的 zp0 和带点 p1 的 zp1、自由向量、投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>OR[ ]</td>
+  </tr>
+</table>
+
+获取顶部两个堆栈元素的逻辑与。
+从堆栈中弹出顶部的两个元素 e2 和 e1，并将两个元素的逻辑与结果压入堆栈。 如果其中一个或两个元素为 FALSE（值为零），则压入零。 如果两个元素都为 TRUE（具有非零值），则压入一个。
+
+### CALL[] 调用函数
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x2B</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>f：函数标识符号（0 到 (n-1) 范围内的 int32，其中 n 在“maxp”表中指定）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>FDEF[ ], EIF[ ]</td>
+  </tr>
+</table>
+
+### CEILING[] 天花板
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x67</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>n：定点数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>n : n 的上限 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>FLOOR[ ]</td>
+  </tr>
+</table>
+
+获取堆栈顶部数字的上限。
+从堆栈中弹出一个数字 n 并压入 n ，即大于或等于 n 的最小整数值。 请注意，n 的上限虽然是一个整数值，但表示为 26.6 定点数。
+
+### CINDEX[] 将 INDEXed 元素复制到栈顶
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x25</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>k：堆栈元素编号（int32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>ek: 第 k 个堆栈元素 (StkElt)</td>
+  </tr>
+  <tr>
+    <td rowspan="4" >堆栈之前</td>
+    <td>k：堆栈元素编号</td>
+  </tr>
+  <tr>
+    <td>e1：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>ek：堆栈元素</td>
+  </tr>
+  <tr>
+    <td rowspan="4" >堆栈之后</td>
+    <td>ek：索引元素</td>
+  </tr>
+  <tr>
+    <td>e1：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>...</td>
+  </tr>
+  <tr>
+    <td>ek：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>MINDEX[ ]</td>
+  </tr>
+</table>
+
+将索引堆栈元素复制到堆栈顶部。
+从堆栈中弹出堆栈元素编号 k，并将第 k 个堆栈元素的副本压入堆栈顶部。 由于它是一个被压入的副本，因此第 k 个元素保持在其原始位置。 此功能是 CINDEX[ ] 和 MINDEX[ ] 指令之间的主要区别。
+
+k 的零值或负值是错误的。
+
+### CLEAR[] 清除堆栈
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x22</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>堆栈中的所有项目 (StkElt)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+</table>
+
+清除堆栈中的所有元素。
+
+### DEBUG[] 调试调用
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x4F</td>
+  </tr>
+  <tr>
+    <td>pops 尾部弹出</td>
+    <td>n：整数（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+</table>
+
+从堆栈中弹出一个整数。 在解释器的非调试版本中，指令的执行将继续。 在可供字体开发人员使用的调试版本中，将调用依赖于实现的调试器。
+该指令仅用于调试目的，不应成为成品字体的一部分。 某些实现不支持此指令。
