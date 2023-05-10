@@ -900,3 +900,279 @@ IF-ELSE-EIF 序列的 ELSE 部分是可选的。
     <td>ODD[ ]</td>
   </tr>
 </table>
+
+测试堆栈顶部的数字在根据舍入状态舍入时是否为偶数。
+从堆栈中弹出一个 26.6 的数字 e，并根据当前轮次状态对该数字进行四舍五入。 然后将该数字截断为整数。 如果被截断的数字是偶数，则表示 TRUE 的 1 被压入堆栈； 如果它是奇数，则将零（表示 FALSE）放入堆栈。
+
+### FDEF[] 函数定义
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x2C</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>f：函数标识符号（0 到 (n-1) 范围内的整数，其中 n 在“maxp”表中指定</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>ENDF[ ], CALL[ ]</td>
+  </tr>
+</table>
+
+标记函数定义的开始，并从堆栈中弹出一个数字 f 以唯一标识此函数。 当在指令流中遇到 ENDF[] 时，该定义将终止。 函数定义只能出现在字体程序或 CVT 程序中。 函数必须先定义，然后才能与 CALL[ ] 指令一起使用。
+
+### FLIPOFF[] 将自动 FLIP 布尔值设置为 OFF
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x4E</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>自动翻转</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MIRP、MIAP</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>FLIPON[ ], MIRP[ ], MIAP[ ]</td>
+  </tr>
+</table>
+
+将图形状态中的自动翻转布尔值设置为 FALSE，导致 MIRP[] 和 MIAP[] 指令使用控制值表条目的符号。 当自动翻转设置为 FALSE 时，测量距离的方向变得很重要。 自动翻转状态变量的默认值为 TRUE。
+
+### FLIPON[] 将自动 FLIP 布尔值设置为 ON
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x4D</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>自动翻转</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MIRP、MIAP</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>FLIPOFF[ ], MIRP[ ], MIAP[ ]</td>
+  </tr>
+</table>
+
+将图形状态中的自动翻转布尔值设置为 TRUE，导致 MIRP[] 和 MIAP[] 指令忽略控制值表条目的符号。 当自动翻转变量为 TRUE 时，测量距离的方向变得无关紧要。 自动翻转状态变量的默认值为 TRUE。
+
+### FLIPPT[] 翻转点
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x80</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>p1, p2, , ploopvalue: 点数 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0，循环</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>FLIPRGON[ ], FLIPRGOFF[ ]</td>
+  </tr>
+</table>
+
+使曲线上的点成为曲线外点或使曲线外的点成为曲线上的点。
+从堆栈中弹出点 p、p1、p2、...、ploopvalue。 如果 pi 是曲线上的点，则它是曲线外的点。 如果 pi 是曲线外点，则它是曲线上点。 没有点 pi 被标记为已触摸。 因此，所有翻转点都不会受到 IUP[ ] 指令的影响。 FLIPPT[ ] 指令重新定义字形轮廓的形状。
+
+### FLIPRGOFF[] FLIP RanGe 关闭
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x80</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pops</td>
+    <td>h：范围内的高点数（uint32）</td>
+  </tr>
+  <tr>
+    <td>l：范围内的低点数（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>FLIPPT[ ], FLIPRGOFF[ ]</td>
+  </tr>
+</table>
+
+将指定范围内的所有点更改为曲线外点。
+弹出定义点范围的两个数字，第一个是高点，第二个是低点。 此范围内的曲线上点将成为曲线外点。 点的位置不受影响，因此点不标记为触摸。
+
+### FLIPRGON[] FLIP RanGe 开启
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x81</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pops</td>
+    <td>h：翻转范围内的高点数（uint32）</td>
+  </tr>
+  <tr>
+    <td>l：翻转范围内的低点数（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>FLIPPT[ ], FLIPRGOFF[ ]</td>
+  </tr>
+</table>
+
+使指定范围内的所有点成为曲线上的点。
+弹出定义点范围的两个数字，第一个是高点，第二个是低点。 此范围内的曲线外点将变为曲线上点。 点的位置不受影响，因此点不标记为触摸。
+
+### FLOOR[] FLOOR
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x66</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>n：需要 floor 的号码（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>n : n 层 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>CEILING[ ]</td>
+  </tr>
+</table>
+
+获取堆栈顶部值的底部。
+
+从堆栈中弹出一个 26.6 定点数 n 并返回 n ，即小于或等于 n 的最大整数值。 请注意，n 的下限虽然是一个整数值，但表示为 26.6 定点数。
+
+### GC[a] 获取投影到投影向量上的坐标
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x46 - 0x47</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：使用点p的当前位置</td>
+  </tr>
+  <tr>
+    <td>1：使用原轮廓中p点的位置</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>p: 点号 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>c：坐标位置（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp2，投影向量，双投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SCFS[ ]</td>
+  </tr>
+</table>
+
+使用当前投影向量获取指定点的坐标值。
+弹出一个点号 p 并将该点在当前投影向量上的坐标值压入堆栈。 GC[] 返回的值取决于投影向量的当前方向。
+
+下图，GC[1]，p1 在栈顶，返回点 p1 的原始位置，而 GC[0]，p2 在栈顶，返回点 p2 的当前位置。
+
+![F025_instr4](./images/F025_instr4.gif)
+
+### GETINFO[] 获取信息
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x88</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>选择器：整数（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>结果：整数（uint32）</td>
+  </tr>
+</table>
+
+用于获取有关呈现字体的 TrueType 引擎版本的数据以及当前字形的特征。 该指令弹出一个用于确定所需信息类型的选择器，并将结果压入堆栈。
+在选择器中设置位 0 请求引擎版本。 设置位 1 询问字形是否已旋转。 设置位 2 询问字形是否已被拉伸。 要请求有关这些值中的两个或更多个的信息，请设置适当的位。 例如，选择器值 6 (0112) 请求有关旋转和拉伸的信息。
+
+结果与请求的信息一起被压入堆栈。 结果的第 0 位到第 7 位包含字体引擎版本号。 表 0-2 中列出了版本号。
+
+如果当前字形已旋转，则位 8 设置为 1。 否则为 0。 位 9 设置为 1 以指示字形已被拉伸。 否则为 0。
+
+**表 0-1** 选择器位和产生的结果
+
+**表 6**
+|选择位|意义|结果位|
+|-|-|-|
+|0|获取引擎版本|0-7|
+|1|旋转？|8|
+|2|拉伸？|9|
+表 0-2 中给出了引擎版本的可能值。
