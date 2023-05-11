@@ -1176,3 +1176,327 @@ IF-ELSE-EIF 序列的 ELSE 部分是可选的。
 |1|旋转？|8|
 |2|拉伸？|9|
 表 0-2 中给出了引擎版本的可能值。
+
+**表 0-2** 字体引擎版本号
+
+|系统|引擎版本|
+|-|-|
+|Macintosh System6.0|1|
+|Macintosh System7.0|2|
+|Windows 3.1|3|
+|KanjiTalk 6.1|4|
+
+如果 TrueType 引擎是 System 7.0 版本，并且选择器请求有关版本号、旋转和拉伸的信息，并且字形旋转但未拉伸，则结果将为 01 0000 00102 或 258。
+
+### GFV[] 获取自由向量
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x0D</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pushes 压入栈</td>
+    <td>px: x 分量 (EF2Dot14)</td>
+  </tr>
+  <tr>
+    <td>py：y 分量 (EF2Dot14)</td>
+  </tr>
+  <tr>
+    <td>获取</td>
+    <td>自由向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>GPV[ ]</td>
+  </tr>
+</table>
+
+将当前自由向量分解为其 x 和 y 分量，并将这些分量作为两个 2.14 数字放入堆栈。 这些数字占据每个 long 的最低有效两个字节。
+
+压入的第一个分量 px 是自由向量的 x 分量。 第二个推入的 py 是自由向量的 y 分量。 每个都是一个2.14的数字。
+
+GFV[] 将自由向量视为源自网格原点的单位向量。 在下图中，A 点到 B 点的距离为 1 个单位。
+
+![F025_instr5](./images/F025_instr5.gif)
+
+### GPV[] Get Projection Vector 获取投影向量
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x0C</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pushes 压入栈</td>
+    <td>p<sup>x</sup>: x 组件 (EF2Dot14)</td>
+  </tr>
+  <tr>
+    <td>p<sup>y</sup>：y 组件 (EF2Dot14)</td>
+  </tr>
+  <tr>
+    <td>获取</td>
+    <td>投影矢量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>GFV[ ]</td>
+  </tr>
+</table>
+
+将当前投影向量分解为其 x 和 y 分量，并将这些分量作为两个 2.14 数字压入堆栈。
+压入的第一个分量 px 是投影向量的 x 分量。 第二个压入的 py 是投影向量的 y 分量。
+
+GPV[] 将投影矢量视为源自网格原点的单位矢量。 在下图中，A 点到 B 点的距离是一个单位。
+
+![F025_instr6](./images/F025_instr6.gif)
+
+### GT[] 大于
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x52</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>e2：堆栈元素 e1：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>b：布尔值（[0,1]范围内的uint32）</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>LT[ ], GTEQ[ ]</td>
+  </tr>
+</table>
+
+比较顶部两个堆栈元素的大小。
+从堆栈中弹出两个整数 e2 和 e1 并比较它们。 如果 e1 大于 e2，则表示 TRUE 的 1 被压入堆栈。 如果 e1 不大于 e1，则表示 FALSE 的零被放入堆栈。
+
+### GTEQ[] 大于或等于
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x53</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>e2：堆栈元素 e1：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>b：布尔值（[0,1]范围内的uint32）</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>LTEQ[ ], GT[ ]</td>
+  </tr>
+</table>
+
+比较顶部两个堆栈元素的大小。
+从堆栈中弹出两个整数 e2 和 e1 并比较它们。 如果 e1 大于或等于 e2，则表示 TRUE 的 1 被压入堆栈。 如果 e1 不大于或等于 e1，则表示 FALSE 的零被放入堆栈。
+
+### IDEF[] 指令定义
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x89</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>操作码 (Eint8)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>ENDF[ ]</td>
+  </tr>
+</table>
+
+开始指令的定义。 该指令由弹出的操作码标识。 IDEF[ ] 指令的目的是允许旧版本的缩放器使用使用在以后版本的 TrueType 解释器中定义的指令的字体。 引用未定义的操作码将无效。 IDEF[ ] 不适用于创建用户定义的指令。 FDEF[ ] 应该用于该目的。
+当在指令流中遇到 ENDF[ ] 时，以 IDEF[ ] 开始的指令定义终止。 不允许嵌套的 IDEF。 弹出的操作码的后续执行将定向到该指令定义的内容。 IDEF 应在字体程序中定义。 不建议在 CVT 程序中定义指令。
+
+### IF[] IF test
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x58</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>e：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>ELSE[ ], EIF[ ]</td>
+  </tr>
+</table>
+
+标记 if 语句的开始。
+从堆栈中弹出一个整数 e。 如果 e 为零 (FALSE)，指令指针将移动到指令流中关联的 ELSE 或 EIF[] 指令。 如果 e 为非零 (TRUE)，则执行指令流中的下一条指令。 执行将继续，直到遇到关联的 ELSE[] 指令或关联的 EIF[] 指令结束 IF[] 语句。 如果在 EIF[] 之前找到关联的 ELSE[] 语句，则指令指针将移至 EIF[] 语句。
+
+### INSTCTRL[ ] INSTRuction 执行控制
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x8E</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>s：选择器（int32） v：指令控制值（int32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>指令控制</td>
+  </tr>
+</table>
+
+设置指令控制状态变量，可以打开或关闭指令的执行并调节 CVT 程序中设置的参数的使用。
+
+该指令清除和设置各种控制标志。 选择器用于选择相关标志。 该值决定了该标志的新设置。
+
+在 1.0 版中，只使用了两个标志。
+
+标志 1 用于禁止网格拟合。 选择器值为 1。如果此标志设置为 TRUE (v=1)，则不会执行与字形相关的任何指令。 如果标志为 FALSE (v=0)，指令将被执行。 例如，要在旋转或拉伸字形时禁止网格调整，请在预编程中使用以下序列：
+
+<table>
+  <tr>
+    <td>PUSHB[000] 6</td>
+    <td>/* 要求 GETINFO 检查拉伸或旋转 */</td>
+  </tr>
+  <tr>
+    <td>GETINFO[ ]</td>
+    <td>/* 如果字形被拉伸或旋转，将推送 TRUE */</td>
+  </tr>
+  <tr>
+    <td>IF[]</td>
+    <td>/* 测试栈顶的值 */</td>
+  </tr>
+  <tr>
+    <td>PUSHB[000] 1</td>
+    <td>/* INSTCTRL 的值 */</td>
+  </tr>
+  <tr>
+    <td>PUSHB[000] 1</td>
+    <td>/* INSTCTRL 选择器 */</td>
+  </tr>
+  <tr>
+    <td>INSTCTRL[]</td>
+    <td>/* 基于选择器和值将关闭网格匹配 */</td>
+  </tr>
+  <tr>
+    <td colspan="2" >EIF[]</td>
+  </tr>
+</table>
+
+标志 2 用于确定在执行与字形相关的指令时应忽略 CVT 程序中设置的任何参数。 这些包括，例如，扫描类型和 CVT 切入的值。 当 flag2 设置为 TRUE 时，将使用这些参数的默认值，而不管预编程对这些值所做的任何更改。 当 flag2 设置为 FALSE 时，由 CVT 程序更改的参数值将用于字形指令。
+
+INSTCTRL[] 只能在 CVT 程序中执行。
+
+### IP[] Interpolate Point 插值点
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x39</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>p1, p2, , ploopvalue: 点数 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>带 rp1 的 zp0、带 rp2 的 zp1、带点 p 的 zp2、循环、自由向量、投影向量、双投影向量</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>IUP[ ]</td>
+  </tr>
+</table>
+
+对指定点的位置进行插值以保留它们与参考点 rp<sup>1</sup> 和 <sup>rp2</sup> 的原始关系。
+
+从堆栈中弹出点编号 p<sup>1</sup>、p<sup>2</sup>、...、ploopvalue。 移动每个点 pi，使其与 rp<sup>1</sup> 和 rp<sup>2</sup> 的关系与原始无指令轮廓中的关系相同。 即，以下关系成立：
+![function5-1](./images/function5-1.gif)
+
+如果 rp<sup>1</sup> 和 rp<sup>2</sup> 在投影向量上占据相同的位置，则该指令是非法的。
+
+更直观地说，IP[] 指令保留了一个点相对于两个参考点的相对关系。
+
+在下图中，点 p 是相对于参考点 rp<sup>1</sup> 和 rp<sup>2</sup> 进行插值的。 第一张图中，IP[]指令执行前的情况，p点到rp<sup>1</sup>原位置的距离为d1，p点到rp<sup>2</sup>原位置的距离为d2。 两个距离之比为 d1:d2。
+
+![F025_instr7](./images/F025_instr7.gif)
+
+IP[] 指令的效果如下图所示。 它沿着自由向量移动点 p，直到从 rp<sup>1</sup> 的当前位置到点 p 的距离 d3 与从点 p 到点 rp<sup>2</sup> 的当前位置的距离 d4 之比等于 d1:d2。 也就是说，点 p 沿着自由向量移动，直到 d1:d2 = d3:d4。当这些距离沿着投影向量测量时。
+
+![F025_instr8](./images/F025_instr8.gif)
+
+### ISECT[] 将点 p 移动到两条线的 InterSECTion
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x0F</td>
+  </tr>
+  <tr>
+    <td rowspan="10" >Pops</td>
+    <td>a0：A线的起点（uint32）</td>
+  </tr>
+  <tr>
+    <td>a1：A线的终点（uint32）</td>
+  </tr>
+  <tr>
+    <td>b0：B线的起点（uint32）</td>
+  </tr>
+  <tr>
+    <td>b1：B线的终点（uint32）</td>
+  </tr>
+  <tr>
+    <td>p：要移动的点 (uint32) 推动 -</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>zp<sup>2</sup> with point p, zp<sup>0</sup> with line A, zp<sup>1</sup> with line B</td>
+  </tr>
+</table>
+
+将指定的点移动到指定的两条线的交点。
+
+弹出 A 行的端点 a<sup>0</sup> 和 a<sup>1</sup>，然后是 B 行的端点 b<sup>0</sup> 和 b<sup>1</sup>，然后是点 p。 将点 p 置于直线 A 和 B 的交点处。点 a<sup>0</sup> 和 a<sup>1</sup> 定义直线 A。类似地，b<sup>0</sup> 和 b<sup>1</rpe> 定义直线 B。ISECT 忽略移动点 p 中的自由向量。
+
+在平行线 A 和 B 的退化情况下，该点位于中间。 那是。
+
+![function5-2](./images/function5-2.gif)
+
+在下图中，点 p 从其当前位置移动到 a<sup>0</sup>、a<sup>1</sup> 定义的直线与 b<sup>0</sup>、b<sup>1</sup> 定义的直线的交点。 请注意，点 p 不需要沿着自由向量移动，而只是简单地重新定位在交点处。
+
+![F025_instr9](./images/F025_instr9.gif)
