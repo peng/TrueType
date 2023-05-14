@@ -1500,3 +1500,53 @@ IP[] 指令的效果如下图所示。 它沿着自由向量移动点 p，直到
 在下图中，点 p 从其当前位置移动到 a<sup>0</sup>、a<sup>1</sup> 定义的直线与 b<sup>0</sup>、b<sup>1</sup> 定义的直线的交点。 请注意，点 p 不需要沿着自由向量移动，而只是简单地重新定位在交点处。
 
 ![F025_instr9](./images/F025_instr9.gif)
+
+### IUP[a] 通过轮廓插值未触及的点
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x30 - 0x31</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：在y方向插值</td>
+  </tr>
+  <tr>
+    <td>1：在x方向插值</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp<sup>2</sup></td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>IP[ ]</td>
+  </tr>
+</table>
+
+在 zp<sup>2</sup> 引用的区域中插入未接触点，以保留未接触点与该区域中其他点的原始关系。
+
+逐个轮廓考虑参考字形轮廓轮廓，移动按顺序落在一对触摸点之间的任何未触摸点。 然而，这样一个点如何移动取决于它的投影是否落在触摸点的投影之间。 也就是说，如果未触摸点的投影 x 坐标或 y 坐标（取决于插值是在 x 中还是在 y 中）最初位于触摸对的坐标之间，则该坐标将在新坐标之间线性插值 接触点。 否则，未触摸点将移动最近触摸点从其原始轮廓位置移动的量。 布尔值 a 决定插值是在 x 方向还是在 y 方向。 自由度和投影矢量的当前设置不相关。
+
+下面的一组图说明了这种区别。 第一张图显示了执行 IUP[] 指令之前的轮廓。 这里 p<sup>1</sup>、p<sup>2</sup>、p<sup>3</sup>、p<sup>4</sup> 和 p<sup>5</sup> 是轮廓上的连续点。 点 p<sup>2</sup>、p<sup>3</sup> 和 p<sup>4</sup> 都依次落在轮廓上的 p<sup>1</sup> 和 p<sup>5</sup> 之间。 假设点 p<sup>3</sup> 已被触及。
+
+![F025_instr10](./images/F025_instr10.gif)
+
+点 p<sub>4</sub> 的 x 坐标介于 p<sub>1</sub> 和 p<sub>5</sub> 之间，而点 p<sub>2</sub> 和 p<sub>3</sub> 则没有。 假设 p<sub>1</sub> 和 p<sub>5</sub> 已被先前的指令移动，并且点 p<sub>3</sub> 已被触摸但未从其原始位置移动。 作为 IUP[1] 的结果，发生了 x 方向的插值。 点 p<sub>4</sub> 将被线性插值。 点 p<sub>2</sub> 将移动最近触摸点移动的量。 点 p<sub>3</sub> 将不受影响。 （假设点 p<sub>2</sub> 和 p<sub>4</sub> 处于它们的原始位置。这不是严格必要的，因为 UTP[ ] 指令可以不触及已移动的点，因此受 IUP[ ] 指令的操作影响。）
+
+作为 IUP[1] 指令的结果，移动了两个点。 第一步是下图所示的转变。 点 p<sub>1</sub> 从其原始位置平行于 x 轴移动了 ds 个单位的距离。 点 p<sub>2</sub> 平行于 x 轴移动，直到它与原始位置的距离等于 ds。
+
+![F025_instr11](./images/F025_instr11.gif)
+
+第二步是下图所示的线性插值。 点 p4 沿指定轴移动到一个新位置，该位置保持与点 p<sub>1</sub> 和 p<sub>5</sub> 的相对距离。 插值后点p<sub>4</sub>到p<sub>1</sub>的原始距离(d<sub>1</sub>)与点p<sub>4</sub>到p<sub>5</sub>的原始距离(d<sub>2</sub>)之比等于点p<sub>4</sub>到p<sub>1</sub>(d<sub>3</sub>)的新距离与新点p<sub>4</sub>到p<sub>1</sub>的新距离(d<sub>3</sub>)之比。 点 p<sub>4</sub> 到 p<sub>4</sub> 的距离 (d<sub>4</sub>)。 即：d<sub>1</sub>:d<sub>2</sub> = d<sub>3</sub>:d<sub>4</sub>
+
+![F025_instr12](./images/F025_instr12.gif)
