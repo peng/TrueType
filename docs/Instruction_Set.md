@@ -1468,7 +1468,7 @@ IP[] 指令的效果如下图所示。 它沿着自由向量移动点 p，直到
     <td>0x0F</td>
   </tr>
   <tr>
-    <td rowspan="10" >Pops</td>
+    <td rowspan="5" >Pops</td>
     <td>a0：A线的起点（uint32）</td>
   </tr>
   <tr>
@@ -1550,3 +1550,140 @@ IP[] 指令的效果如下图所示。 它沿着自由向量移动点 p，直到
 第二步是下图所示的线性插值。 点 p4 沿指定轴移动到一个新位置，该位置保持与点 p<sub>1</sub> 和 p<sub>5</sub> 的相对距离。 插值后点p<sub>4</sub>到p<sub>1</sub>的原始距离(d<sub>1</sub>)与点p<sub>4</sub>到p<sub>5</sub>的原始距离(d<sub>2</sub>)之比等于点p<sub>4</sub>到p<sub>1</sub>(d<sub>3</sub>)的新距离与新点p<sub>4</sub>到p<sub>1</sub>的新距离(d<sub>3</sub>)之比。 点 p<sub>4</sub> 到 p<sub>4</sub> 的距离 (d<sub>4</sub>)。 即：d<sub>1</sub>:d<sub>2</sub> = d<sub>3</sub>:d<sub>4</sub>
 
 ![F025_instr12](./images/F025_instr12.gif)
+
+该指令对 zp2 指向的字形区域中的点进行操作。 该区域应始终为区域 1。将 IUP[ ] 应用于区域 0 是非法的。
+
+IUP[ ] 指令不接触它移动的点。 因此，受 IUP[ ] 指令影响的未触及点将受到后续 IUP[] 指令的影响，除非它们被中间指令触及。
+
+### JMPR[] JuMP 相对
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x1C</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>偏移量：要移动指令指针的字节数 (int32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>JROF[ ], JROT[ ]</td>
+  </tr>
+</table>
+
+将指令指针移动到由从堆栈中弹出的偏移量指定的新位置。
+从堆栈弹出一个整数偏移量。 带符号的偏移量被添加到指令指针，并在指令流中的新位置恢复执行。 跳转是相对于指令本身的位置。 也就是说，+1 的偏移量会导致紧跟在 JMPR[] 指令之后的指令被执行。
+
+### JROF[] 相对跳转设置为假
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x79</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>e：堆栈元素偏移量：要移动指令指针的字节数（int32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>JMPR[ ] JROT[ ]</td>
+  </tr>
+</table>
+
+如果测试的元素具有 FALSE（零）值，则将指令指针移动到由从堆栈弹出的偏移量指定的新位置。
+
+弹出一个布尔值 e 和一个偏移量。 在布尔值 e 为 FALSE 的情况下，带符号的偏移量将添加到指令指针，并在新位置恢复执行； 否则，不进行跳跃。 跳转是相对于指令本身的位置。
+
+### JROT[] 相对跳转设置为 True 
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x78</td>
+  </tr>
+  <tr>
+    <td rowspan="3" >Pops</td>
+    <td>e：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>偏移量：要移动的字节数</td>
+  </tr>
+  <tr>
+    <td>指令指针（int32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>JMPR[ ] JROF[ ]</td>
+  </tr>
+</table>
+
+如果测试的元素具有 TRUE 值，则将指令指针移动到由从堆栈弹出的偏移值指定的新位置。
+弹出一个布尔值 e 和一个偏移量。 如果布尔值为 TRUE（非零），则带符号的偏移量将添加到指令指针，并且将在获得的地址处恢复执行。 否则，不会进行跳跃。 跳转是相对于指令本身的位置。
+
+### LOOPCALL[] 循环调用函数
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x2A</td>
+  </tr>
+  <tr>
+    <td>Pops</td>
+    <td>f：0 到 (n-1) 范围内的函数编号整数，其中 n 在“maxp”表中指定
+count：调用函数的次数（有符号字）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>SLOOP[ ]</td>
+  </tr>
+</table>
+
+反复调用一个函数。
+
+弹出一个函数编号 f 和一个计数。 调用函数 f，计算次数。
+
+### LT[] 小于
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x50</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pops</td>
+    <td>e2：堆栈元素（StkElt）</td>
+  </tr>
+  <tr>
+    <td>e1：堆栈元素（StkElt）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>b：布尔值（[0,1]范围内的uint32）</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>GT[ ], LTEQ[ ]</td>
+  </tr>
+</table>
+
+比较堆栈顶部的两个数字。 如果两个数字中的第二个小于第一个，则测试成功。
+
+从堆栈中弹出两个整数 e2 和 e1，并比较它们。 如果 e1 小于 e2，则将表示 TRUE 的 1 压入堆栈。 如果 e1 不小于 e2，则将表示 FALSE 的 0 放入堆栈。
