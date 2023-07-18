@@ -2085,3 +2085,105 @@ MIRP[] 可用于在暮光区域创建点。
 在下图中，点 p 沿着自由向量移动，直到其到点 rp0 的距离等于参考 CVT 条目中找到的距离 d。
 
 ![F025_instr16](./images/F025_instr16.gif)
+
+### MPPEM[] Measure Pixels Per EM 测量每个 EM 的像素
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x4B</td>
+  </tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>ppem：每 em 的像素 (Euint16)</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>投影向量</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>MPS[ ]</td>
+  </tr>
+</table>
+
+将当前每 em 的像素数推入堆栈。 每em的像素是渲染设备的分辨率以及当前点大小和当前变换矩阵的函数。 该指令查看投影向量并返回该方向上每 em 的像素数。 该数字始终是整数。
+
+下图分别显示了 18 点 Times New Roman 字体在 72 dpi、144 dpi 和 300 dpi 下的放大倍数。 增加每 em 的像素数可以提高所获得图像的质量。 但是，它不会改变所获得图像的绝对大小。
+
+![F025_instr17](./images/F025_instr17.gif)
+
+### MPS[] Measure Point Size 测量点大小
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x4C</td>
+  </tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>pointSize: 当前点大小(Euint16)</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>MPPEM[ ]</td>
+  </tr>
+</table>
+
+将当前点值推入堆栈。
+
+测量点大小可用于获得一个值，该值用作选择是否分支到通过指令流的替代路径的基础。 它使得可以以不同的方式处理低于或高于某个阈值的点大小。
+
+下图显示了 72 dpi 下 12 点、24 点和 48 点 Times New Roman Q 的放大倍数。 请注意，增加字形的点大小会增加其绝对大小。 在低分辨率设备（例如屏幕）上，可以以更高的点大小捕获更多细节。
+
+![F025_instr18](./images/F025_instr18.gif)
+
+### MSIRP[a] Move Stack Indirect Relative Point 移动堆栈间接相对点
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x3A - 0x3B</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：不改变rp0</td>
+  </tr>
+  <tr>
+    <td>1：设置rp0为点号p</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出</td>
+    <td>d: 距离 (F26Dot6) p: 点编号 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Uses 使用</td>
+    <td>zp1 与点 p 和 zp0 与 rp0、自由向量、投影向量</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>MIRP[ ]</td>
+  </tr>
+</table>
+
+通过设置从堆栈中弹出的值的距离，可以协调点和参考点之间的距离。
+
+弹出距离 d 和点编号 p，并使点 p 与 rp0 当前位置之间的距离等于 d。 距离 d 以像素坐标表示。
+
+MSIRP[ ] 与 MIRP[ ] 指令非常相似，只是从堆栈而不是 CVT 中获取距离。 由于MSIRP[]不使用CVT，因此控制值切入不是MIRP[]中的因素。 由于 MSIRP[ ] 不进行舍入，因此其效果不依赖于舍入状态。
+
+MSIRP[] 可用于在暮光区域创建点。
+
+在下图中，点 p 沿着自由向量移动，直到与 rp0 的距离为 d。
+
+![F025_instr19](./images/F025_instr19.gif)
