@@ -2187,3 +2187,123 @@ MSIRP[] 可用于在暮光区域创建点。
 在下图中，点 p 沿着自由向量移动，直到与 rp0 的距离为 d。
 
 ![F025_instr19](./images/F025_instr19.gif)
+
+### MUL[] MULtiply 乘法
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x63</td>
+  </tr>
+    <td rowspan="2">Pops 弹出</td>
+    <td>n2：乘数（F26Dot6</td>
+  </tr>
+  </tr>
+    <td>n1：被乘数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>(n2 * n1)/64：乘积 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>DIV[ ]</td>
+  </tr>
+</table>
+
+将堆栈顶部的两个数字相乘。 从堆栈中弹出两个 26.6 数字 n2 和 n1，并将两个元素的乘积压入堆栈。 52.12 结果右移 6 位，并丢弃高 26 位，得到 26.6 结果。
+
+### NEG[] NEGate 否定门
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x65</td>
+  </tr>
+    <td>Pops 弹出</td>
+    <td>n：像素坐标（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-n：n1 的否定 (F26Dot6)</td>
+  </tr>
+</table>
+
+对堆栈顶部的数字求反。
+从堆栈中弹出一个数字 n，并将 n 的负值压入堆栈。
+
+### NEQ[] Not EQual 不等于
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x63</td>
+  </tr>
+    <td rowspan="2">Pops 弹出</td>
+    <td>n2：乘数（F26Dot6</td>
+  </tr>
+  </tr>
+    <td>n1：被乘数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>(n2 * n1)/64：乘积 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>DIV[ ]</td>
+  </tr>
+</table>
+
+判断栈顶两个元素是否不相等。
+从堆栈中弹出两个数字 e2 和 e1 并比较它们。 如果它们不同，则将表示 TRUE 的 1 压入堆栈。 如果它们相等，则为零，表示 FALSE 被压入堆栈。
+
+### NOT[] logical NOT 逻辑非
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x5C</td>
+  </tr>
+    <td>Pops 弹出</td>
+    <td>e：栈元素</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>(not e)：e 的逻辑非 (uint32)</td>
+  </tr>
+</table>
+
+对堆栈顶部的数字取逻辑非。
+
+从堆栈中弹出数字 e，并返回对 e 执行逻辑 NOT 运算的结果。 如果 e 为零，则将 1 压入堆栈；如果 e 非零，则将 0 压入堆栈。
+
+### NPUSHB[] PUSH N Bytes 压入 N 个字节
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x40</td>
+  </tr>
+    <td rowspan="2">From IS</td>
+    <td>n：要推送的字节数（1 个字节解释为整数）</td>
+  </tr>
+  </tr>
+    <td>b1, b2,...bn：n 个字节的序列</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>b1、b2、...bn：n 个字节的序列，每个字节扩展为 32 位 (uint32)</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>NPUSHW[ ], PUSHB[ ], PUSHW[]</td>
+  </tr>
+</table>
+
+从指令流中取出 n 个字节并将它们压入堆栈。
+
+查看指令流中的下一个字节 n，并从指令流中取出 n 个无符号字节，其中 n 是 (0 255) 范围内的无符号整数，并将它们推入堆栈。 要压入的字节数 n 不会压入堆栈。
+
+每个字节值在压入堆栈之前都会无符号扩展为 32 位。
+
