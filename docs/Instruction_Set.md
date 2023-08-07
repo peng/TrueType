@@ -2307,3 +2307,115 @@ MSIRP[] 可用于在暮光区域创建点。
 
 每个字节值在压入堆栈之前都会无符号扩展为 32 位。
 
+### NPUSHW[] PUSH N Words 压入n个字
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x41</td>
+  </tr>
+    <td rowspan="2">From IS</td>
+    <td>n：要压入的字数（1 个字节代表整数）</td>
+  </tr>
+  </tr>
+    <td>w1, w2,...wn：由字节对组成的 n 个字序列，高字节首先出现</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>w1、w2、...wn：n 个字的序列，每个字扩展为 32 位 (int32)</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>NPUSHW[ ], PUSHB[ ]</td>
+  </tr>
+</table>
+
+从指令流中取出 n 个字并将它们压入堆栈。
+
+查看下一个指令流字节 n 并从指令流中取出 n 个 16 位有符号字，其中 n 是 (0 255) 范围内的无符号整数，并将它们压入堆栈。 每个字在放入堆栈之前都会被符号扩展为 32 位。值 n 不会被压入堆栈。
+
+### NROUND[ab] No ROUNDing of value 不对值进行舍入
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x6C - 0x6F</td>
+  </tr>
+  <tr>
+    <td>ab</td>
+    <td>引擎特性补偿的距离型</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>n1：像素坐标（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>n2：像素坐标（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>ROUND[ ]</td>
+  </tr>
+</table>
+
+更改堆栈顶部数字的值以补偿引擎特性。
+
+从堆栈中弹出一个值 n1，并可能增加或减少其值以补偿使用布尔设置 ab 建立的引擎特性。 结果 n2 被压入堆栈。
+
+NROUND[ab] 因其与 ROUND[ab] 的关系而得名。 它执行与 ROUND[ab] 相同的操作，只是它不对补偿引擎特性后获得的结果进行舍入。
+
+### ODD[] ODD
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x6C - 0x6F</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>n1：像素坐标（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>n2：像素坐标（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>四舍五入状态</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>ROUND[ ]</td>
+  </tr>
+</table>
+
+测试栈顶的数字是否为奇数。
+
+从堆栈中弹出一个数字 e1，并在测试之前根据舍入状态的当前设置对其进行舍入。 然后该数字被截断为整数。 如果截断的数字是奇数，则将 1（表示 TRUE）压入堆栈；如果是偶数，则将 0（表示 FALSE）压入堆栈。
+
+### OR[] logical OR
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x5B</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>e2：堆栈元素 e1：堆栈元素</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>(e1 或 e2)：e1 和 e2 的逻辑或 (uint32)</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>AND[ ]</td>
+  </tr>
+</table>
+
+取堆栈顶部两个数字的逻辑或。
+
+将两个数字 e2 和 e1 从堆栈中弹出，并将两个元素之间的逻辑或运算的结果压入堆栈。 如果两个元素都为 FALSE（值为零），则压入零。 如果两个元素之一都为 TRUE（具有非零值），则压入 1。
+
