@@ -2334,7 +2334,7 @@ MSIRP[] 可用于在暮光区域创建点。
 
 查看下一个指令流字节 n 并从指令流中取出 n 个 16 位有符号字，其中 n 是 (0 255) 范围内的无符号整数，并将它们压入堆栈。 每个字在放入堆栈之前都会被符号扩展为 32 位。值 n 不会被压入堆栈。
 
-### NROUND[ab] No ROUNDing of value 不对值进行舍入
+### NROUND[ab] No ROUNDing of value--不对值进行舍入
 
 <table>
   <tr>
@@ -2394,7 +2394,7 @@ NROUND[ab] 因其与 ROUND[ab] 的关系而得名。 它执行与 ROUND[ab] 相�
 
 从堆栈中弹出一个数字 e1，并在测试之前根据舍入状态的当前设置对其进行舍入。 然后该数字被截断为整数。 如果截断的数字是奇数，则将 1（表示 TRUE）压入堆栈；如果是偶数，则将 0（表示 FALSE）压入堆栈。
 
-### OR[] logical OR
+### OR[] logical OR--逻辑或
 
 <table>
   <tr>
@@ -2419,3 +2419,171 @@ NROUND[ab] 因其与 ROUND[ab] 的关系而得名。 它执行与 ROUND[ab] 相�
 
 将两个数字 e2 和 e1 从堆栈中弹出，并将两个元素之间的逻辑或运算的结果压入堆栈。 如果两个元素都为 FALSE（值为零），则压入零。 如果两个元素之一都为 TRUE（具有非零值），则压入 1。
 
+### POP[] POP top stack element--POP 栈顶元素
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x21</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>e：栈元素</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+</table>
+
+从堆栈中弹出顶部元素。
+
+### PUSHB[abc] PUSH Bytes--PUSH 字节
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0xB0 - 0xB7</td>
+  </tr>
+  <tr>
+    <td>abc</td>
+    <td>要压入的字节数 - 1</td>
+  </tr>
+  <tr>
+    <td>From IS</td>
+    <td>b0、b1、bn：n + 1 个字节的序列，其中 n = 4a+2b+c = abc2</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>b0、b1、...、bn：n + 1 个字节的序列，每个字节扩展为 32 位 (uint32)</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>NPUSHB[ ], PUSHW[ ], NPUSHB[]</td>
+  </tr>
+</table>
+
+从指令流中获取指定数量的字节并将它们推送到解释器堆栈上。
+
+变量a、b和c是表示从000到111（二进制为0-7）的数字的二进制数字。 值 1 会自动添加到 abc 数字中，以获得实际压入的字节数。
+
+当字节值被压入堆栈时，它们会用零进行无符号扩展以形成 32 位数字。
+
+### PUSHW[abc] PUSH Words--压入字
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0xB8 - 0xBF</td>
+  </tr>
+  <tr>
+    <td>abc</td>
+    <td>要压入的字节数 - 1</td>
+  </tr>
+  <tr>
+    <td>From IS</td>
+    <td>w0,w1, wn：由字节对组成的 n+1 个字序列，高字节首先出现</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>w0,w1,...wn：n+1 个字的序列，每个字填充为 32 位 (uint32)</td>
+  </tr>
+  <tr>
+    <td>相关指令</td>
+    <td>NPUSHW[ ], PUSHB[ ]</td>
+  </tr>
+</table>
+
+从指令流中获取指定数量的字并将它们推送到解释器堆栈上。
+
+变量a、b和c是表示从000到111（0-7二进制）的数字的二进制数字。 值 1 会自动添加到 abc 数字中，以获得实际推送的字节数。
+
+当字值被压入堆栈时，它们被符号扩展为 32 位。
+
+### RCVT[] Read Control Value Table entry--读取控制值表条目
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x45</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>位置：CVT 条目号 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>值：CVT值（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>WCVTP[ ], WCVTP[ ]</td>
+  </tr>
+</table>
+
+读取控制值表条目并将其值放入堆栈中。
+
+从堆栈中弹出 CVT 位置，并将在指定位置找到的值压入堆栈。
+
+### RDTG[] Round Down To Grid--RDTG[] 向下舍入到网格
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x7D</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>Sets</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MDAP[], MDRP[], MIAP[], MIRP[], ROUND[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>RUTG[ ], RTG[], RTHG[], RTDG[], ROFF[]</td>
+  </tr>
+</table>
+
+将四舍五入状态变量设置为向下到网格。 在这种状态下，距离首先对引擎特性进行补偿，然后截断为整数。 如果补偿和舍入的结果是改变距离的符号，则距离设置为0。
+
+### ROFF[] Round OFF--四舍五入关闭
+
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x7A</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>舍入状态</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MDAP[], MDRP[], MIAP[], MIRP[], ROUND[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>RDTG[], RUTG[ ], RTG[], RTHG[], RTDG[]</td>
+  </tr>
+</table>
+
+将舍入状态变量设置为舍入。 在这种状态下，会发生引擎补偿，但不会发生舍入。 如果引擎补偿会改变距离的符号，则该距离将设置为 0。
