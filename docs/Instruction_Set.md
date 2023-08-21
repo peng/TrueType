@@ -2655,7 +2655,209 @@ NROUND[ab] 因其与 ROUND[ab] 的关系而得名。 它执行与 ROUND[ab] 相�
 
 弹出一个 26.6 的定点数 n1，并且根据布尔 ab 建立的发动机特性，结果按设定量增加或减少。然后根据当前舍入状态对获得的数字进行四舍五入，并作为 n2 推回堆栈。
 
-警告
+**警告**
 
 在 TrueType 中，舍入在零附近对称，包括对打印机网点大小的补偿。请参阅第 2-65 页的“使用颜色进行引擎补偿”。
+
+### RS[] Read Store  读取缓存
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x43</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>n：存储区位置（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>v：存储区域值（uint32）</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>WS[ ]</td>
+  </tr>
+</table>
+
+读取指定存储区域位置中的值并将该值压入堆栈。
+
+从堆栈中弹出存储区域位置 n，并从该位置读取 32 位值 v。 读取的值被压入堆栈。 可用存储位置的数量在字体文件的“maxp”表中指定。
+
+### RTDG[] Round To Double Grid 舍入为双网格
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x3D</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>舍入状态</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MDAP[], MDRP[], MIAP[], MIRP[], ROUND[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>RDTG[], ROFF[], RUTG[ ], RTG[], RTHG[]</td>
+  </tr>
+</table>
+
+将圆形状态变量设置为双网格。 在这种状态下，距离会根据引擎特性进行补偿，然后四舍五入为整数或半整数（以最接近的为准）。
+
+**警告**
+
+在 TrueType 中，舍入关于零对称，并且包括对打印机点大小的补偿。 请参阅第 2-65 页上的“使用颜色进行引擎补偿”。
+
+### RTG[] 舍入到网格
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x18</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>舍入状态</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MDAP[], MDRP[], MIAP[], MIRP[], ROUND[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>RDTG[], ROFF[], RUTG[ ], RTDG[], RTHG[]</td>
+  </tr>
+</table>
+
+将舍入状态变量设置为网格。 在这种状态下，距离会根据引擎特性进行补偿，并四舍五入到最接近的整数。
+
+**警告**
+
+在 TrueType 中，舍入关于零对称，并且包括对打印机点大小的补偿。 请参阅第 2-65 页上的“使用颜色进行引擎补偿”。
+
+### RTHG[] Round To Half Grid 舍入到半网格
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x19</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>舍入状态</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MDAP[], MDRP[], MIAP[], MIRP[], ROUND[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>RDTG[], ROFF[], RUTG[ ], RTDG[], RTG[]</td>
+  </tr>
+</table>
+
+将舍入状态变量设置为半网格。 在这种状态下，距离会根据引擎特性进行补偿，并四舍五入到最接近的半整数。 如果这些操作改变了距离的符号，则根据距离的原始符号将距离设置为+1/2或-1/2。
+
+**警告**
+
+在 TrueType 中，舍入关于零对称，并且包括对打印机点大小的补偿。 请参阅第 2-65 页上的“使用颜色进行引擎补偿”。
+
+### RUTG[] Round Up To Grid 向上舍入到网格
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x7C</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>舍入状态</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MDAP[], MDRP[], MIAP[], MIRP[], ROUND[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>RDTG[], ROFF[], RTDG[], RTG[], RTHG[]</td>
+  </tr>
+</table>
+
+将舍入状态变量向上舍入到网格。 在这种状态下，在补偿引擎特性之后，距离被四舍五入到最接近的整数。 如果补偿和舍入会改变距离的符号，则距离将设置为 0。
+
+**警告**
+
+在 TrueType 中，舍入关于零对称，并且包括对打印机点大小的补偿。 请参阅第 2-65 页上的“使用颜色进行引擎补偿”。
+
+### S45ROUND[] Super ROUND 45 degrees 超级圆形45度
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x77</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>n：uint32分解得到周期、相位、阈值（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>舍入状态</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MDAP[], MDRP[], MIAP[], MIRP[], ROUND[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SROUND[ ]</td>
+  </tr>
+</table>
+
+S45ROUND[ ] 与 SROUND[ ] 类似。 不同之处在于它使用像素的 gridPeriod 而不是 1 个像素。 S45ROUND[ ] 可用于精细控制与 x 轴成 45 度角测量的距离的舍入。
+
+**警告**
+
+在 TrueType 中，舍入关于零对称，并且包括对打印机点大小的补偿。 请参阅第 2-65 页上的“使用颜色进行引擎补偿”。
+
+从堆栈中弹出一个数字 n 并分解该数字以获得周期、相位和用于设置图形状态变量回合状态值的阈值。 仅使用参数 n 的低 8 位来获取这些值。 该字节的编码如下表 2 所示。
 
