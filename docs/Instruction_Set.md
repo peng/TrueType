@@ -3208,3 +3208,105 @@ ppem 的当前设置是否小于指定阈值？
 
 ![F025_instr20](./images/F025_instr20.gif)
 
+### SCVTCI[] 设置控制值表切入
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x1D</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>n：切入值（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>控制值切入</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>MIAP, MIRP</td>
+  </tr>
+</table>
+
+为控制值表切入建立一个新值。
+
+从堆栈中弹出一个值 n，并将控制值切入设置为 n。 增加切入值将增加使用 CVT 值而不是原始轮廓值的尺寸范围。
+
+### SDB[] 设置图形状态下的Delta Base
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x5E</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>n： Delta 基数的值 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>delta 基础</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>DELTAP1[], DELTAP2[], DELTAP3[], DELTAC1[], DELTAC2[], DELTAC3[]</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>SDS[ ]</td>
+  </tr>
+</table>
+
+为 delta 基状态变量建立一个新值，从而更改 DELTA[] 指令影响的值范围。
+
+弹出一个数字 n，并将 delta 基数设置为值 n。 Delta 基数的默认值为 9。
+
+### SDPVTL[a] 将双投影矢量设置为线
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x86 - 0x87</td>
+  </tr>
+  <tr>
+    <td>a</td>
+    <td>0：矢量与直线平行</td>
+  </tr>
+  <tr>
+    <td>1：向量垂直于线</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>p2：点号（uint32）</td>
+  </tr>
+  <tr>
+    <td>p1：点号（uint32）</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>双投影向量、投影向量、zp2 与 p2、zp1 与 p1</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SPVTL[ ]</td>
+  </tr>
+</table>
+
+根据两点的原始位置设置第二个投影向量。 新向量将指向与 p2 到 p1 定义的线平行的方向。 投影矢量也设置在与从 p2 到 p1 的线平行的方向上，但它是使用这些点的当前位置设置的。
+
+从堆栈中弹出两个点数，并使用它们来指定定义第二个双投影向量的线。 在执行任何指令之前，该双投影向量使用原始轮廓的坐标。 它仅与 IP[]、GC[]、MD[]、MDRP[] 和 MIRP[] 指令一起使用。 在这些指令中，使用双投影向量代替投影向量。 这将持续下去，直到某些指令再次设置投影向量。
