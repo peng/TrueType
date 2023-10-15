@@ -3261,7 +3261,7 @@ ppem 的当前设置是否小于指定阈值？
     <td>DELTAP1[], DELTAP2[], DELTAP3[], DELTAC1[], DELTAC2[], DELTAC3[]</td>
   </tr>
   <tr>
-    <td>影响</td>
+    <td>相关说明</td>
     <td>SDS[ ]</td>
   </tr>
 </table>
@@ -3310,3 +3310,332 @@ ppem 的当前设置是否小于指定阈值？
 根据两点的原始位置设置第二个投影向量。 新向量将指向与 p2 到 p1 定义的线平行的方向。 投影矢量也设置在与从 p2 到 p1 的线平行的方向上，但它是使用这些点的当前位置设置的。
 
 从堆栈中弹出两个点数，并使用它们来指定定义第二个双投影向量的线。 在执行任何指令之前，该双投影向量使用原始轮廓的坐标。 它仅与 IP[]、GC[]、MD[]、MDRP[] 和 MIRP[] 指令一起使用。 在这些指令中，使用双投影向量代替投影向量。 这将持续下去，直到某些指令再次设置投影向量。
+
+### SDS[] 设置图形状态下的Delta Shift
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x5F</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>n：增量偏移值 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>增量偏移</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>DELTAP1[], DELTAP2[], DELTAP3[], DELTAC1[], DELTAC2[], DELTAC3[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SDB[ ]</td>
+  </tr>
+</table>
+
+为增量移位状态变量建立一个新值，从而更改 DELTA[] 指令的步长。
+
+从堆栈中弹出一个值 n 并将 delta shift 设置为 n。 增量偏移的默认值为 3。
+
+### SFVFS[] 从堆栈中设置自由向量
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x0B</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>y：自由向量的 y 分量 (F2Dot14)</td>
+  </tr>
+  <tr>
+    <td>x：自由向量的 x 分量 (F2Dot14)</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>自由向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SFVTL[ ], SFVTPV[ ], SFVTCA[ ]</td>
+  </tr>
+</table>
+
+使用从堆栈中获取的值更改自由向量的方向，从而更改点可以移动的方向。
+
+使用从堆栈中获取的值 x 和 y 设置自由向量的方向。 设置向量，使其在 x 和 y 轴上的投影为 x 和 y，它们被指定为有符号（二进制补码）定点 (2.14) 数。 值 (x2 + y2) 必须等于 1 (0x4000)。
+
+### SFVTCA[a] 将自由向量设置为坐标轴
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x04 - 0x05</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：将自由向量设置为y轴</td>
+  </tr>
+  <tr>
+    <td>1：设置自由向量为x轴</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>自由向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SFVFS[ ], SFVTL[ ], SFVTPV[ ]</td>
+  </tr>
+</table>
+
+根据标志 a 的值将自由向量设置为坐标轴之一。
+
+### SFVTL[a] 将自由向量设置为线
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x08 - 0x09</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：设置自由向量平行于点p1和p2定义的线段</td>
+  </tr>
+  <tr>
+    <td>1：设置垂直于点p1和p2定义的线段的自由向量； 矢量逆时针旋转 90 度</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pops 压入栈</td>
+    <td>p2：点号（uint32）</td>
+  </tr>
+  <tr>
+    <td>p1：点号（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>自由向量</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp1 指向包含点 p1 的区域 zp2 指向包含点 p2 的区域</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SFVFS[ ], SFVTL[ ], SFVTPV[ ]</td>
+  </tr>
+</table>
+
+使用从堆栈中获取端点的线指定的方向更改自由向量的值。 效果是将点移动的方向更改为与该线平行。 选择点的顺序很重要。 颠倒顺序将颠倒自由向量的方向。
+
+从堆栈中弹出两个点号 p2 和 p1，并将自由向量设置为与点 p1 和 p2 定义并从 p2 指向 p1 的线段平行或垂直的单位向量。
+
+如果布尔值 a 的值为 0，则自由向量平行于从 p2 到 p1 的直线。
+
+如果布尔值 a 的值为 1，则自由向量垂直于从 p2 到 p1 的直线。 更准确地，通过逆时针旋转平行于线90的矢量来获得自由矢量。
+
+### SFVTPV[] 将自由向量设置为投影向量
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x0E</td>
+  </tr>
+  <tr>
+    <td>Pops 弹出</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>自由向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SFVFS[ ], SFVTL[ ], SFVTCA[ ]</td>
+  </tr>
+</table>
+
+将自由向量设置为与投影向量相同。 这意味着移动和测量将沿同一方向。
+
+### SHC[a] 使用参考点移动轮廓
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x34 - 0x35</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：在zp1指向的区域中使用rp2</td>
+  </tr>
+  <tr>
+    <td>1：在zp0指向的区域中使用rp1</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>c：要移动的轮廓（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0 与 rp1 或 zp1 与 rp2 取决于标志 zp2 与轮廓 c 自由向量、投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SHP[ ], SHZ[ ]</td>
+  </tr>
+</table>
+
+将轮廓移动参考点移动的量。
+
+弹出数字 c，并将轮廓 c 上的每个点移动与参考点移动相同的量。 每个点沿着自由向量移动，使得该点的新位置和该点的旧位置之间的距离与参考点的当前位置和参考点的原始位置之间的距离相同。 距离是沿着投影矢量测量的。 如果参考点是定义轮廓的点之一，则该指令不会移动参考点。
+
+该指令与SHP[]类似，但轮廓上的每个点都会移位。
+
+在下图中，由 、 和 点形成的三角形轮廓移动了参考点 rp 从其原始位置移动的量 d。 新轮廓 p1、p2、p3 保留原始形状，但已在空间中沿自由向量平移量 d。
+
+![F025_instr21](./images/F025_instr21.gif)
+
+### SHP[a] 使用参考点的移位点
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x32 - 0x33</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：在zp1指向的区域中使用rp2</td>
+  </tr>
+  <tr>
+    <td>1：在zp0指向的区域中使用rp1</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>p1, p2, , ploopvalue：要移动的点 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0 与 rp1 或 zp1 与 rp2 取决于标志 zp2 与点 p 循环、自由向量、投影向量</td>
+  </tr>
+</table>
+
+移动由参考点已移动量指定的点。
+
+弹出点编号 p1、p2、...、ploopvalue，并将这些点移动与参考点移动相同的量。 每个点pi沿着自由向量移动，使得点pi的新位置与点pi的当前位置之间的距离与参考点的当前位置与参考点的原始位置之间的距离相同。
+
+在下图中，参考点的当前位置与其原始位置之间的距离为 d。 直线 LL' 是在距点 A' 距离 d 处垂直于投影矢量绘制的。 点 p 沿着自由向量移动到向量与线 LL' 相交的点。 从点 A' 到 B' 的距离 d 现在与从 A 到 B 的距离相同。
+
+![F025_instr22](./images/F025_instr22.gif)
+
+### SHPIX[] 将点移位 PIXel 量
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x38</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>d：偏移幅度 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>p1, p2, , ploopvalue: point to be shifted (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp2，循环，自由向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SHP[ ]</td>
+  </tr>
+</table>
+
+将指定点移动指定量。
+
+弹出点数 p1、p2、...、ploopvalue 和一个金额。 将每个点 pi 移动量 d。
+
+SHPIX[ ] 的独特之处在于仅依赖于自由向量的方向，它不使用投影向量。 测量是在自由矢量的方向上进行的。
+
+在下面的示例中，点 p 沿着自由向量移动 d 像素。
+
+![F025_instr23](./images/F025_instr23.gif)
+
+### SHZ[a] 使用参考点的移动区域
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x36 - 0x37</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：参考点rp2在zp1指向的区域内</td>
+  </tr>
+  <tr>
+    <td>1：参考点rp1在zp0指向的区域内</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>e：要移动的区域（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0 与 rp1 或 zp1 与 rp2 取决于标志自由向量、投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SHP[ ], SHC[ ]</td>
+  </tr>
+</table>
+
+将指定区域中的所有点移动参考点移动的量。
+
+弹出区域编号 e，并将指定区域（Z1 或 Z0）中的点移动与参考点移动量相同的量。 区域中的点将被移动，使得移动点的新位置与其旧位置之间的距离与参考点的当前位置与参考点的原始位置之间的距离相同。
+
+SHZ[a] 使用 zp0 和 rp1 或 zp1 和 rp2。 该指令与 SHC[ ] 类似，但区域中的所有点都会移位，而不仅仅是单个轮廓上的点。
+
