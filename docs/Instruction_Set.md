@@ -3639,3 +3639,35 @@ SHPIX[ ] 的独特之处在于仅依赖于自由向量的方向，它不使用�
 
 SHZ[a] 使用 zp0 和 rp1 或 zp1 和 rp2。 该指令与 SHC[ ] 类似，但区域中的所有点都会移位，而不仅仅是单个轮廓上的点。
 
+### SLOOP[] 设置LOOP变量
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x17</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>n：循环图形状态变量的值（整数）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>循环</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>ALIGNRP[], FLIPPT[], IP[], SHP[], SHPIX[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>LOOPCALL[ ]</td>
+  </tr>
+</table>
+
+更改循环变量的值，从而更改受影响的指令在调用时执行的次数。
+
+从堆栈中弹出一个值 n，并将循环变量 count 设置为该值。 循环变量与 SHP[a]、SHPIX[a]、IP[ ] 和 ALIGNRP[] 一起使用。 值n表示指令要重复的次数。 指令执行所需次数后，循环变量将重置为其默认值 1。将循环变量设置为零是错误的。
