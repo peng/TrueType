@@ -1938,7 +1938,7 @@ MDRP[]指令也可以设置为使用最小距离值。 最小距离设置两点�
 
 上面的布尔值控制舍入和控制值切入的使用。 要让该布尔值仅指定 MIAP[] 指令是否应查看控制值切入值，请使用 ROFF[] 指令关闭舍入。
 
-该指令可用于“创建”暮光区点。 这是通过将 zp0 设置为区域 0 并将最初位于原点的指定点移动到所需位置来完成的。
+该指令可用于“创建”阴影区点。 这是通过将 zp0 设置为区域 0 并将最初位于原点的指定点移动到所需位置来完成的。
 
 在下图中，点 p 沿着自由向量移动，直到它占据沿着投影向量投影到 c 个单位的位置。
 
@@ -2080,7 +2080,7 @@ MIRP[] 指令可以根据许多条件保留两点之间的距离。 根据布尔
 
 上面的 c 布尔值控制舍入和控制值表条目的使用。 如果您希望此布尔值的含义仅指定 MIRP[] 指令是否应查看控制值切入，请使用 ROFF[] 指令关闭舍入。 通过这种方式，可以指定舍入已关闭，但切入仍然适用。
 
-MIRP[] 可用于在暮光区域创建点。
+MIRP[] 可用于在阴影区域创建点。
 
 在下图中，点 p 沿着自由向量移动，直到其到点 rp0 的距离等于参考 CVT 条目中找到的距离 d。
 
@@ -2182,7 +2182,7 @@ MIRP[] 可用于在暮光区域创建点。
 
 MSIRP[ ] 与 MIRP[ ] 指令非常相似，只是从堆栈而不是 CVT 中获取距离。 由于MSIRP[]不使用CVT，因此控制值切入不是MIRP[]中的因素。 由于 MSIRP[ ] 不进行舍入，因此其效果不依赖于舍入状态。
 
-MSIRP[] 可用于在暮光区域创建点。
+MSIRP[] 可用于在阴影区域创建点。
 
 在下图中，点 p 沿着自由向量移动，直到与 rp0 的距离为 d。
 
@@ -2865,9 +2865,9 @@ S45ROUND[ ] 与 SROUND[ ] 类似。 不同之处在于它使用像素的 gridPer
 
 <table>
   <tr>
-    <th colspan="2" >时期</th>
-    <th colspan="2" >短语</th>
-    <th colspan="3" >临界点</th>
+    <th colspan="2" >周期</th>
+    <th colspan="2" >相位</th>
+    <th colspan="3" >阈值</th>
   </tr>
   <tr>
     <td>7</td>
@@ -3202,7 +3202,7 @@ ppem 的当前设置是否小于指定阈值？
 
 弹出坐标值 c 和点编号 p，并将点 p 从其当前位置沿自由向量移动，以便其沿投影向量的分量成为从堆栈中弹出的值。
 
-该指令可用于在暮光区域“创建”点。
+该指令可用于在阴影区域“创建”点。
 
 在下图中，点 p 沿着自由向量移动，直到其在投影向量上的坐标值为 c。
 
@@ -3671,3 +3671,810 @@ SHZ[a] 使用 zp0 和 rp1 或 zp1 和 rp2。 该指令与 SHC[ ] 类似，但区
 更改循环变量的值，从而更改受影响的指令在调用时执行的次数。
 
 从堆栈中弹出一个值 n，并将循环变量 count 设置为该值。 循环变量与 SHP[a]、SHPIX[a]、IP[ ] 和 ALIGNRP[] 一起使用。 值n表示指令要重复的次数。 指令执行所需次数后，循环变量将重置为其默认值 1。将循环变量设置为零是错误的。
+
+### SMD[] Set Minimum Distance 设置最小距离
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x1A</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>distance：minimum_distance 的值 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>最小距离</td>
+  </tr>
+</table>
+
+为最小距离建立一个新值，即距离将舍入到的最小可能值。 该变量的适当设置可以防止距离四舍五入到零并因此在网格拟合发生时消失。
+
+从堆栈中弹出 26.6 值并将最小距离变量设置为该值。
+
+### SPVFS[] Set Projection Vector From Stack 设置堆栈中的投影向量
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x0A</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>y：投影矢量 (F2Dot14) 的 y 分量 x：投影矢量 (F2Dot14) 的 x 分量</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SPVTL[ ], SPVTCA[ ]</td>
+  </tr>
+</table>
+
+使用从堆栈中获取的值建立投影向量的新值。
+
+弹出两个数字 y 和 x，表示投影向量的 y 和 x 分量。 值 x 和 y 是扩展为 32 位的 2.14 数字。 使用从堆栈中获取的值 x 和 y 设置投影向量的方向，以便其在 x 轴和 y 轴上的投影为 x 和 y，它们被指定为有符号（二进制补码）定点 (2.14) 数字 。 值 (x2 + y2) 必须等于 1 (0x4000)。
+
+### SPVTCA[a] Set Projection Vector To Coordinate Axis 将投影矢量设置为坐标轴
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x02-0x03</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：设置投影向量到y轴</td>
+  </tr>
+  <tr>
+    <td>1：设置投影向量到x轴</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SPVTL[ ], SPVFS[ ]</td>
+  </tr>
+</table>
+
+根据标志 a 的值将投影矢量设置为坐标轴之一。
+
+### SPVTL[a] Set Projection Vector To Line 将投影矢量设置为线
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x06-0x07</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：设置投影向量平行于p2到p1的线段</td>
+  </tr>
+  <tr>
+    <td>1：设置投影向量垂直于p2到p1的线段； 矢量逆时针旋转 90 度</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pops 压入栈</td>
+    <td>p2：点号（uint32）</td>
+  </tr>
+  <tr>
+    <td>p1：点号（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp1 指向的区域中的点 p1 zp2 指向的区域中的点 p2</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>投影向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SPVFS[ ], SPVTCA[ ]</td>
+  </tr>
+</table>
+
+将投影矢量的方向更改为由从堆栈获取的端点定义的线指定的方向。 指定点的顺序很重要。颠倒点的顺序将颠倒投影矢量的方向。
+
+弹出两个点编号 p2 和 p1，并将投影向量设置为与从点 p2 到点 p1 并指向 p2 到 p1 的线段平行或垂直的单位向量。
+
+### SROUND[] Super ROUND 超级圆形
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x76</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>n：分解得到周期、相位、阈值的数字（Eint8）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>圆形状态</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MDAP[], MDRP[], MIAP[], MIRP[], ROUND[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>S45ROUND[ ]</td>
+  </tr>
+</table>
+
+通过直接设置回合状态的三个组成部分的值：周期、相位和阈值，提供对回合状态变量的影响的精细控制。
+
+从堆栈中弹出一个数字 n 并分解该数字以获得周期、相位和用于设置图形状态变量回合状态值的阈值。 仅使用参数 n 的低 8 位来获取这些值。 该字节的编码如下表 8 所示。
+
+**表 8：** SROUND 字节编码
+
+<table>
+  <tr>
+    <th colspan="2" >周期</th>
+    <th colspan="2" >相位</th>
+    <th colspan="3" >阈值</th>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>6</td>
+    <td>5</td>
+    <td>4</td>
+    <td>3</td>
+    <td>2</td>
+    <td>1</td>
+  </tr>
+</table>
+
+"句点"指定舍入值之间的分隔或空格的长度。 相位指定舍入值与周期倍数的偏移量。 阈值指定在潜在舍入值之前映射到该值的域部分。有关舍入的其他信息可以在第 2-66 页的“舍入”中找到。
+
+对于 SROUND[]，用于计算表 9 中所示周期的网格周期等于 1.0 像素。 表 10 列出了相位的可能值，表 11 列出了阈值的可能值。
+
+**表 9：** 设置周期
+<table>
+  <tr>
+    <th>位值</th>
+    <th>设置</th>
+  </tr>
+  <tr>
+    <td>00</td>
+    <td>1/2像素</td>
+  </tr>
+  <tr>
+    <td>01</td>
+    <td>1 像素</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>2 像素</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>预留的</td>
+  </tr>
+</table>
+
+**表 10：** 设置相位
+<table>
+  <tr>
+    <th>位值</th>
+    <th>设置</th>
+  </tr>
+  <tr>
+    <td>00</td>
+    <td>周期/4</td>
+  </tr>
+  <tr>
+    <td>01</td>
+    <td>周期/2</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>周期 * 3/4</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td>预留的</td>
+  </tr>
+</table>
+
+**表 11：** 设置阈值
+
+<table>
+  <tr>
+    <th>位值</th>
+    <th>阈值</th>
+  </tr>
+  <tr>
+    <td>0000</td>
+    <td>周期-1</td>
+  </tr>
+  <tr>
+    <td>0001</td>
+    <td>-3/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>0010</td>
+    <td>-2/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>0011</td>
+    <td>-1/8 *  周期</td>
+  </tr>
+  <tr>
+    <td>0100</td>
+    <td>0/8 * 周期 = 0</td>
+  </tr>
+  <tr>
+    <td>0101</td>
+    <td>1/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>0110</td>
+    <td>2/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>0111</td>
+    <td>3/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>1000</td>
+    <td>4/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>1001</td>
+    <td>5/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>1010</td>
+    <td>6/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>1011</td>
+    <td>7/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>1100</td>
+    <td>8/8 * 周期 = 周期</td>
+  </tr>
+  <tr>
+    <td>1101</td>
+    <td>9/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>1110</td>
+    <td>10/8 * 周期</td>
+  </tr>
+  <tr>
+    <td>1111</td>
+    <td>11/8 * 周期</td>
+  </tr>
+</table>
+
+### SRP0[] Set Reference Point 0 设置参考点0
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x10</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>p：点数（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>rp0</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>ALIGNRP[], MDAP[], MDRP[], MIAP[], MIRP[] MSIRP[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SRP1[ ], SRP2[ ]</td>
+  </tr>
+</table>
+为参考点 0 设置新值。
+
+从堆栈中弹出一个点编号 p，并将 rp0 设置为 p。
+
+### SRP1[] Set Reference Point 1 设置参考点 1
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x11</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>p：点数（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>rp1</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>IP[], MDAP[], MIAP[], MSIRP[], SHC[], SHP[], SHZ</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SRP0[], SRP2[ ]</td>
+  </tr>
+</table>
+
+为参考点 1 设置新值。
+
+从堆栈中弹出一个点编号 p，并将 rp1 设置为 p。
+
+### SRP2[] Set Reference Point 2 设置参考点 2
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x12</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>p：点数（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>rp2</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>IP[], SHC[], SHP[], SHZ[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SRP1[ ], SRP0[]</td>
+  </tr>
+</table>
+
+为参考点 2 设置新值。
+
+从堆栈中弹出一个点编号 p，并将 rp2 设置为 p。
+
+### SSW[] Set Single Width 设置单宽度
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x1F</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>n：单一宽度值（FUnit）的值</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>单一宽度值</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SSWCI[ ]</td>
+  </tr>
+</table>
+
+为单宽度值状态变量建立一个新值。 当单一宽度值与给定CVT条目之间的差小于单一宽度切入时，使用单一宽度值代替控制值表条目。
+
+从堆栈中弹出一个 32 位整数值 n，并将图形状态中的单个宽度值设置为 n。 n 值以 FUnit 表示。
+
+### SSWCI[] Set Single Width Cut-In 设置单宽度切点
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x1E</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>n：单宽度切入值（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>单宽度切入</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>MIAP[], MIRP[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SSW[ ]</td>
+  </tr>
+</table>
+
+为单宽度切入建立一个新值，解释器将忽略控制值表中的值以支持单宽度值的距离差。
+
+弹出 32 位整数值 n，并将单宽度切入设置为 n。
+
+### SUB[] 减法
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x61</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pops 压入栈</td>
+    <td>n2：减数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>n1：被减数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>(n1 - n2)：差异 (F26Dot6)</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>ADD[ ]</td>
+  </tr>
+</table>
+
+用栈顶的数字减去栈顶的数字。
+
+从堆栈中弹出两个 26.6 数字 n1 和 n2，并将两个元素之间的差值压入堆栈。
+
+### SVTCA[a] Set freedom and projection Vectors To Coordinate Axis 将自由度和投影向量设置为坐标轴
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x00-0x01</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >a</td>
+    <td>0：将向量设置为 y 轴</td>
+  </tr>
+  <tr>
+    <td>1：设置向量为x轴</td>
+  </tr>
+  <tr>
+    <td>Pops 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >设置</td>
+    <td>投影向量</td>
+  </tr>
+  <tr>
+    <td>自由向量</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SPTCA[ ], SFVTCA[ ]</td>
+  </tr>
+</table>
+
+将投影矢量和自由矢量设置为同一坐标轴，使移动和测量处于同一方向。 布尔变量a的设置决定轴的选择。
+
+SVTCA[ ] 是替代 SFVTCA[ ] 和 SPVTCA[ ] 指令的快捷方式。 因此，SVTCA[1] 相当于 SFVTCA[1] 后跟 SPVTCA[1]。
+
+### SWAP[] SWAP the top two elements on the stack 交换栈顶两个元素
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x23</td>
+  </tr>
+  <tr>
+    <td rowspan="2" >Pops 压入栈</td>
+    <td>e2：堆栈元素（StkElt）</td>
+  </tr>
+  <tr>
+    <td>e1：堆栈元素（StkElt）</td>
+  </tr>
+  <tr>
+    <td rowspan="2">Pushes 压入栈</td>
+    <td>e2：堆栈元素（StkElt）</td>
+  </tr>
+  <tr>
+    <td>e1：堆栈元素（StkElt）</td>
+  </tr>
+</table>
+
+交换堆栈顶部的两个元素。
+
+从堆栈中弹出两个元素 e2 和 e1，并反转它们的顺序，使旧的顶部元素成为顶部元素，旧的第二个元素成为顶部元素。
+
+### SZP0[] Set Zone Pointer 0 设置区域指针 0
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x13</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出入栈</td>
+    <td>n2：减数（F26Dot6）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>zp0</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>AA[], ALIGNPTS[], ALIGNRP[], DELTAC1[], DELTAC2[], DELTAC3[], DELTAP1[], DELTAP2[], DELTAP3[], FLIPPT[], FLIPRGOFF[], FLIPRGON[], IP[], ISECT[], MD[], MDAP[], MDRP[], MIAP[], MIRP[], MSIRP[], SHC[], SHE[], SHP[], SHZ[], UTP[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SZP1[ ], SZP2[ ], SZPS[ ]</td>
+  </tr>
+</table>
+
+为 zp0 建立一个新值。 它可以指向字形区域或暗区域。
+
+从堆栈中弹出区域编号 n，并将 zp0 设置为具有该编号的区域。 如果 n 的值为零，则 zp0 指向区域 0（暗区域）。 如果 n 的值为 1，则 zp0 指向区域 1（字形区域）。 n 的任何其他值都是错误的。
+
+### SZP1[] Set Zone Pointer 1 设置区域指针 1
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x14</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出入栈</td>
+    <td>n：区域号（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>zp1</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>ALIGNPTS[], ALIGNRP[], IP[], ISECT[], MD[], MDRP[], MIRP[], MSIRP[], SDPVTL[], SFVTL[], SHC[], SHP[], SHZ[], SPVTL[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SZP0[ ], SZP2[ ], SZPS[ ]</td>
+  </tr>
+</table>
+
+为 zp1 建立新值。 它可以指向字形区域或阴影区域。
+
+从堆栈中弹出区域编号 n，并将 zp1 设置为具有该编号的区域。 如果 n 的值为零，则 zp1 指向区域 0（阴影区域）。 如果 n 的值为 1，则 zp1 指向区域 1（字形区域）。 n 的任何其他值都是错误的。
+
+### SZP2[] 设置区域指针 2
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x15</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出入栈</td>
+    <td>n：区域号（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>zp2</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>IP[], ISECT[], IUP[], GC[], SDPVTL[], SHC[], SHP[], SFVTL[], SHPIX[], SPVTL[], SC[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SZP0[ ], SZP1[ ], SZPS[ ]</td>
+  </tr>
+</table>
+
+为 zp2 建立新值。 它可以指向字形区域或阴影区域。
+
+从堆栈中弹出区域编号 n，并将 zp2 设置为具有该编号的区域。 如果 n 的值为零，则 zp2 指向区域 0（阴影区域）。 如果 n 的值为 1，则 zp2 指向区域 1（字形区域）。 n 的任何其他值都是错误的。
+
+### SZPS[] Set Zone PointerS 设置区域指针S
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x16</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出</td>
+    <td>n：区域号（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>zp0, zp1, zp2</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>ALIGNPTS[], ALIGNRP[], DELTAC1[], DELTAC2[], DELTAC3[], DELTAP1[], DELTAP2[], DELTAP3[], FLIPPT[], FLIPRGOFF[], FLIPRGON[], GC[], IP[], ISECT[], IUP[], MD[], MDAP[], MDRP[], MIAP[], MIRP[], MSIRP[], SC[], SDPVTL[], SFVTL[], SHPIX[], SPVTL[], SHC[], SHP[], SHZ[], SPVTL[], UTP[]</td>
+  </tr>
+  <tr>
+    <td>相关说明</td>
+    <td>SZP0[ ], SZP1[ ], SZP2[ ]</td>
+  </tr>
+</table>
+
+设置所有三个区域指针以引用字形区域或阴影区域。
+
+从堆栈中弹出一个整数 n 并将所有区域指针设置为指向具有该数字的区域。 如果 n 为 0，则所有三个区域指针都将指向区域 0（阴影区域）。 如果 n 为 1，则所有三个区域指针都将指向区域 1（字形区域）。 n 的任何其他值都是错误的。
+
+### UTP[] UnTouch Point 非接触点
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x29</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出</td>
+    <td>p：点编号（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>使用</td>
+    <td>zp0 与点 p，自由向量</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>IUP[ ]</td>
+  </tr>
+</table>
+
+将点标记为未触及，从而导致 IUP[ ] 指令影响其位置。
+
+弹出一个点编号 p，并将点 p 标记为未触及。 可以在x方向、y方向或者x和y方向上触摸点。 自由向量的位置决定该点是否在 x 方向、y 方向或同时在这两个方向上未被触及。 如果向量设置为 x 轴，则该点在 x 方向上将保持不变。 如果向量设置为 y 轴，则该点在 y 方向上将保持不变。 否则该点在两个方向上都不会被触及。
+
+标记为未触摸的点将被 IUP[ ] 指令移动，即使该点之前已被触摸过。
+
+### WCVTF[] Write Control Value Table in Funits 在 Funits 中写入控制值表
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x70</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出</td>
+    <td>n：FUnit 中的数字 (uint32) l：控制值表位置 (uint32)</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>控制值表条目</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>WCVTP[ ]</td>
+  </tr>
+</table>
+
+将缩放后的 F26Dot6 值写入指定的控制值表位置。
+
+从堆栈中弹出一个整数值 n 和一个控制值表位置 l。 FUnit 值缩放为当前点大小和分辨率，并放入控制值表中。 该指令假定该值以 FUnit 而非像素表示。
+
+由于 CVT 已缩放为像素值，因此从堆栈中取出的值在写入表之前会缩放为适当的像素值。
+
+### WCVTP[] Write Control Value Table in Pixel units 以像素为单位写入控制值表
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x44</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出</td>
+    <td>v：以像素为单位的值 (F26Dot6)<br>
+l：控制值表位置（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>控制值表条目</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>WCVTF[ ]</td>
+  </tr>
+</table>
+
+将像素值写入指定的控制值表位置。
+
+从堆栈中弹出值 v 和控制值表位置 l 并将该值放入控制值表中的指定位置。 该指令假定从堆栈中获取的值以像素为单位，而不是以 FUnit 为单位。 该值不变地写入 CVT 表。 位置l必须小于字体文件中'maxp'表中指定的存储位置的数量。
+
+###  WS[] Write Store 写存储
+
+<table>
+  <tr>
+    <td>代码范围</td>
+    <td>0x42</td>
+  </tr>
+  <tr>
+    <td >Pops 弹出</td>
+    <td>v：存储区域值（uint32）<br>
+l：存储区位置（uint32）</td>
+  </tr>
+  <tr>
+    <td>Pushes 压入栈</td>
+    <td>-</td>
+  </tr>
+  <tr>
+    <td>设置</td>
+    <td>存储区值</td>
+  </tr>
+  <tr>
+    <td>影响</td>
+    <td>RS[ ]</td>
+  </tr>
+</table>
+
+将从堆栈中取出的值写入指定的存储区域位置。
+
+弹出存储区域位置 l，后跟一个值 v。将此 32 位值写入由 l 索引的存储区域位置。 该值必须小于字体文件的“maxp”表中指定的存储位置数。
