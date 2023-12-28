@@ -104,3 +104,54 @@ indexSubTableArray的格式如下表所示：
 |uint16|lastGlyphIndex|该范围内最后一个字形的索引。|
 |uint32|additionalOffsetToIndexSubtable|用于到达indexSubTable； 添加到indexSubTableArrayOffset以获取距“bloc”表开头的偏移量。|
 
+最后我们到达索引子表。 目前有两种格式的索引：一种用于比例数据，一种用于等宽数据。 数据是固定大小还是可变大小决定了使用哪个索引。 注意：“bdat”数据的格式可以是任何格式。 它不是由索引格式决定的。 索引告诉我们特定字形的信息在“bdat”中从哪里开始以及数据有多大。 字形数据的大小是 offsetArray[glyphIndex+1] - offsetArray[glyphIndex] 的差值。 格式1索引子表是比例格式索引。 这将用于大多数罗马字体以及大中文、日文或韩文字体中的前 200 个左右字形。 imageFormat告诉我们位图数据表中有什么样的数据。
+
+每个索引子表提供有关字体中每个字形的实际位图数据的位置的信息。 实际上包含“bdat”表中字形数据位置的indexSubTables 具有三种格式。 格式 1 适用于按比例间隔的字形。 格式 2 适用于等宽字形。 格式 3 也适用于按比例间隔的字形，但使用 uint16 数组而不是 uint32，因此是格式一的压缩形式。 每个indexSubTables都有一个indexSubHeader。 索引子头的格式如下表所示：
+
+|类型|名称|描述|
+|-|-|-|
+|uint16|	indexFormat|格式编号（1 与 4 字节偏移增量成比例，2 是等宽间距，3 与 2 字节偏移增量成比例）。|
+|uint16|	imageFormat|图像数据类型的代码。 有关该值的解释，请参阅“bdat”表的描述。|
+|uint32|	imageDataOffset|该索引子表的图像数据基址的偏移量。|
+
+在格式 1 和格式 3 中，数据是连续存储的，因此任何字形的数据长度都是通过从下一个字形的位置中减去该字形的位置来给出的。 如果长度为零，则该位图集中的该字形没有可用的位图。 格式1位图索引子表如下表所示：
+
+|类型|名称|描述|
+|-|-|-|
+|indexSubHeader|	header|标头信息如上所述。|
+|uint32|	offsetArray[]|offsetArray[glyphIndex] + imageDataOffset = 字形位图数据的开始位置。|
+
+格式3索引子表也是比例格式索引。 它与格式 1 类似，只是偏移量是短字节而不是长字节。
+
+Format 3位图索引子表如下表所示：
+
+|类型|名称|描述|
+|-|-|-|
+|indexSubHeader|	header|标头信息如上所述。|
+|uint16|	offsetArray[]|offsetArray[glyphIndex] + imageDataOffset = 字形位图数据的开始位置。|
+
+对于等宽字体，度量是相同的，只有位图发生变化。 对于这些，我们使用格式 2 索引子表。 指标不在位图数据表中，而是在子表中。 对于这些字形，只有实际的位图数据被放入位图数据表中。 数据可以采用多种格式； 字节对齐、位对齐、压缩等。需要从位图数据表中读入的所有位图数据的大小就是imageSize。 imageDataOffset 是该范围字形中第一个字形在位图数据表中的偏移量。 通过将 imageSize 乘以差值 (theDesiredGlyphIndex -firstGlyphIndexInThisRange)，然后将结果添加到索引标头的标头中的 imageDataOffset，可以轻松找到其余字形。
+
+Format 2位图索引子表如下表所示：
+
+|类型|名称|描述|
+|-|-|-|
+|indexSubHeader|	header|标头信息如上所述。|
+|uint32|imageSize|	所有字形的大小相同。 可以是压缩的、位对齐的或字节对齐的。|
+|bigGlyphMetrics|	bigMetrics|	所有字形共享相同的度量。|
+
+索引类型 2 字形的度量信息属于 bigGlyphMetrics 类型，该类型记录在位图数据表文档中。
+
+## 平台特定信息
+
+用于 OS X 8.5 和早期版本的 OS X 的嵌入式位图必须为字体中的每个字形包含一个位图字形。 OS X 上不允许使用稀疏位图。
+
+sbitLineMetrics 记录中的 minOriginSB、minAdvanceSB、maxBeforeBL 和 minAfterBL 字段在 OS X 上不使用。
+
+## 依赖关系
+
+“bloc”表与字体的“bdat”（位图数据）表有着千丝万缕的联系。 如果其中一个存在，另一个也一定存在，并且其中一个的改变几乎不可避免地会引发另一个的改变。
+
+通常，大多数字体编辑工具可能会发现同时读写两个表比单独处理它们更方便。 例如，这是由 Apple 的 ftxdumperfuser 工具完成的。
+
+为字体的各个点大小指示的嵌入位图中的字形数量必须等于“maxp”（最大配置文件）表中包含的字体中的字形数量。
