@@ -103,3 +103,371 @@
 ![ff52](./images//FF52.gif)
 
 让我们看一个如何应用这些距离的示例。 在下图中，初始文本以三个不同大小的大写 D 字形开头。 用户指定前两个大写 D 字形应具有悬挂基线。
+
+![ff53](./images/FF53.gif)
+
+第一步是将所有基线解析为文本行的主导基线（在本例中为罗马基线）。 在下图中，前两个大写 D 字形现在悬挂在悬挂基线上，该基线与正文的基线对齐。
+
+![ff54](./images/FF54.gif)
+
+最后一步如下图所示。 前两个大写 D 字形的悬挂基线与正文的悬挂基线对齐。 这一系列文本的主要基线仍然是罗马基线。
+
+![ff55](./images/FF55.gif)
+
+### 示例：分配基线增量值和控制点
+
+AAT 字体需要在基线表中为字体中使用的所有基线分配增量值或控制点。 值可以是基于距离的或基于控制点的。 与使用基于距离的基线表的字体相比，使用控制点的字体在小点尺寸下可以更好地在屏幕上保留基线信息。
+
+### 基于距离的格式
+
+格式 0 和 1 基线表是基于距离的，因为它们以纯 FUnit 指定基线增量值。 增量值是从自然基线到指定基线的距离。 AAT 字体需要在基线表中为字体中使用的所有基线分配增量值。
+
+考虑一个“P”的字形，其 em 平方为 1000，上升部分为 932，下降部分为 -482，以及罗马基线。 该字形和其他字形的基线增量的可能分配如下图所示：
+
+![ff28](./images/FF28.gif)
+
+下表总结了基于距离的基线表的基线数据。
+
+|基线|基线值|增量值（FUnits）
+|-|-|
+|Roman 罗马| 0| 0|
+|Ideographic Centered 表意文字居中| 1| 352|
+|Ideographic Low 表意低| 2| 352|
+|Hanging 悬挂| 3| 705|
+|Math 数学| 4| 352|
+
+### 示例：格式 1 基线表
+也许您想为包含混合汉字和罗马字形的字体创建基线表。 所有罗马字形都应具有罗马基线值，所有汉字字形应具有表意居中基线值。
+
+本例中所做的假设如下：
+
+* 罗马字形占用字形索引 2 到 270，汉字字形占用字形索引 271 到 8200。
+* 汉字字形的内在基线是罗马风格的（即字形位于全角形的底部）。
+* 以罗马和表意文字为中心的基线之间存在 855 FUnit 的差异。
+* 罗马字母的大写高度为 1520 FUnits。 （在此示例中，瓶盖高度等于悬挂基线测量值。）
+
+下图显示了此示例字体的基线表格式 1 基线分配。
+
+![ff36](./images/FF36.gif)
+
+下表显示了如何为示例字体构建格式 1 基线表。
+
+<table border="1" cellspacing="2" cellpadding="0">
+  <tbody>
+  <tr align="left" valign="middle">
+		<th align="middle">
+			<p align="left">偏移<br>
+			/长度</p>
+		</th>
+		<th align="middle">
+			<p align="left">值</p>
+		</th>
+		<th align="middle">
+			<p align="left">名称</p>
+		</th>
+		<th align="left">
+			<p align="left">注释</p>
+		</th>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>0/4</td>
+		<td>0x00010000</td>
+		<td>version</td>
+		<td class="description">基线表的版本号，采用定点格式。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>4/2</td>
+		<td>1</td>
+		<td>format</td>
+		<td class="description">基线表的格式。 该基线表将使用基于距离的增量和查找表。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>6/2</td>
+		<td>1</td>
+		<td>defaultBaseline</td>
+		<td class="description">默认基线是表意文字居中基线，其基线值= 1。通过指定该值，我们只需要在查找表中包含罗马字形。 汉字字形已经位于默认基线上。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（基线表的 <code>Format1Part</code> 从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>8/2</td>
+		<td>0</td>
+		<td>delta</td>
+		<td class="description">从默认基线到罗马基线的 FUnit 增量（基线值 = 0）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>10/2</td>
+		<td>855</td>
+		<td>delta</td>
+		<td class="description">FUnits 中从默认基线到表意文字中心基线的增量 (1)。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>12/2</td>
+		<td>0</td>
+		<td>delta</td>
+		<td class="description">表意低基线没有增量值 (2)。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>14/2</td>
+		<td>1520</td>
+		<td>delta</td>
+		<td class="description">FUnits 从默认基线到悬挂基线的增量 (3)。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>16/56</td>
+		<td>0</td>
+		<td>No</td>
+		<td class="description">基线值 4 到 31 的增量值。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（<code>Format1Part</code> 的查找表从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>72/2</td>
+		<td>2</td>
+		<td>format</td>
+		<td class="description">查找表格式 2（表示<a href="Chap6Tables.html#LookupFormat2">分段单个</a>表格式）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（接下来的 5 个字段是查找表的 <code>BinSrchHeader</code>）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>74/2</td>
+		<td>6</td>
+		<td>unitSize</td>
+		<td class="description">LookupSegment 记录的大小（起始字形索引为 2 个字节，结束字形索引为 2 个字节，基线值为 2 个字节）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>76/2</td>
+		<td>1</td>
+		<td>nUnits</td>
+		<td class="description">要搜索的先前大小的单元数。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>78/2</td>
+		<td>6</td>
+		<td>searchRange</td>
+		<td class="description">unitSize 乘以小于或等于 nUnits 的最大二的幂。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>80/2</td>
+		<td>0</td>
+		<td>entrySelector</td>
+		<td class="description">小于或等于 nUnits 的最大的两个幂的对数以 2 为底。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>82/2</td>
+		<td>0</td>
+		<td>rangeShift</td>
+		<td class="description">unitSize 乘以 nUnits 的差值减去两个小于或等于 nUnits 的最大幂。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（第一个 <code>LookupSegment</code> 用于罗马字形）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>84/2</td>
+		<td>270</td>
+		<td>lastGlyph</td>
+		<td class="description">罗马字形的结束字形索引。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>86/2</td>
+		<td>2</td>
+		<td>firstGlyph</td>
+		<td class="description">罗马字形的起始字形索引。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>88/2</td>
+		<td>0</td>
+		<td>value</td>
+		<td class="description">对于此范围内的罗马字形，罗马基线值 = 0。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（最后一个<code>LookupSegment</code>）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>90/2</td>
+		<td>0xFFFF</td>
+		<td>lastGlyph</td>
+		<td class="description">最后一个查找段中最后一个字形的特殊值。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>92/2</td>
+		<td>0xFFFF</td>
+		<td>firstGlyph</td>
+		<td class="description">最后一个查找段中第一个字形的特殊值。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>94/2</td>
+		<td>0</td>
+		<td>value</td>
+		<td class="description">终止值。</td>
+		</tr>
+	</tbody>
+</table>
+
+### 示例：格式 3 基线表
+
+此示例使用与前面的基线表格式 1 示例相同的基本设置，并添加了控制点信息以更准确地放置基线偏移。 假设我们已将字形 22 指定为包含控制点信息的字形。 该字形将在罗马基线处具有控制点 #80，在表意文字中心基线处具有控制点 #81，在悬挂基线处具有控制点 #82。
+
+表 3-9 显示了如何为示例字体构建 Format 3 基线表。
+
+<table border="1" cellspacing="2" cellpadding="0">
+		<tbody><tr align="left" valign="middle">
+		<th align="middle">
+			<p align="left">偏移<br>
+			/长度</p>
+		</th>
+		<th align="middle">
+			<p align="left">值</p>
+		</th>
+		<th align="middle">
+			<p align="left">名称</p>
+		</th>
+		<th align="left">
+			<p align="left">注释</p>
+		</th>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>0/4</td>
+		<td>0x00010000</td>
+		<td>version</td>
+		<td class="description">基线表的版本号（定点格式）为1.0。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>4/2</td>
+		<td>3</td>
+		<td>format</td>
+		<td class="description">格式 3 基线表。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>6/2</td>
+		<td>1</td>
+		<td>defaultBaseline</td>
+		<td class="description">默认基线是表意文字居中基线。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（基线表的 <code>Format3Part</code> 从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>8/2</td>
+		<td>22</td>
+		<td>stdGlyph</td>
+		<td class="description">标准字形的字形索引，其中包含控制点信息。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>10/2</td>
+		<td>80</td>
+		<td>ctlPoint</td>
+		<td class="description">标准字形中罗马基线的控制点（基线值 0）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>12/2</td>
+		<td>81</td>
+		<td>ctlPoint</td>
+		<td class="description">标准字形中表意居中基线的控制点（基线值 1）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>14/2</td>
+		<td>0xFFFF</td>
+		<td>ctlPoint</td>
+		<td class="description">这个特殊值意味着表意低基线类（基线值2）没有控制点。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>16/2</td>
+		<td>82</td>
+		<td>ctlPoint</td>
+		<td class="description">标准字形中悬挂基线的控制点（基线值 3）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>18/56</td>
+		<td>0xFFFF</td>
+		<td>ctlPoint</td>
+		<td class="description">此特殊值意味着基线类别 4 至 31 没有控制点。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（<code>Format3Part</code> 的查找表从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>74/2</td>
+		<td>2</td>
+		<td>format</td>
+		<td class="description">查找表格式 2（<a href="Chap6Tables.html#LookupFormat2">单段</a>表）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（接下来的 5 个字段是查找表的 <code>BinSrchHeader</code>）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>76/2</td>
+		<td>6</td>
+		<td>unitSize</td>
+		<td class="description">LookupSegment 记录的大小（起始字形索引为 2 个字节，结束字形索引为 2 个字节，基线值为 2 个字节）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>78/2</td>
+		<td>1</td>
+		<td>nUnits</td>
+		<td class="description">要搜索的先前大小的单元数。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>80/2</td>
+		<td>6</td>
+		<td>searchRange</td>
+		<td class="description">unitSize 乘以小于或等于 nUnits 的最大 2 次方。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>82/2</td>
+		<td>0</td>
+		<td>entrySelector</td>
+		<td class="description">小于或等于 nUnits 的最大的两个幂的对数以 2 为底。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>84/2</td>
+		<td>0</td>
+		<td>rangeShift</td>
+		<td class="description">unitSize 乘以 nUnits 的差值减去两个小于或等于 nUnits 的最大幂。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（第一个 <code>LookupSegment</code> 用于罗马字形）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>86/2</td>
+		<td>270</td>
+		<td>lastGlyph</td>
+		<td class="description">罗马字形的结束字形索引。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>88/2</td>
+		<td>2</td>
+		<td>firstGlyph</td>
+		<td class="description">罗马字形的起始字形索引。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>90/2</td>
+		<td>0</td>
+		<td>value</td>
+		<td class="description">对于此范围内的罗马字形，罗马基线值 = 0。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4">（最后一个<code>LookupSegment</code>）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>92/2</td>
+		<td>0xFFFF</td>
+		<td>lastGlyph</td>
+		<td class="description">最后一个查找段中最后一个字形的特殊值。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>94/2</td>
+		<td>0xFFFF</td>
+		<td>firstGlyph</td>
+		<td class="description">最后一个查找段中第一个字形的特殊值。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>96/2</td>
+		<td>0</td>
+		<td>value</td>
+		<td class="description">终止值</td>
+		</tr>
+	</tbody></table>
