@@ -313,3 +313,8 @@ sfntInstance数组的格式如下表所示：
 		<td class="description">第三个实例沿第二个坐标轴的坐标。</td>
 		</tr>
 	</tbody></table>
+
+## 依赖关系
+
+“fvar”表应具有与“gvar”表相同的轴数。 名称引用应与“名称”表中的正确条目相对应。
+
