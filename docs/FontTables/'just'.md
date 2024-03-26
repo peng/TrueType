@@ -309,5 +309,206 @@ actionType 为 4 是延展字形动作。 这会导致字形的实际形状通�
     <td>2</td>
     <td>format</td>
     <td>查找表格式2（段单表格式）。</td>
-  </tr> 
+  </tr>
+  <tr>
+    <td colspan="4" >（接下来的 5 个字段是 BinSrchHeader）</td>
+  </tr>
+  <tr>
+    <td>18/2</td>
+    <td>6</td>
+    <td>unitSize</td>
+    <td>LookupSegment 记录的大小（起始字形索引为 2 个字节，结束字形索引为 2 个字节，宽度delta簇记录的偏移量为 2 个字节）。</td>
+  </tr>
+  <tr>
+    <td>20/2</td>
+    <td>2</td>
+    <td>nUnits</td>
+    <td>要搜索的先前大小的单元数。</td>
+  </tr>
+  <tr>
+    <td>22/2</td>
+    <td>12</td>
+    <td>searchRange</td>
+    <td>unitSize 乘以小于或等于 nUnits 的最大二的幂。</td>
+  </tr>
+  <tr>
+    <td>24/2</td>
+    <td>1</td>
+    <td>entrySelector</td>
+    <td>小于或等于 nUnits 的最大的两个幂的对数以 2 为底。</td>
+  </tr>
+  <tr>
+    <td>26/2</td>
+    <td>0</td>
+    <td>rangeShift</td>
+    <td>unitSize 乘以 nUnits 的差值减去两个小于或等于 nUnits 的最大幂。</td>
+  </tr>
+  <tr>
+    <td colspan="4" >（第一个LookupSegment从这里开始）</td>
+  </tr>
+  <tr>
+    <td>28/2</td>
+    <td>2</td>
+    <td>lastGlyph</td>
+    <td>第一段中的结束字形索引（空格字形）。</td>
+  </tr>
+  <tr>
+    <td>30/2</td>
+    <td>2</td>
+    <td>firstGlyph</td>
+    <td>该段中的起始字形索引（空间字形）。</td>
+  </tr>
+  <tr>
+    <td>32/2</td>
+    <td>0</td>
+    <td>value</td>
+    <td>从 WidthDeltaClusters 记录表的开头（偏移量 48）到第一个 WidthDeltaCluster 记录（也是偏移量 48）的字节偏移量。</td>
+  </tr>
+  <tr>
+    <td colspan="4" >（第二个LookupSegment从这里开始）</td>
+  </tr>
+  <tr>
+    <td>34/2</td>
+    <td>275</td>
+    <td>lastGlyph</td>
+    <td>第二段中的结束字形索引（非空白）。</td>
+  </tr>
+  <tr>
+    <td>36/2</td>
+    <td>3</td>
+    <td>firstGlyph</td>
+    <td>第二段中的起始字形索引（非空白）。</td>
+  </tr>
+  <tr>
+    <td>38/2</td>
+    <td>28</td>
+    <td>value</td>
+    <td>从 WidthDeltaClusters 记录表的开头（偏移量 48）到第二个 WidthDeltaCluster 记录（偏移量 76）的偏移量（以字节为单位）。</td>
+  </tr>
+  <tr>
+    <td colspan="4" >（最后一个LookupSegment从这里开始）</td>
+  </tr>
+  <tr>
+    <td>40/2</td>
+    <td>0xFFFF</td>
+    <td>lastGlyph</td>
+    <td>最后一个查找段中最后一个字形的特殊值。</td>
+  </tr>
+  <tr>
+    <td>42/2</td>
+    <td>0xFFFF</td>
+    <td>firstGlyph</td>
+    <td>最后一个查找段中第一个字形的特殊值。</td>
+  </tr>
+  <tr>
+    <td>44/2			</td>
+    <td>0</td>
+    <td>value</td>
+    <td>从 WidthDeltaClusters 记录表的开头到此特定 WidthDeltaCluster 记录的字节偏移量。</td>
+  </tr>
+  <tr>
+    <td>46/2</td>
+    <td>0</td>
+    <td>padding</td>
+    <td>填充以保证此字段后面的 WidthDeltaCluster 表从长字边界（4 的倍数）开始。</td>
+  </tr>
+  <tr>
+    <td colspan="4" >（WidthDeltaCluster 记录从这里开始）</td>
+  </tr>
+  <tr>
+    <td>48/4</td>
+    <td>1</td>
+    <td>count</td>
+    <td>随后的对齐类别和 JustWidthDeltaEntry 对的数量。</td>
+  </tr>
+  <tr>
+    <td>52/4</td>
+    <td>0</td>
+    <td>justClass</td>
+    <td>理由类别为零。</td>
+  </tr>
+  <tr>
+    <td>56/4</td>
+    <td>0x00008000</td>
+    <td>beforeGrowLimit</td>
+    <td>字形在左侧可以增长的最大 em 数是二分之一 em。</td>
+  </tr>
+  <tr>
+    <td>60/4</td>
+    <td>0xFFFFF500</td>
+    <td>beforeShrinklimit</td>
+    <td>字形在左侧可以收缩的 em 数大约为 -0.043 em。</td>
+  </tr>
+  <tr>
+    <td>64/4</td>
+    <td>0x00008000</td>
+    <td>afterGrowLimit</td>
+    <td>字形在右侧可以增长的最大 em 数是二分之一 em。</td>
+  </tr>
+  <tr>
+    <td>68/4</td>
+    <td>0xFFFFF500</td>
+    <td>afterShrinkLimit</td>
+    <td>字形在右侧可以收缩的 em 数大约为 -0.043 em。</td>
+  </tr>
+  <tr>
+    <td>72/2</td>
+    <td>0x0001</td>
+    <td>growFlags</td>
+    <td>空白优先。</td>
+  </tr>
+  <tr>
+    <td>72/2</td>
+    <td>0x0001</td>
+    <td>shrinkFlags</td>
+    <td>空白优先。</td>
+  </tr>
+  <tr>
+    <td>76/4</td>
+    <td>1</td>
+    <td>count</td>
+    <td>随后的对齐类别和 JustWidthDeltaEntry 对的数量。</td>
+  </tr>
+  <tr>
+    <td>80/4</td>
+    <td>0</td>
+    <td>justClass</td>
+    <td>理由类别为零。</td>
+  </tr>
+  <tr>
+    <td>84/4</td>
+    <td>0x00002500</td>
+    <td>beforeGrowLimit</td>
+    <td>字形在左侧可以增长的最大 em 数大约为 0.14 em。</td>
+  </tr>
+  <tr>
+    <td>88/4</td>
+    <td>0xFFFFF500</td>
+    <td>beforeShrinklimit</td>
+    <td>字形在左侧可以收缩的 em 数大约为 -0.043 em。</td>
+  </tr>
+  <tr>
+    <td>92/4</td>
+    <td>0x00002500</td>
+    <td>afterGrowLimit</td>
+    <td>字形在右侧可以增长的最大 em 数大约为 0.14 em。</td>
+  </tr>
+  <tr>
+    <td>96/4 </td>
+    <td>0xFFFFF500</td>
+    <td>afterShrinkLimit</td>
+    <td>字形在右侧可以收缩的 em 数大约为 -0.043 em。</td>
+  </tr>
+  <tr>
+    <td>100/2</td>
+    <td>0x0002</td>
+    <td>GrowthFlags</td>
+    <td>字符间优先级。</td>
+  </tr>
+  <tr>
+    <td>102/2 </td>
+    <td> 0x0002</td>
+    <td>shrinkFlags</td>
+    <td>字符间优先级。</td>
+  </tr>
 </table>
