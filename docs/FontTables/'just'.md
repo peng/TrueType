@@ -512,3 +512,296 @@ actionType 为 4 是延展字形动作。 这会导致字形的实际形状通�
     <td>字符间优先级。</td>
   </tr>
 </table>
+
+#### 示例：复杂调整表（带有后补偿和调整类别状态表）
+
+一个更复杂的示例是您要为其添加 kashida 功能的阿拉伯字体。 此示例中使用的 kashida 字形是字形编号 226。此示例还使用以下字形分配：2 是空白，3 到 225 是常规字形，226 是 kashida。 为简单起见，此字体使用状态表，将对齐类别 1 分配给每个单词中的第一个字形（在本示例中，实际上是单词左侧的字形，而不是右侧），并且 调整类别 0 到所有其他字形。
+
+后补偿子表的查找表不需要列出可能附加 kashida 的每个单独的字形。 通过匹配所有字形，您可以依靠 justClass 值来过滤出 kashida 操作将影响的那些字形。
+
+请记住：该操作发生在三个不同的地方：
+
+支持 kashida 的字形由理由类别表根据上下文进行标识。
+对于带有 kashida 的字形，实际提前宽度拉伸因子被指定为无限制。
+考虑到这些无限的提前宽度增长因子，后补偿子表捕获这些字形并添加适当宽度的 kashida。
+下图显示了此示例字体的调整表有限状态机。 有四种状态。 它们是“文本开始”、“行开始”、“看到一个字母”和“看到一个空格”状态。 请注意，当有限状态机处于“文本开头”、“行开头”或“看到空格”状态并遇到字母（指定字形类别 4）时，该字形将转换为具有对齐类别的字形 1.
+
+<table border="1" cellspacing="2" cellpadding="0">
+		<tbody><tr align="left" valign="middle">
+		<th>
+			<div align="left">
+			  偏移/长度
+			</div>
+		</th>
+		<th>
+			<div align="left">
+			值
+			</div>
+		</th>
+		<th>
+			<div align="left">
+			名称
+			</div>
+		</th>
+		<th align="left">
+			<div align="left">
+			注释
+			</div>
+		</th>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>0/4</td>
+		<td>0x00010000</td>
+		<td>version</td>
+		<td class="description">定点格式的调整表的版本号。 版本是1.0。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>4/2</td>
+		<td>0</td>
+		<td>format</td>
+		<td class="description">理由表格式。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>6/2</td>
+		<td>10</td>
+		<td>horizOffset</td>
+		<td class="description">水平对齐标头表起始处的字节偏移量。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>8/2</td>
+		<td>0</td>
+		<td>vertOffset</td>
+		<td class="description">垂直 JustificationHeader 子表开始的字节偏移量。 值为 0 表示没有垂直子表。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4" class="description">（水平 <code>JustificationHeader</code> 从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>10/2</td>
+		<td>0</td>
+		<td>justClassTableOffset</td>
+		<td class="description">调整类别状态表的字节偏移量。 值 0 表示每个字形的 justClass 值为零。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>12/2</td>
+		<td>48</td>
+		<td>wdcTableOffset</td>
+		<td class="description">宽度delta簇开始的字节偏移量。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>14/2</td>
+		<td>0</td>
+		<td>pcTableOffset</td>
+		<td class="description">后补偿子表开始的字节偏移量。 值为 0 表示没有后补偿子表。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4" class="description">（查找表从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>16/2</td>
+		<td>2</td>
+		<td>format</td>
+		<td class="description">查找表格式2（段单表格式）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4" class="description">（接下来的 5 个字段是 <code>BinSrchHeader</code>）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>18/2</td>
+		<td>6</td>
+		<td>unitSize</td>
+		<td class="description">LookupSegment 记录的大小（起始字形索引为 2 个字节，结束字形索引为 2 个字节，宽度delta簇记录的偏移量为 2 个字节）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>20/2</td>
+		<td>2</td>
+		<td>nUnits</td>
+		<td class="description">要搜索的先前大小的单元数。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>22/2</td>
+		<td>12</td>
+		<td>searchRange</td>
+		<td class="description">unitSize 乘以小于或等于 nUnits 的最大二的幂。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>24/2</td>
+		<td>1</td>
+		<td>entrySelector</td>
+		<td class="description">小于或等于 nUnits 的最大的两个幂的对数以 2 为底。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>26/2</td>
+		<td>0</td>
+		<td>rangeShift</td>
+		<td class="description">unitSize 乘以 nUnits 的差值减去两个小于或等于 nUnits 的最大幂。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4" class="description">（第一个 <code>LookupSegment</code> 从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>28/2</td>
+		<td>2</td>
+		<td>lastGlyph</td>
+		<td class="description">第一段中的结束字形索引（空格字形）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>30/2</td>
+		<td>2</td>
+		<td>firstGlyph</td>
+		<td class="description">该段中的起始字形索引（空间字形）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>32/2</td>
+		<td>0</td>
+		<td>value</td>
+		<td class="description">从 WidthDeltaClusters 记录表的开头（偏移量 48）到第一个 WidthDeltaCluster 记录（也是偏移量 48）的字节偏移量。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4" class="description">（第二个 <code>LookupSegment</code> 从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>34/2</td>
+		<td>275</td>
+		<td>lastGlyph</td>
+		<td class="description">第二段中的结束字形索引（非空白）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>36/2</td>
+		<td>3</td>
+		<td>firstGlyph</td>
+		<td class="description">第二段中的起始字形索引（非空白）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>38/2</td>
+		<td>28</td>
+		<td>value</td>
+		<td class="description">从 WidthDeltaClusters 记录表的开头（偏移量 48）到第二个 WidthDeltaCluster 记录（偏移量 76）的偏移量（以字节为单位）。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4" class="description">（最后一个 <code>LookupSegment</code> 从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>40/2</td>
+		<td>0xFFFF</td>
+		<td>lastGlyph</td>
+		<td class="description">最后一个查找段中最后一个字形的特殊值。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>42/2</td>
+		<td>0xFFFF</td>
+		<td>firstGlyph</td>
+		<td class="description">最后一个查找段中第一个字形的特殊值。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>44/2</td>
+		<td>0</td>
+		<td>value</td>
+		<td class="description">从 WidthDeltaClusters 记录表的开头到此特定 WidthDeltaCluster 记录的字节偏移量。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>46/2</td>
+		<td>0</td>
+		<td>padding</td>
+		<td class="description">填充以保证此字段后面的 WidthDeltaCluster 表从长字边界（4 的倍数）开始。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td colspan="4" class="description">（<code>WidthDeltaCluster</code> 记录从这里开始）</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>48/4</td>
+		<td>1</td>
+		<td>count</td>
+		<td class="description">随后的对齐类别和 JustWidthDeltaEntry 对的数量。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>52/4</td>
+		<td>0</td>
+		<td>justClass</td>
+		<td class="description">理由类别为零。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>56/4</td>
+		<td>0x00008000</td>
+		<td>beforeGrowLimit</td>
+		<td class="description">字形在左侧可以增长的最大 em 数是二分之一 em。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>60/4</td>
+		<td>0xFFFFF500</td>
+		<td>beforeShrinklimit</td>
+		<td class="description">字形在左侧可以收缩的 em 数大约为 -0.043 em。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>64/4</td>
+		<td>0x00008000</td>
+		<td>afterGrowLimit</td>
+		<td class="description">字形在右侧可以增长的最大 em 数是二分之一 em。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>68/4</td>
+		<td>0xFFFFF500</td>
+		<td>afterShrinkLimit</td>
+		<td class="description">字形在右侧可以收缩的 em 数大约为 -0.043 em。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>72/2</td>
+		<td>0x0001</td>
+		<td>growFlags</td>
+		<td class="description">空白优先。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>74/2</td>
+		<td>0x0001</td>
+		<td>shrinkFlags</td>
+		<td class="description">空白优先。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>76/4</td>
+		<td>1</td>
+		<td>count</td>
+		<td class="description">随后的对齐类别和 JustWidthDeltaEntry 对的数量。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>80/4</td>
+		<td>0</td>
+		<td>justClass</td>
+		<td class="description">理由类别为零。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>84/4</td>
+		<td>0x00002500</td>
+		<td>beforeGrowLimit</td>
+		<td class="description">字形在左侧可以增长的最大 em 数大约为 0.14 em。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>88/4</td>
+		<td>0xFFFFF500</td>
+		<td>beforeShrinklimit</td>
+		<td class="description">字形在左侧可以收缩的 em 数大约为 -0.043 em。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>92/4</td>
+		<td>0x00002500</td>
+		<td>afterGrowLimit</td>
+		<td class="description">字形在右侧可以增长的最大 em 数大约为 0.14 em。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>96/4</td>
+		<td>0xFFFFF500</td>
+		<td>afterShrinkLimit</td>
+		<td class="description">字形在右侧可以收缩的 em 数大约为 -0.043 em。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>100/2</td>
+		<td>0x0002</td>
+		<td>growFlags</td>
+		<td class="description">字符间优先级。</td>
+		</tr>
+		<tr align="left" valign="middle">
+		<td>102/2</td>
+		<td>0x0002</td>
+		<td>shrinkFlags</td>
+		<td class="description">字符间优先级。</td>
+		</tr>
+	</tbody></table>
