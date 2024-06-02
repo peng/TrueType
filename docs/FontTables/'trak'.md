@@ -101,150 +101,151 @@ trackTableEntry格式如下：
 		<td>6/2</td>
 		<td>12</td>
 		<td>horizOffset</td>
-		<td class="description">Offset to TrackData for horizontal text.</td>
+		<td class="description">水平文本的 TrackData 偏移量。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>8/2</td>
 		<td>0</td>
 		<td>vertOffset</td>
-		<td class="description">Offset to TrackData for vertical text (a value of 0 means none)</td>
+		<td class="description">垂直文本的 TrackData 偏移量（值 0 表示无）</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>10/2</td>
 		<td>0</td>
-		<td>(pad</td>
-		<td class="description">word) Padding to ensure the following. TrackData table is longword aligned.</td>
+		<td>（源文档这里有些问题）</td>
+		<!-- 源文档有些问题 -->
+		<td class="description">(pad word) 填充保证以下。 TrackData 表是长字对齐的。</td>
 		</tr>
 		<tr align="left" valign="middle">
-		<td colspan="4">(The <code>TrackData</code> for horizontal text is next)</td>
+		<td colspan="4">（接下来是水平文本的 <code>TrackData</code>）</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>12/2</td>
 		<td>3</td>
 		<td>nTracks</td>
-		<td class="description">Number of tracks included.</td>
+		<td class="description">包含的曲目数量。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>14/2</td>
 		<td>2</td>
 		<td>nSizes</td>
-		<td class="description">Number of font sizes for each track.</td>
+		<td class="description">每个轨道的字体大小数。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>16/4</td>
 		<td>44</td>
 		<td>sizeTableOffset</td>
-		<td class="description">Offset of the size subtable.</td>
+		<td class="description">大小子表的偏移量。</td>
 		</tr>
 		<tr align="left" valign="middle">
-		<td colspan="4">(The three sorted <code>TrackTableEntry</code> records follow)</td>
+		<td colspan="4">（三个排序的 <code>TrackTableEntry</code> 记录如下）</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>20/4</td>
 		<td>0xFFFF0000</td>
 		<td>track</td>
-		<td class="description">Fixed-point representation of -1 (first of three tracks).</td>
+		<td class="description">-1 的定点表示（三个轨道中的第一个）。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>24/2</td>
 		<td>256</td>
 		<td>nameIndex</td>
-		<td class="description">The 'name' table index for the descriptive string "tight."</td>
+		<td class="description">描述性字符串“tight”的“名称”表索引。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>26/2</td>
 		<td>52</td>
 		<td>offset</td>
-		<td class="description">Offset of the two per-size tracking values for track number -1.</td>
+		<td class="description">轨道编号 -1 的两个按尺寸跟踪值的偏移量。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>28/4</td>
 		<td>0x00000000</td>
 		<td>track</td>
-		<td class="description">Fixed-point representation of 0 (second of three tracks).</td>
+		<td class="description">0 的定点表示（三个轨道中的第二个）。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>32/2</td>
 		<td>258</td>
 		<td>nameIndex</td>
-		<td class="description">The 'name' table index for the descriptive string "normal."</td>
+		<td class="description">描述性字符串“normal”的“name”表索引。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>34/2</td>
 		<td>60</td>
 		<td>offset</td>
-		<td class="description">Offset of the two per-size tracking values for track number 0.</td>
+		<td class="description">轨道编号 0 的两个按尺寸跟踪值的偏移量。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>38/4</td>
 		<td>0x00010000</td>
 		<td>track</td>
-		<td class="description">Fixed-point representation of +1 (third of three tracks).</td>
+		<td class="description">+1 的定点表示（三个轨道中的第三个）。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>40/2</td>
 		<td>257</td>
 		<td>nameIndex</td>
-		<td class="description">The 'name' table index for the descriptive string "loose."</td>
+		<td class="description">描述性字符串“loose”的“名称”表索引。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>42/2</td>
 		<td>56</td>
 		<td>offset</td>
-		<td class="description">Offset of the two per-size tracking values for track number +1.</td>
+		<td class="description">轨道编号的两个按尺寸跟踪值的偏移量 +1。</td>
 		</tr>
 		<tr align="left" valign="middle">
-		<td colspan="4">(The size subtable [i.e. the <code>sizeTable</code> array] is next)</td>
+		<td colspan="4">（接下来是大小子表[即 <code>sizeTable</code> 数组]）</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>44/4</td>
 		<td>0x000C0000</td>
 		<td>sizeTable[1]</td>
-		<td class="description">Fixed-point representation of 12 points.</td>
+		<td class="description">12 点的定点表示。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>48/4</td>
 		<td>0x00180000</td>
 		<td>sizeTable[2]</td>
-		<td class="description">Fixed-point representation of 24 points.</td>
+		<td class="description">24 点的定点表示。</td>
 		</tr>
 		<tr align="left" valign="middle">
-		<td colspan="4">(The per-size tracking values whose offsets were included in the <code>TrackTableEntry</code> records are included last)</td>
+		<td colspan="4">（最后包含 <code>TrackTableEntry</code> 记录中包含偏移量的按尺寸跟踪值）</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>52/2</td>
 		<td>-15</td>
 		<td>value</td>
-		<td class="description">FUnits of tight tracking at 12-point.</td>
+		<td class="description">FUnits 紧密跟踪 12 点。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>54/2</td>
 		<td>-7</td>
 		<td>value</td>
-		<td class="description">FUnits of tight tracking at 24-point.</td>
+		<td class="description">24 点紧密跟踪的 FUnits。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>56/2</td>
 		<td>50</td>
 		<td>value</td>
-		<td class="description">FUnits of loose tracking at 12-point.</td>
+		<td class="description">12 点松动跟踪的 F 单位。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>58/2</td>
 		<td>20</td>
 		<td>value</td>
-		<td class="description">FUnits of loose tracking at 24-point.</td>
+		<td class="description">24 点松散跟踪的 FUnits。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>60/2</td>
 		<td>0</td>
 		<td>value</td>
-		<td class="description">FUnits of normal tracking at 12-point.</td>
+		<td class="description">12 点正常跟踪的 F 单位。</td>
 		</tr>
 		<tr align="left" valign="middle">
 		<td>62/2</td>
 		<td>0</td>
 		<td>value</td>
-		<td class="description">FUnits of normal tracking at 24-point.</td>
+		<td class="description">24 点正常跟踪的 F 单位。</td>
 		</tr>
 	</tbody></table>
