@@ -118,3 +118,73 @@ Unicode GlyphIdentifier 仅应用于与单个 Unicode 字符对应的字形。�
 
 请注意，对于任何对齐，无需单独填充 GlyphIdentifiers。使用的填充是针对整个 GlyphInfo 结构的。
 
+### 字形组的结构
+
+当向用户呈现用于选择特定字形的界面时，应用程序通常希望知道字体中逻辑上相关的字形集（或者可能是在设计者眼中相关的字形集）。为了适应这种情况，GlyphGroup 结构会收集有关相关字形的信息。GlyphGroup 是 GlyphSubgroup 结构的集合，其中每个命名组都有一个名称（通过“名称”表索引）和一个字形索引集合，这些字形索引的顺序由设计者决定。例如，如果字体包含给定字母的许多不同花饰，则设计者可以为该字母的所有字形创建组，其中每个组都有一个名称（例如“长尾”、“粗茎”等）。
+
+“Zapf”表通过将每个字形与零个或多个字形组相关联来实现此目的，每个字形组又由一个或多个子组组成。有三种结构用于提供这些关联。
+
+#### GlyphSubgroup 结构
+GlyphSubgroup 是创建一组字形的基本结构。GlyphSubgroup 位于 extraInfo 空间中，格式如下：
+
+类型|名称|描述
+|-|-|-|
+|UInt16|nameIndex|此组名称在“名称”表中的索引；值为零表示此组没有名称
+|UInt16|numGlyphs|此命名组中的字形索引数；此值可能为零，在这种情况下不会有字形跟随，并且此名称是整个组的名称（此约定仅适用于组中的第一个名称）
+|UInt16|glyphs[]|此组的字形索引。
+
+注意：不要求 GlyphSubgroup 中的所有字形都用于同一个字符串。字体设计者可以完全自由地为字体中的所有标点符号添加一个 GlyphSubgroup。
+
+#### GlyphGroup 结构
+GlyphGroup 结构是 GlyphSubgroup 的数组，如下所示：
+
+类型|名称|描述
+|-|-|-|
+|UInt16|numGroups|低 14 位指定定义的 GlyphSubgroups 数量；它们一个接一个地跟在这个字段后面。如果最高位为 1，则每个 GlyphSubgroup 前面都有一个 16 位标志字。第 14 位应为 0。
+|(变量)|groups[]|此 GlyphGroup 的 GlyphSubgroups。每个组前面可能都有一个 16 位标志（取决于 numGroups 字段的高位）
+
+下列标志可供使用：
+|掩码|名称|描述
+|-|-|-|
+|0x8000|isAligned|如果此位为开，则此 GlyphSubgroup 会填充到 32 位边界
+|0x4000|isSubdivided|如果此位为开，则此 GlyphSubgroup 实际上是更大单个组的细分。如果此位为关，则此组是一个唯一的自包含组。应在组中用于呈现用户界面的部分中设置此位。
+|0x3FFF|（保留）|这些位当前未定义，必须为零
+
+#### GlyphGroupOffsetArray 结构
+GlyphGroupOffsetArray 结构是 GlyphGroups 偏移量的数组。它看起来像这样：
+
+类型|名称|描述
+|-|-|-|
+|UInt16|numGroups| 低 14 位指定数组中 GlyphGroups 的偏移量。第 15 位应为 0，第 14 位应为 1。
+|UInt16|padding| 此字段当前未使用，应设置为 0。它的存在是为了尽可能地在“Zapf”表中保持 32 位对齐。
+|UInt32|groupOffsets[]| 与此 GlyphGroupOffsetArray 关联的 GlyphGroups 的偏移量（相对于 extraInfo）。此字段中的第一个值表示要用作给定字形的“替代形式”的组，如 OS X 上的字符调色板中所示。如果包含此字形的组不包含字形的替代形式，则第一个 groupOffset 应为 0xFFFFFFFF。
+
+给定字形的 GlyphInfo.groupOffset 指向 GlyphGroup 或 GlyphGroupOffsetArray。每个都以一个两字节的 numGroups 字段开头，该字段的第 14 位用于区分两者。如果第 14 位为空，则这是一个 GlyphGroup。如果设置了第 14 位，则它是一个 GlyphGroupOffsetArray。
+
+通常，如果满足以下条件，GlyphInfo.groupOffset 应该指向 GlyphGroupOffsetArray：
+
+* 字形属于多个字形组，或者
+* 您想要明确标记字形所属的一个组作为同一字符串的备用字形集
+
+为了使代码更简洁，工具编写者还可以让每个 GlyphInfo.groupOffset 指向 GlyphGroupOffsetArray。
+
+**示例**
+让我们看几个示例，看看如何使用这些结构来表示各种字形分组。
+
+一个简单的组
+首先，在最简单的情况下，字体设计者希望在字体中包含十个不同的花饰符号，并且他们希望将它们放在一个组中，以便用户可以选择一个。在此示例中，每个符号字形的 GlyphInfo 结构将具有相同的 groupOffset 值，该偏移量将引用以下 GlyphGroup：
+
+|名称|值|描述|
+|-|-|-|
+|numGroups|0x0001|这是一个 GlyphGroup。所有 & 符号只有一个 GlyphSubgroup，并且前面没有标志字
+|nameIndex|300|此组名称在“名称”表中的索引（类似于“Swash Ampersands”）
+|nGlyphs|10|属于此组的字形数量
+|glyphs[]|...|& 符号的十个字形索引
+
+应用程序可以使用此信息向用户提供十个 & 符号的简单调色板以供选择。
+
+一个组内的多个子组
+在一个稍微复杂一点的示例中，设计人员仍然有十个花饰 & 符号，并希望用户看到所有这十个符号，但将它们分组到带有标签的组中，并带有一个总体标签，因此菜单看起来会像这样：
+
+![z1](./images/z1.jpg)
+
