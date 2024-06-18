@@ -188,3 +188,1434 @@ GlyphGroupOffsetArray 结构是 GlyphGroups 偏移量的数组。它看起来像
 
 ![z1](./images/z1.jpg)
 
+|名称|值|描述|
+|-|-|-|
+|numGroups| 0x8003| 第 14 位为清除，因此这是一个 GlyphGroup。第 16 位已设置，因此每个 GlyphSubgroup 都有一个前置标志字段。后面总共有三个 GlyphSubgroup。
+|flag| 0x4000| 此组是较大组的一个细分
+|nameIndex| 300| “Swash Ampersands”字符串的名称索引
+|nGlyphs| 0| 当 nGlyphs 为零时，nameIndex 标识整个分组
+|flag| 0xC000| 此组是较大组的一个细分，并填充到四字节边界
+|nameIndex| 301| ““Classic” 样式”字符串的名称索引
+|nGlyphs| 6| Classic 样式中有六个“&”符号
+|glyphs[]| ...|六个“&”符号的字形索引
+||0| 两个字节的填充|
+|flag|0x4000|此组是较大组的一个细分
+|nameIndex|302| ““Nouveau” 样式”字符串的名称索引
+|nGlyphs| 4| Nouveau 样式中有四个“&”符号
+|glyphs[]| ...| 四个“&”符号的字形索引
+
+（在实践中，只将三个 GlyphSubgroup 中的一个填充到长边界是没有意义的，但是为了说明标志的使用而包含的。）
+
+**多个组中的字形**
+还有一个更复杂的例子，涉及希望字形属于多个组的字体设计者。例如，我们前面示例中的十个 & 符号应具有刚刚描述的所有特征，但它们也应属于字体中所有标点符号的单独组。同样，每个 & 符号可以具有相同的 groupOffset 值，参考此 GlyphGroupOffsetArray 结构：
+
+|名称|值|描述|
+|-|-|-|
+|numGroups| 0x4002| 这是一个 GlyphGroupOffsetArray 结构（设置了第 14 位），其中有两个偏移量。
+|padding| 0| 填充字
+|offset[0]| … |偏移量（相对于 extraInfo）到 GlyphGroup 结构，用于替代 & 符号（如上所述）
+|offset[1]|… |偏移量（相对于 extraInfo）到 GlyphGroup 结构，用于标点符号字形
+
+句号字形也是标点符号组的成员，但（与 & 符号不同）它没有可供用户选择的替代字形。其 GlyphInfo 结构将包含指向 GlyphGroupOffsetArray 的偏移量，如下所示：
+
+|名称|值|描述|
+|-|-|-|
+|numGroups| 0x4002| 这是一个 GlyphGroupOffsetArray 结构（设置了第 14 位），其中有两个偏移量。
+|padding| 0| 填充字
+|offset[0]|0xFFFFFFFF|句点没有替代字形
+|offset[1]|…|标点符号字形的 GlyphGroup 结构的偏移量（相对于 extraInfo）
+
+标点符号 GlyphGroup 如下所示：
+
+|名称|值|描述|
+|-|-|-|
+|numGroups| 0x0001| 一个 GlyphSubgroup 紧随其后，且前面没有标志字
+|nameIndex| 350| “标点符号”字符串的名称索引
+|nGlyphs| 40| 以下数组中有 40 个标点符号字形（其中包括我们的十个 & 符号和一个句点）
+|glyphs[]| ...|所有标点符号的字形索引（同样，包括我们的十个 & 符号和一个句点）
+
+### FeatureInfo 结构
+FeatureInfo 结构标识强制显示此字形的布局引擎输入。在许多情况下，没有指定任何内容，因为给定的字形是字符串的默认字形。例如“A”，其中不需要发生任何其他事情。但是，在多个花饰、行首或行尾花饰或上下文形式的情况下，需要更多信息来让用户知道如何在布局一行时获取此字形。（当然，应用程序可以只向用户展示字体中所有字形的调色板，但有时这可能会让人不知所措！）
+
+这里有趣的问题之一是识别在选择某些字形时重要的上下文类型。
+
+FeatureInfo 的格式如下：
+|类型|名称|描述|
+|-|-|-|
+|UInt16|context|位字段，用于标识此字形出现的上下文。注意，可能有多个位处于打开状态！零值表示上下文无关。
+|||0x0001 = 行首
+|||0x0002 = 行中
+|||0x0004 = 行末
+|||0x0008 = 字首
+|||0x0010 = 字中
+|||0x0020 = 字末
+|||0x0040 = 自动分数分子
+|||0x0080 = 自动分数分母
+|UInt16| nAATFeatures| 用于选择此功能的 <type,selector> 对的数量
+|sfntFontRunFeature| features[]|<type,selector> 对。（此类型在 SFNTTypes.h 中定义，常量在 SFNTLayoutTypes.h 中）
+|UInt32| nOTTags| 用于选择此功能的 4 字节功能标签的数量。
+|UInt32| tags[]|标签数组。
+
+## 示例
+为了帮助阐明如何表示所有这些信息，让我们看一个具体的例子。假设我们有一个包含以下（有点奇怪的）内容的字体：
+
+![z2](./images/z2.jpg)
+
+数字是字形索引，图像显示实际字形。以下是此字体的示例“Zapf”文件：
+
+<table>
+  <tbody>
+  <tr align="left">
+    <th>偏移</th>
+    <th>值</th>
+    <th>描述</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>0x00010000</td>
+    <td class="description">版本 1.0 采用固定表示法</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>482</td>
+    <td class="description">Offset to start of <code>extraInfo</code> part</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">The offsets to the <code>GlyphInfo</code> records start here</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>68</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 0</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td>88</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 1</td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td>108</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 2</td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td>128</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 3</td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td>148</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 4</td>
+  </tr>
+  <tr>
+    <td>28</td>
+    <td>168</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 5</td>
+  </tr>
+  <tr>
+    <td>32</td>
+    <td>188</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 6</td>
+  </tr>
+  <tr>
+    <td>36</td>
+    <td>216</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 7</td>
+  </tr>
+  <tr>
+    <td>40</td>
+    <td>244</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 8</td>
+  </tr>
+  <tr>
+    <td>44</td>
+    <td>272</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 9</td>
+  </tr>
+  <tr>
+    <td>48</td>
+    <td>304</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 10</td>
+  </tr>
+  <tr>
+    <td>52</td>
+    <td>336</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 11</td>
+  </tr>
+  <tr>
+    <td>56</td>
+    <td>364</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 12</td>
+  </tr>
+  <tr>
+    <td>60</td>
+    <td>416</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 13</td>
+  </tr>
+  <tr>
+    <td>64</td>
+    <td>444</td>
+    <td class="description">Offset to <code>GlyphInfo</code> for glyph 14</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 0 starts here</td>
+  </tr>
+  <tr>
+    <td>68</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No GlyphGroup for this glyph</td>
+  </tr>
+  <tr>
+    <td>72</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No FeatureInfo for this glyph</td>
+  </tr>
+  <tr>
+    <td>76</td>
+    <td>1</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>78</td>
+    <td>0x0063</td>
+    <td class="description">Unicode for 'c'</td>
+  </tr>
+  <tr>
+    <td>80</td>
+    <td>1</td>
+    <td class="description">Number of <code>GlyphIdentifier</code>s which follow</td>
+  </tr>
+  <tr>
+    <td>82</td>
+    <td>0</td>
+    <td class="description">This is a universal name</td>
+  </tr>
+  <tr>
+    <td>84</td>
+    <td>1</td>
+    <td class="description">A byte of string length</td>
+  </tr>
+  <tr>
+    <td>85</td>
+    <td>'c'</td>
+    <td class="description">UTF-8 name 'c'</td>
+  </tr>
+  <tr>
+    <td>86</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 1 starts here</td>
+  </tr>
+  <tr>
+    <td>88</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No GlyphGroup for this glyph</td>
+  </tr>
+  <tr>
+    <td>92</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No FeatureInfo for this glyph</td>
+  </tr>
+  <tr>
+    <td>96</td>
+    <td>1</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>98</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f'</td>
+  </tr>
+  <tr>
+    <td>100</td>
+    <td>1</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>102</td>
+    <td>0</td>
+    <td class="description">This is a universal name</td>
+  </tr>
+  <tr>
+    <td>104</td>
+    <td>1</td>
+    <td class="description">A byte of string length</td>
+  </tr>
+  <tr>
+    <td>105</td>
+    <td>'f'</td>
+    <td class="description">UTF-8 name 'f'</td>
+  </tr>
+  <tr>
+    <td>106</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 2 starts here</td>
+  </tr>
+  <tr>
+    <td>108</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No GlyphGroup for this glyph</td>
+  </tr>
+  <tr>
+    <td>112</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No FeatureInfo for this glyph</td>
+  </tr>
+  <tr>
+    <td>116</td>
+    <td>1</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>118</td>
+    <td>0x0069</td>
+    <td class="description">Unicode for 'i'</td>
+  </tr>
+  <tr>
+    <td>120</td>
+    <td>1</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>122</td>
+    <td>0</td>
+    <td class="description">This is a universal name</td>
+  </tr>
+  <tr>
+    <td>124</td>
+    <td>1</td>
+    <td class="description">A byte of string length</td>
+  </tr>
+  <tr>
+    <td>125</td>
+    <td>'i'</td>
+    <td class="description">UTF-8 name 'i'</td>
+  </tr>
+  <tr>
+    <td>126</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 3 starts here</td>
+  </tr>
+  <tr>
+    <td>128</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No GlyphGroup for this glyph</td>
+  </tr>
+  <tr>
+    <td>132</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No FeatureInfo for this glyph</td>
+  </tr>
+  <tr>
+    <td>136</td>
+    <td>1</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>138</td>
+    <td>0x006C</td>
+    <td class="description">Unicode for 'l'</td>
+  </tr>
+  <tr>
+    <td>140</td>
+    <td>1</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>142</td>
+    <td>0</td>
+    <td class="description">This is a universal name</td>
+  </tr>
+  <tr>
+    <td>144</td>
+    <td>1</td>
+    <td class="description">A byte of string length</td>
+  </tr>
+  <tr>
+    <td>145</td>
+    <td>'l'</td>
+    <td class="description">UTF-8 name 'l'</td>
+  </tr>
+  <tr>
+    <td>146</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 4 starts here</td>
+  </tr>
+  <tr>
+    <td>148</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No GlyphGroup for this glyph</td>
+  </tr>
+  <tr>
+    <td>152</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No FeatureInfo for this glyph</td>
+  </tr>
+  <tr>
+    <td>156</td>
+    <td>1</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>158</td>
+    <td>0x0073</td>
+    <td class="description">Unicode for 's'</td>
+  </tr>
+  <tr>
+    <td>160</td>
+    <td>1</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>162</td>
+    <td>0</td>
+    <td class="description">This is a universal name</td>
+  </tr>
+  <tr>
+    <td>164</td>
+    <td>1</td>
+    <td class="description">A byte of string length</td>
+  </tr>
+  <tr>
+    <td>165</td>
+    <td>'s'</td>
+    <td class="description">UTF-8 name 's'</td>
+  </tr>
+  <tr>
+    <td>166</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 5 starts here</td>
+  </tr>
+  <tr>
+    <td>168</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No GlyphGroup for this glyph</td>
+  </tr>
+  <tr>
+    <td>172</td>
+    <td>0xFFFFFFFF</td>
+    <td class="description">No FeatureInfo for this glyph</td>
+  </tr>
+  <tr>
+    <td>176</td>
+    <td>1</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>178</td>
+    <td>0x0074</td>
+    <td class="description">Unicode for 't'</td>
+  </tr>
+  <tr>
+    <td>180</td>
+    <td>1</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>182</td>
+    <td>0</td>
+    <td class="description">This is a universal name</td>
+  </tr>
+  <tr>
+    <td>184</td>
+    <td>1</td>
+    <td class="description">A byte of string length</td>
+  </tr>
+  <tr>
+    <td>185</td>
+    <td>'t'</td>
+    <td class="description">UTF-8 name 't'</td>
+  </tr>
+  <tr>
+    <td>186</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 6 starts here</td>
+  </tr>
+  <tr>
+    <td>188</td>
+    <td>90</td>
+    <td class="description">Offset in extra info space to group information for this glyph</td>
+  </tr>
+  <tr>
+    <td>192</td>
+    <td>0</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>196</td>
+    <td>2</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>198</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f'</td>
+  </tr>
+  <tr>
+    <td>200</td>
+    <td>0x0069</td>
+    <td class="description">Unicode for 'i' (note we don't use the composed 0xFB01 value as it’s intended for compatibility only)</td>
+  </tr>
+  <tr>
+    <td>202</td>
+    <td>2</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>204</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>205</td>
+    <td>2</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>206</td>
+    <td>'fi'</td>
+    <td class="description">UTF-8 name 'fi'</td>
+  </tr>
+  <tr>
+    <td>208</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>209</td>
+    <td>3</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>210</td>
+    <td>'f_i'</td>
+    <td class="description">UTF-8 name 'f_i'</td>
+  </tr>
+  <tr>
+    <td>213</td>
+    <td>0</td>
+    <td class="description">Three bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 7 starts here</td>
+  </tr>
+  <tr>
+    <td>216</td>
+    <td>90</td>
+    <td class="description">Offset in extra info space to group information for this glyph</td>
+  </tr>
+  <tr>
+    <td>220</td>
+    <td>0</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>224</td>
+    <td>2</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>226</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f'</td>
+  </tr>
+  <tr>
+    <td>228</td>
+    <td>0x006C</td>
+    <td class="description">Unicode for 'l' (note we don't use the composed 0xFB02 value as it’s intended for compatibility only)</td>
+  </tr>
+  <tr>
+    <td>230</td>
+    <td>2</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>232</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>233</td>
+    <td>2</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>234</td>
+    <td>'fl'</td>
+    <td class="description">UTF-8 name 'fl'</td>
+  </tr>
+  <tr>
+    <td>236</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>237</td>
+    <td>3</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>238</td>
+    <td>'f_l'</td>
+    <td class="description">UTF-8 name 'f_l'</td>
+  </tr>
+  <tr>
+    <td>241</td>
+    <td>0</td>
+    <td class="description">Three bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 8 starts here</td>
+  </tr>
+  <tr>
+    <td>244</td>
+    <td>90</td>
+    <td class="description">Offset in extra info space to group information for this glyph</td>
+  </tr>
+  <tr>
+    <td>248</td>
+    <td>0</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>252</td>
+    <td>2</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>254</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f'</td>
+  </tr>
+  <tr>
+    <td>256</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f' (note we don't use the composed 0xFB00 value as it’s intended for compatibility only)</td>
+  </tr>
+  <tr>
+    <td>258</td>
+    <td>2</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>260</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>261</td>
+    <td>2</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>262</td>
+    <td>'ff'</td>
+    <td class="description">UTF-8 name 'fi'</td>
+  </tr>
+  <tr>
+    <td>264</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>265</td>
+    <td>3</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>266</td>
+    <td>'f_f'</td>
+    <td class="description">UTF-8 name 'f_i'</td>
+  </tr>
+  <tr>
+    <td>269</td>
+    <td>0</td>
+    <td class="description">Three bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 9 starts here</td>
+  </tr>
+  <tr>
+    <td>272</td>
+    <td>90</td>
+    <td class="description">Offset in extra info space to group information for this glyph</td>
+  </tr>
+  <tr>
+    <td>276</td>
+    <td>0</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>280</td>
+    <td>3</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>282</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f'</td>
+  </tr>
+  <tr>
+    <td>284</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f'</td>
+  </tr>
+  <tr>
+    <td>286</td>
+    <td>0x0069</td>
+    <td class="description">Unicode for 'i' (note we don't use the composed 0xFB03 value as it’s intended for compatibility only)</td>
+  </tr>
+  <tr>
+    <td>288</td>
+    <td>2</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>290</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>291</td>
+    <td>3</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>292</td>
+    <td>'ffi'</td>
+    <td class="description">UTF-8 name 'ffi'</td>
+  </tr>
+  <tr>
+    <td>295</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>296</td>
+    <td>5</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>297</td>
+    <td>'f_f_i'</td>
+    <td class="description">UTF-8 name 'f_f_i'</td>
+  </tr>
+  <tr>
+    <td>302</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 10 starts here</td>
+  </tr>
+  <tr>
+    <td>304</td>
+    <td>90</td>
+    <td class="description">Offset in extra info space to group information for this glyph</td>
+  </tr>
+  <tr>
+    <td>308</td>
+    <td>0</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>312</td>
+    <td>3</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>314</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f'</td>
+  </tr>
+  <tr>
+    <td>316</td>
+    <td>0x0066</td>
+    <td class="description">Unicode for 'f'</td>
+  </tr>
+  <tr>
+    <td>318</td>
+    <td>0x006C</td>
+    <td class="description">Unicode for 'l' (note we don't use the composed 0xFB04 value as it’s intended for compatibility only)</td>
+  </tr>
+  <tr>
+    <td>320</td>
+    <td>2</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>322</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>323</td>
+    <td>3</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>324</td>
+    <td>'ffl'</td>
+    <td class="description">UTF-8 name 'ffl'</td>
+  </tr>
+  <tr>
+    <td>327</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>328</td>
+    <td>5</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>329</td>
+    <td>'f_f_l'</td>
+    <td class="description">UTF-8 name 'f_f_l'</td>
+  </tr>
+  <tr>
+    <td>334</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 11 starts here</td>
+  </tr>
+  <tr>
+    <td>336</td>
+    <td>90</td>
+    <td class="description">Offset in extra info space to group information for this glyph</td>
+  </tr>
+  <tr>
+    <td>340</td>
+    <td>10</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>344</td>
+    <td>2</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>346</td>
+    <td>0x0063</td>
+    <td class="description">Unicode for 'c'</td>
+  </tr>
+  <tr>
+    <td>348</td>
+    <td>0x0074</td>
+    <td class="description">Unicode for 't'</td>
+  </tr>
+  <tr>
+    <td>350</td>
+    <td>2</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>352</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>353</td>
+    <td>2</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>354</td>
+    <td>'ct'</td>
+    <td class="description">UTF-8 name 'ct'</td>
+  </tr>
+  <tr>
+    <td>356</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>357</td>
+    <td>3</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>358</td>
+    <td>'c_t'</td>
+    <td class="description">UTF-8 name 'c_t'</td>
+  </tr>
+  <tr>
+    <td>361</td>
+    <td>0</td>
+    <td class="description">Three bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 12 starts here</td>
+  </tr>
+  <tr>
+    <td>364</td>
+    <td>80</td>
+    <td class="description">Offset to group information for this group</td>
+  </tr>
+  <tr>
+    <td>368</td>
+    <td>24</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>372</td>
+    <td>2</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>374</td>
+    <td>0x0073</td>
+    <td class="description">Unicode for 's'</td>
+  </tr>
+  <tr>
+    <td>376</td>
+    <td>0x0074</td>
+    <td class="description">Unicode for 't' (note we don't use the composed 0xFB05 value as it’s intended for compatibility only)</td>
+  </tr>
+  <tr>
+    <td>378</td>
+    <td>3</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>380</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>381</td>
+    <td>10</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>382</td>
+    <td>'stoldstyle'</td>
+    <td class="description">UTF-8 name 'stoldstyle'</td>
+  </tr>
+  <tr>
+    <td>392</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>393</td>
+    <td>12</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>394</td>
+    <td>'s_t.oldstyle'</td>
+    <td class="description">UTF-8 name 's_t.oldstyle'</td>
+  </tr>
+  <tr>
+    <td>406</td>
+    <td>68</td>
+    <td class="description"><code>'name'</code> table entry follows</td>
+  </tr>
+  <tr>
+    <td>407</td>
+    <td>290</td>
+    <td class="description"><code>'name'</code> table entry for version history</td>
+  </tr>
+  <tr>
+    <td>409</td>
+    <td>71</td>
+    <td class="description"><code>'name'</code> table entry follows</td>
+  </tr>
+  <tr>
+    <td>410</td>
+    <td>291</td>
+    <td class="description"><code>'name'</code> table entry for guide for use</td>
+  </tr>
+  <tr>
+    <td>412</td>
+    <td>72</td>
+    <td class="description"><code>'name'</code> table entry follows</td>
+  </tr>
+  <tr>
+    <td>413</td>
+    <td>292</td>
+    <td class="description"><code>'name'</code> table entry for history of this glyph</td>
+  </tr>
+  <tr>
+    <td>415</td>
+    <td>0</td>
+    <td class="description">Padding</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 13 starts here</td>
+  </tr>
+  <tr>
+    <td>416</td>
+    <td>80</td>
+    <td class="description">Offset to group information for this group</td>
+  </tr>
+  <tr>
+    <td>420</td>
+    <td>10</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>424</td>
+    <td>2</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>426</td>
+    <td>0x0073</td>
+    <td class="description">Unicode for 's'</td>
+  </tr>
+  <tr>
+    <td>428</td>
+    <td>0x0074</td>
+    <td class="description">Unicode for 't' (note we don't use the composed 0xFB06 value; these Unicodes are always decomposed)</td>
+  </tr>
+  <tr>
+    <td>430</td>
+    <td>3</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>432</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>433</td>
+    <td>2</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>434</td>
+    <td>'st'</td>
+    <td class="description">UTF-8 name 'st'</td>
+  </tr>
+  <tr>
+    <td>436</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>437</td>
+    <td>3</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>438</td>
+    <td>'s_t'</td>
+    <td class="description">UTF-8 name 's_t'</td>
+  </tr>
+  <tr>
+    <td>441</td>
+    <td>127</td>
+    <td class="description">Flags field follows</td>
+  </tr>
+  <tr>
+    <td>442</td>
+    <td>0x8000</td>
+    <td class="description">This is the default glyph for the 'st' string</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">GlyphInfo for glyph 14 starts here</td>
+  </tr>
+  <tr>
+    <td>444</td>
+    <td>80</td>
+    <td class="description">Offset to group information for this group</td>
+  </tr>
+  <tr>
+    <td>448</td>
+    <td>44</td>
+    <td class="description">Offset in extra info space to FeatureInfo</td>
+  </tr>
+  <tr>
+    <td>452</td>
+    <td>2</td>
+    <td class="description">Number of 16-bit Unicode values which follow</td>
+  </tr>
+  <tr>
+    <td>454</td>
+    <td>0x0073</td>
+    <td class="description">Unicode for 's'</td>
+  </tr>
+  <tr>
+    <td>456</td>
+    <td>0x0074</td>
+    <td class="description">Unicode for 't'</td>
+  </tr>
+  <tr>
+    <td>458</td>
+    <td>2</td>
+    <td class="description">Number of GlyphIdentifiers which follow</td>
+  </tr>
+  <tr>
+    <td>460</td>
+    <td>1</td>
+    <td class="description">Apple name follows</td>
+  </tr>
+  <tr>
+    <td>461</td>
+    <td>7</td>
+    <td class="description">Length of Apple name</td>
+  </tr>
+  <tr>
+    <td>462</td>
+    <td>'stfinal'</td>
+    <td class="description">UTF-8 name 'st'</td>
+  </tr>
+  <tr>
+    <td>469</td>
+    <td>2</td>
+    <td class="description">Adobe name follows</td>
+  </tr>
+  <tr>
+    <td>470</td>
+    <td>9</td>
+    <td class="description">Length of Adobe name</td>
+  </tr>
+  <tr>
+    <td>471</td>
+    <td>'s_t.final'</td>
+    <td class="description">UTF-8 name 's_t.final'</td>
+  </tr>
+  <tr>
+    <td>480</td>
+    <td>0</td>
+    <td class="description">Two bytes of padding for long alignment</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">Extra info space</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">FeatureInfo for common ligatures starts here (offset 0)</td>
+  </tr>
+  <tr>
+    <td>482</td>
+    <td>0</td>
+    <td class="description">Context is irrelevant for the common ligatures</td>
+  </tr>
+  <tr>
+    <td>484</td>
+    <td>1</td>
+    <td class="description">One AAT-style &lt;type,selector&gt; pair follows</td>
+  </tr>
+  <tr>
+    <td>486</td>
+    <td>1</td>
+    <td class="description">"Ligature" type</td>
+  </tr>
+  <tr>
+    <td>488</td>
+    <td>2</td>
+    <td class="description">"Common ligatures on" selector</td>
+  </tr>
+  <tr>
+    <td>490</td>
+    <td>0</td>
+    <td class="description">No OpenType feature tags follow</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">FeatureInfo for rare ligatures starts here (offset 10)</td>
+  </tr>
+  <tr>
+    <td>492</td>
+    <td>0</td>
+    <td class="description">Context is irrelevant for the rare ligatures</td>
+  </tr>
+  <tr>
+    <td>494</td>
+    <td>1</td>
+    <td class="description">One AAT-style &lt;type,selector&gt; pair follows</td>
+  </tr>
+  <tr>
+    <td>496</td>
+    <td>1</td>
+    <td class="description">"Ligature" type</td>
+  </tr>
+  <tr>
+    <td>498</td>
+    <td>4</td>
+    <td class="description">"Rare ligatures on" selector</td>
+  </tr>
+  <tr>
+    <td>500</td>
+    <td>1</td>
+    <td class="description">One OpenType feature follows</td>
+  </tr>
+  <tr>
+    <td>502</td>
+    <td>'rlig'</td>
+    <td class="description">"Rare ligatures" OpenType tag</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">FeatureInfo for rare oldstyle ligatures starts here (offset 24)</td>
+  </tr>
+  <tr>
+    <td>506</td>
+    <td>0x0018</td>
+    <td class="description">Context is word-start or word-middle</td>
+  </tr>
+  <tr>
+    <td>508</td>
+    <td>2</td>
+    <td class="description">Two AAT-style &lt;type,selector&gt; pairs follow</td>
+  </tr>
+  <tr>
+    <td>510</td>
+    <td>1</td>
+    <td class="description">"Ligature" type</td>
+  </tr>
+  <tr>
+    <td>512</td>
+    <td>4</td>
+    <td class="description">"Rare ligatures on" selector</td>
+  </tr>
+  <tr>
+    <td>514</td>
+    <td>8</td>
+    <td class="description">"Smart swashes" type</td>
+  </tr>
+  <tr>
+    <td>518</td>
+    <td>8</td>
+    <td class="description">"Non-final swashes on" selector</td>
+  </tr>
+  <tr>
+    <td>520</td>
+    <td>1</td>
+    <td class="description">One OpenType feature follows</td>
+  </tr>
+  <tr>
+    <td>522</td>
+    <td>'rlig'</td>
+    <td class="description">"Rare ligatures" OpenType tag</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">FeatureInfo for rare final swash ligatures starts here (offset 44)</td>
+  </tr>
+  <tr>
+    <td>526</td>
+    <td>0x0024</td>
+    <td class="description">Context is word-final or line-final</td>
+  </tr>
+  <tr>
+    <td>528</td>
+    <td>3</td>
+    <td class="description">Two AAT-style &lt;type,selector&gt; pairs follow</td>
+  </tr>
+  <tr>
+    <td>530</td>
+    <td>1</td>
+    <td class="description">"Ligature" type</td>
+  </tr>
+  <tr>
+    <td>532</td>
+    <td>4</td>
+    <td class="description">"Rare ligatures on" selector</td>
+  </tr>
+  <tr>
+    <td>534</td>
+    <td>8</td>
+    <td class="description">"Smart swashes" type</td>
+  </tr>
+  <tr>
+    <td>536</td>
+    <td>2</td>
+    <td class="description">"Word-final swashes on" selector</td>
+  </tr>
+  <tr>
+    <td>538</td>
+    <td>8</td>
+    <td class="description">"Smart swashes" type</td>
+  </tr>
+  <tr>
+    <td>540</td>
+    <td>6</td>
+    <td class="description">"Line-final swashes on" selector</td>
+  </tr>
+  <tr>
+    <td>542</td>
+    <td>1</td>
+    <td class="description">One OpenType feature follows</td>
+  </tr>
+  <tr>
+    <td>544</td>
+    <td>'rlig'</td>
+    <td class="description">"Rare ligatures" OpenType tag</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">Group information for "st" variants (offset 66)</td>
+  </tr>
+  <tr>
+    <td>548</td>
+    <td>0x4002</td>
+    <td class="description">This is a GlyphGroupOffsetArray with two entries</td>
+  </tr>
+  <tr>
+    <td>552</td>
+    <td>0</td>
+    <td class="description">Padding</td>
+  </tr>
+  <tr>
+    <td>554</td>
+    <td>0x00000050</td>
+    <td class="description">Alternate glyphs group for the "st" glyphs</td>
+  </tr>
+  <tr>
+    <td>558</td>
+    <td>0x00000058</td>
+    <td class="description">Ligature glyph group</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">Alternate glyphs for "st" variants (offset 80)</td>
+  </tr>
+  <tr>
+    <td>562</td>
+    <td>0x0001</td>
+    <td class="description">This is a GlyphGroup containing one GlyphSubgroup and no flags</td>
+  </tr>
+  <tr>
+    <td>564</td>
+    <td>0</td>
+    <td class="description">No name for this group</td>
+  </tr>
+  <tr>
+    <td>566</td>
+    <td>3</td>
+    <td class="description">There are three glyphs</td>
+  </tr>
+  <tr>
+    <td>568</td>
+    <td>12</td>
+    <td class="description">Glyph 12</td>
+  </tr>
+  <tr>
+    <td>570</td>
+    <td>13</td>
+    <td class="description">Glyph 13</td>
+  </tr>
+  <tr>
+    <td>572</td>
+    <td>14</td>
+    <td class="description">Glyph 14</td>
+  </tr>
+  <tr style="font-style: italic;">
+    <td colspan="3">Group information for all ligatures (offset 90)</td>
+  </tr>
+  <tr>
+    <td>574</td>
+    <td>0x8003</td>
+    <td class="description">This is a GlyphGroup containing two GlyphSubgroups with preceding flags</td>
+  </tr>
+  <tr>
+    <td>576</td>
+    <td>0x4000</td>
+    <td class="description">This group is one subdivision of a larger group</td>
+  </tr>
+  <tr>
+    <td>578</td>
+    <td>300</td>
+    <td class="description"><code>'name'</code> table entry for the "Ligatures" string</td>
+  </tr>
+  <tr>
+    <td>580</td>
+    <td>0</td>
+    <td class="description">No actual glyphs; this is the name for the entire set of GlyphSubgroups</td>
+  </tr>
+  <tr>
+    <td>582</td>
+    <td>0x4000</td>
+    <td class="description">This group is one subdivision of a larger group</td>
+  </tr>
+  <tr>
+    <td>584</td>
+    <td>301</td>
+    <td class="description"><code>'name'</code> table entry for the "Common Ligatures" string</td>
+  </tr>
+  <tr>
+    <td>586</td>
+    <td>5</td>
+    <td class="description">Five glyphs in this GlyphSubgroup</td>
+  </tr>
+  <tr>
+    <td>588</td>
+    <td>6</td>
+    <td class="description">Glyph 6 (fi)</td>
+  </tr>
+  <tr>
+    <td>590</td>
+    <td>7</td>
+    <td class="description">Glyph 7 (fl)</td>
+  </tr>
+  <tr>
+    <td>592</td>
+    <td>8</td>
+    <td class="description">Glyph 8 (ff)</td>
+  </tr>
+  <tr>
+    <td>594</td>
+    <td>9</td>
+    <td class="description">Glyph 9 (ffi)</td>
+  </tr>
+  <tr>
+    <td>596</td>
+    <td>10</td>
+    <td class="description">Glyph 10 (ffl)</td>
+  </tr>
+  <tr>
+    <td>598</td>
+    <td>0x4000</td>
+    <td class="description">This group is one subdivision of a larger group</td>
+  </tr>
+  <tr>
+    <td>600</td>
+    <td>302</td>
+    <td class="description"><code>'name'</code> table entry for the "Rare Ligatures" string</td>
+  </tr>
+  <tr>
+    <td>602</td>
+    <td>4</td>
+    <td class="description">Four glyphs in this GlyphSubgroup</td>
+  </tr>
+  <tr>
+    <td>604</td>
+    <td>11</td>
+    <td class="description">Glyph 11 (ct)</td>
+  </tr>
+  <tr>
+    <td>606</td>
+    <td>12</td>
+    <td class="description">Glyph 13 (slong-t)</td>
+  </tr>
+  <tr>
+    <td>608</td>
+    <td>13</td>
+    <td class="description">Glyph 13 (st)</td>
+  </tr>
+  <tr>
+    <td>610</td>
+    <td>14</td>
+    <td class="description">Glyph 14 (s-tswash)</td>
+  </tr>
+  </tbody>
+</table>
