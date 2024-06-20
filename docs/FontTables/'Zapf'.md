@@ -278,884 +278,884 @@ FeatureInfo 的格式如下：
   <tr>
     <td>4</td>
     <td>482</td>
-    <td class="description">Offset to start of <code>extraInfo</code> part</td>
+    <td class="description"><code>extraInfo</code> 部分开始的偏移量</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">The offsets to the <code>GlyphInfo</code> records start here</td>
+    <td colspan="3"><code>GlyphInfo</code> 记录的偏移量从这里开始</td>
   </tr>
   <tr>
     <td>8</td>
     <td>68</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 0</td>
+    <td class="description">字形 0 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>12</td>
     <td>88</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 1</td>
+    <td class="description">字形 1 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>16</td>
     <td>108</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 2</td>
+    <td class="description">字形 2 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>20</td>
     <td>128</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 3</td>
+    <td class="description">字形 3 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>24</td>
     <td>148</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 4</td>
+    <td class="description">字形 4 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>28</td>
     <td>168</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 5</td>
+    <td class="description">字形 5 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>32</td>
     <td>188</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 6</td>
+    <td class="description">字形 6 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>36</td>
     <td>216</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 7</td>
+    <td class="description">字形 7 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>40</td>
     <td>244</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 8</td>
+    <td class="description">字形 8 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>44</td>
     <td>272</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 9</td>
+    <td class="description">字形 9 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>48</td>
     <td>304</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 10</td>
+    <td class="description">字形 10 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>52</td>
     <td>336</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 11</td>
+    <td class="description">字形 11 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>56</td>
     <td>364</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 12</td>
+    <td class="description">字形 12 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>60</td>
     <td>416</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 13</td>
+    <td class="description">字形 13 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr>
     <td>64</td>
     <td>444</td>
-    <td class="description">Offset to <code>GlyphInfo</code> for glyph 14</td>
+    <td class="description">字形 14 的 <code>GlyphInfo</code> 偏移量</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 0 starts here</td>
+    <td colspan="3">字形 0 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>68</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No GlyphGroup for this glyph</td>
+    <td class="description">此字形没有 GlyphGroup</td>
   </tr>
   <tr>
     <td>72</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No FeatureInfo for this glyph</td>
+    <td class="description">该字形没有功能信息</td>
   </tr>
   <tr>
     <td>76</td>
     <td>1</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>78</td>
     <td>0x0063</td>
-    <td class="description">Unicode for 'c'</td>
+    <td class="description">'c' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>80</td>
     <td>1</td>
-    <td class="description">Number of <code>GlyphIdentifier</code>s which follow</td>
+    <td class="description">后面的 <code>GlyphIdentifier</code> 数量</td>
   </tr>
   <tr>
     <td>82</td>
     <td>0</td>
-    <td class="description">This is a universal name</td>
+    <td class="description">这是一个通用名称</td>
   </tr>
   <tr>
     <td>84</td>
     <td>1</td>
-    <td class="description">A byte of string length</td>
+    <td class="description">字符串长度的一个字节</td>
   </tr>
   <tr>
     <td>85</td>
     <td>'c'</td>
-    <td class="description">UTF-8 name 'c'</td>
+    <td class="description">UTF-8 名称“c”</td>
   </tr>
   <tr>
     <td>86</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 1 starts here</td>
+    <td colspan="3">字形 1 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>88</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No GlyphGroup for this glyph</td>
+    <td class="description">此字形没有 GlyphGroup</td>
   </tr>
   <tr>
     <td>92</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No FeatureInfo for this glyph</td>
+    <td class="description">该字形没有功能信息</td>
   </tr>
   <tr>
     <td>96</td>
     <td>1</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>98</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f'</td>
+    <td class="description">'f' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>100</td>
     <td>1</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>102</td>
     <td>0</td>
-    <td class="description">This is a universal name</td>
+    <td class="description">这是一个通用名称</td>
   </tr>
   <tr>
     <td>104</td>
     <td>1</td>
-    <td class="description">A byte of string length</td>
+    <td class="description">字符串长度的一个字节</td>
   </tr>
   <tr>
     <td>105</td>
     <td>'f'</td>
-    <td class="description">UTF-8 name 'f'</td>
+    <td class="description">UTF-8 名称“f”</td>
   </tr>
   <tr>
     <td>106</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 2 starts here</td>
+    <td colspan="3">字形 2 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>108</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No GlyphGroup for this glyph</td>
+    <td class="description">此字形没有 GlyphGroup</td>
   </tr>
   <tr>
     <td>112</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No FeatureInfo for this glyph</td>
+    <td class="description">该字形没有功能信息</td>
   </tr>
   <tr>
     <td>116</td>
     <td>1</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>118</td>
     <td>0x0069</td>
-    <td class="description">Unicode for 'i'</td>
+    <td class="description">'i' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>120</td>
     <td>1</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>122</td>
     <td>0</td>
-    <td class="description">This is a universal name</td>
+    <td class="description">这是一个通用名称</td>
   </tr>
   <tr>
     <td>124</td>
     <td>1</td>
-    <td class="description">A byte of string length</td>
+    <td class="description">字符串长度的一个字节</td>
   </tr>
   <tr>
     <td>125</td>
     <td>'i'</td>
-    <td class="description">UTF-8 name 'i'</td>
+    <td class="description">UTF-8 名称“i”</td>
   </tr>
   <tr>
     <td>126</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 3 starts here</td>
+    <td colspan="3">字形 3 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>128</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No GlyphGroup for this glyph</td>
+    <td class="description">此字形没有 GlyphGroup</td>
   </tr>
   <tr>
     <td>132</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No FeatureInfo for this glyph</td>
+    <td class="description">该字形没有功能信息</td>
   </tr>
   <tr>
     <td>136</td>
     <td>1</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>138</td>
     <td>0x006C</td>
-    <td class="description">Unicode for 'l'</td>
+    <td class="description">'l' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>140</td>
     <td>1</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>142</td>
     <td>0</td>
-    <td class="description">This is a universal name</td>
+    <td class="description">这是一个通用名称</td>
   </tr>
   <tr>
     <td>144</td>
     <td>1</td>
-    <td class="description">A byte of string length</td>
+    <td class="description">字符串长度的一个字节</td>
   </tr>
   <tr>
     <td>145</td>
     <td>'l'</td>
-    <td class="description">UTF-8 name 'l'</td>
+    <td class="description">UTF-8 名称“l”</td>
   </tr>
   <tr>
     <td>146</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 4 starts here</td>
+    <td colspan="3">字形 4 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>148</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No GlyphGroup for this glyph</td>
+    <td class="description">此字形没有 GlyphGroup
   </tr>
   <tr>
     <td>152</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No FeatureInfo for this glyph</td>
+    <td class="description">该字形没有功能信息</td>
   </tr>
   <tr>
     <td>156</td>
     <td>1</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>158</td>
     <td>0x0073</td>
-    <td class="description">Unicode for 's'</td>
+    <td class="description">'s' 的 Unicode</td>
   </tr>
   <tr>
     <td>160</td>
     <td>1</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>162</td>
     <td>0</td>
-    <td class="description">This is a universal name</td>
+    <td class="description">这是一个通用名称</td>
   </tr>
   <tr>
     <td>164</td>
     <td>1</td>
-    <td class="description">A byte of string length</td>
+    <td class="description">字符串长度的一个字节</td>
   </tr>
   <tr>
     <td>165</td>
     <td>'s'</td>
-    <td class="description">UTF-8 name 's'</td>
+    <td class="description">UTF-8 名称 's'</td>
   </tr>
   <tr>
     <td>166</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 5 starts here</td>
+    <td colspan="3">字形 5 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>168</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No GlyphGroup for this glyph</td>
+    <td class="description">此字形没有 GlyphGroup</td>
   </tr>
   <tr>
     <td>172</td>
     <td>0xFFFFFFFF</td>
-    <td class="description">No FeatureInfo for this glyph</td>
+    <td class="description">该字形没有功能信息</td>
   </tr>
   <tr>
     <td>176</td>
     <td>1</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>178</td>
     <td>0x0074</td>
-    <td class="description">Unicode for 't'</td>
+    <td class="description">'t' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>180</td>
     <td>1</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>182</td>
     <td>0</td>
-    <td class="description">This is a universal name</td>
+    <td class="description">这是一个通用名称</td>
   </tr>
   <tr>
     <td>184</td>
     <td>1</td>
-    <td class="description">A byte of string length</td>
+    <td class="description">字符串长度的一个字节</td>
   </tr>
   <tr>
     <td>185</td>
     <td>'t'</td>
-    <td class="description">UTF-8 name 't'</td>
+    <td class="description">UTF-8 名称“t”</td>
   </tr>
   <tr>
     <td>186</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 6 starts here</td>
+    <td colspan="3">字形 6 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>188</td>
     <td>90</td>
-    <td class="description">Offset in extra info space to group information for this glyph</td>
+    <td class="description">额外信息空间中的偏移量以对该字形的信息进行分组</td>
   </tr>
   <tr>
     <td>192</td>
     <td>0</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>196</td>
     <td>2</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>198</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f'</td>
+    <td class="description">'f' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>200</td>
     <td>0x0069</td>
-    <td class="description">Unicode for 'i' (note we don't use the composed 0xFB01 value as it’s intended for compatibility only)</td>
+    <td class="description">“i”的 Unicode（请注意，我们不使用组合的 0xFB01 值，因为它仅用于兼容性）</td>
   </tr>
   <tr>
     <td>202</td>
     <td>2</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>204</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>205</td>
     <td>2</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>206</td>
     <td>'fi'</td>
-    <td class="description">UTF-8 name 'fi'</td>
+    <td class="description">UTF-8 名称“fi”</td>
   </tr>
   <tr>
     <td>208</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>209</td>
     <td>3</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>210</td>
     <td>'f_i'</td>
-    <td class="description">UTF-8 name 'f_i'</td>
+    <td class="description">UTF-8 名称 'f_i'</td>
   </tr>
   <tr>
     <td>213</td>
     <td>0</td>
-    <td class="description">Three bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的三个字节的填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 7 starts here</td>
+    <td colspan="3">字形 7 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>216</td>
     <td>90</td>
-    <td class="description">Offset in extra info space to group information for this glyph</td>
+    <td class="description">额外信息空间中的偏移量以对该字形的信息进行分组</td>
   </tr>
   <tr>
     <td>220</td>
     <td>0</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>224</td>
     <td>2</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>226</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f'</td>
+    <td class="description">'f' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>228</td>
     <td>0x006C</td>
-    <td class="description">Unicode for 'l' (note we don't use the composed 0xFB02 value as it’s intended for compatibility only)</td>
+    <td class="description">“l”的 Unicode（请注意，我们不使用组合的 0xFB02 值，因为它仅用于兼容性）</td>
   </tr>
   <tr>
     <td>230</td>
     <td>2</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>232</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>233</td>
     <td>2</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>234</td>
     <td>'fl'</td>
-    <td class="description">UTF-8 name 'fl'</td>
+    <td class="description">UTF-8 名称“fl”</td>
   </tr>
   <tr>
     <td>236</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>237</td>
     <td>3</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>238</td>
     <td>'f_l'</td>
-    <td class="description">UTF-8 name 'f_l'</td>
+    <td class="description">UTF-8 名称 'f_l'</td>
   </tr>
   <tr>
     <td>241</td>
     <td>0</td>
-    <td class="description">Three bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的三个字节的填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 8 starts here</td>
+    <td colspan="3">字形 8 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>244</td>
     <td>90</td>
-    <td class="description">Offset in extra info space to group information for this glyph</td>
+    <td class="description">额外信息空间中的偏移量以对该字形的信息进行分组</td>
   </tr>
   <tr>
     <td>248</td>
     <td>0</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>252</td>
     <td>2</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>254</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f'</td>
+    <td class="description">'f' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>256</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f' (note we don't use the composed 0xFB00 value as it’s intended for compatibility only)</td>
+    <td class="description">“f”的 Unicode（请注意，我们不使用组合的 0xFB00 值，因为它仅用于兼容性）</td>
   </tr>
   <tr>
     <td>258</td>
     <td>2</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>260</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>261</td>
     <td>2</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>262</td>
     <td>'ff'</td>
-    <td class="description">UTF-8 name 'fi'</td>
+    <td class="description">UTF-8 名称“fi”</td>
   </tr>
   <tr>
     <td>264</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>265</td>
     <td>3</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>266</td>
     <td>'f_f'</td>
-    <td class="description">UTF-8 name 'f_i'</td>
+    <td class="description">UTF-8 名称 'f_i'</td>
   </tr>
   <tr>
     <td>269</td>
     <td>0</td>
-    <td class="description">Three bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的三个字节的填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 9 starts here</td>
+    <td colspan="3">字形 9 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>272</td>
     <td>90</td>
-    <td class="description">Offset in extra info space to group information for this glyph</td>
+    <td class="description">额外信息空间中的偏移量以对该字形的信息进行分组</td>
   </tr>
   <tr>
     <td>276</td>
     <td>0</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>280</td>
     <td>3</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>282</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f'</td>
+    <td class="description">'f' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>284</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f'</td>
+    <td class="description">'f' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>286</td>
     <td>0x0069</td>
-    <td class="description">Unicode for 'i' (note we don't use the composed 0xFB03 value as it’s intended for compatibility only)</td>
+    <td class="description">“i”的 Unicode（请注意，我们不使用组合的 0xFB03 值，因为它仅用于兼容性）</td>
   </tr>
   <tr>
     <td>288</td>
     <td>2</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>290</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>291</td>
     <td>3</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>292</td>
     <td>'ffi'</td>
-    <td class="description">UTF-8 name 'ffi'</td>
+    <td class="description">UTF-8 名称 'ffi'</td>
   </tr>
   <tr>
     <td>295</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>296</td>
     <td>5</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>297</td>
     <td>'f_f_i'</td>
-    <td class="description">UTF-8 name 'f_f_i'</td>
+    <td class="description">UTF-8 名称“f_f_i”</td>
   </tr>
   <tr>
     <td>302</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 10 starts here</td>
+    <td colspan="3">字形 10 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>304</td>
     <td>90</td>
-    <td class="description">Offset in extra info space to group information for this glyph</td>
+    <td class="description">额外信息空间中的偏移量以对该字形的信息进行分组</td>
   </tr>
   <tr>
     <td>308</td>
     <td>0</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>312</td>
     <td>3</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>314</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f'</td>
+    <td class="description">'f' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>316</td>
     <td>0x0066</td>
-    <td class="description">Unicode for 'f'</td>
+    <td class="description">'f' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>318</td>
     <td>0x006C</td>
-    <td class="description">Unicode for 'l' (note we don't use the composed 0xFB04 value as it’s intended for compatibility only)</td>
+    <td class="description">“l”的 Unicode（请注意，我们不使用组合的 0xFB04 值，因为它仅用于兼容性）</td>
   </tr>
   <tr>
     <td>320</td>
     <td>2</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>322</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>323</td>
     <td>3</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>324</td>
     <td>'ffl'</td>
-    <td class="description">UTF-8 name 'ffl'</td>
+    <td class="description">UTF-8 名称“ffl”</td>
   </tr>
   <tr>
     <td>327</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>328</td>
     <td>5</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>329</td>
     <td>'f_f_l'</td>
-    <td class="description">UTF-8 name 'f_f_l'</td>
+    <td class="description">UTF-8 名称“f_f_l”</td>
   </tr>
   <tr>
     <td>334</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 11 starts here</td>
+    <td colspan="3">字形 11 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>336</td>
     <td>90</td>
-    <td class="description">Offset in extra info space to group information for this glyph</td>
+    <td class="description">额外信息空间中的偏移量以对该字形的信息进行分组</td>
   </tr>
   <tr>
     <td>340</td>
     <td>10</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>344</td>
     <td>2</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>346</td>
     <td>0x0063</td>
-    <td class="description">Unicode for 'c'</td>
+    <td class="description">'c' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>348</td>
     <td>0x0074</td>
-    <td class="description">Unicode for 't'</td>
+    <td class="description">'t' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>350</td>
     <td>2</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>352</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>353</td>
     <td>2</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>354</td>
     <td>'ct'</td>
-    <td class="description">UTF-8 name 'ct'</td>
+    <td class="description">UTF-8 名称 'ct'</td>
   </tr>
   <tr>
     <td>356</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>357</td>
     <td>3</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>358</td>
     <td>'c_t'</td>
-    <td class="description">UTF-8 name 'c_t'</td>
+    <td class="description">UTF-8 名称 'c_t'</td>
   </tr>
   <tr>
     <td>361</td>
     <td>0</td>
-    <td class="description">Three bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的三个字节的填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 12 starts here</td>
+    <td colspan="3">字形 12 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>364</td>
     <td>80</td>
-    <td class="description">Offset to group information for this group</td>
+    <td class="description">该组的组信息的偏移量</td>
   </tr>
   <tr>
     <td>368</td>
     <td>24</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>372</td>
     <td>2</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>374</td>
     <td>0x0073</td>
-    <td class="description">Unicode for 's'</td>
+    <td class="description">'s' 的 Unicode</td>
   </tr>
   <tr>
     <td>376</td>
     <td>0x0074</td>
-    <td class="description">Unicode for 't' (note we don't use the composed 0xFB05 value as it’s intended for compatibility only)</td>
+    <td class="description">“t”的 Unicode（请注意，我们不使用组合的 0xFB05 值，因为它仅用于兼容性）</td>
   </tr>
   <tr>
     <td>378</td>
     <td>3</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>380</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>381</td>
     <td>10</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>382</td>
     <td>'stoldstyle'</td>
-    <td class="description">UTF-8 name 'stoldstyle'</td>
+    <td class="description">UTF-8 名称“stoldstyle”</td>
   </tr>
   <tr>
     <td>392</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>393</td>
     <td>12</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>394</td>
     <td>'s_t.oldstyle'</td>
-    <td class="description">UTF-8 name 's_t.oldstyle'</td>
+    <td class="description">UTF-8 名称 's_t.oldstyle'</td>
   </tr>
   <tr>
     <td>406</td>
     <td>68</td>
-    <td class="description"><code>'name'</code> table entry follows</td>
+    <td class="description"><code>'name'</code> 表条目如下</td>
   </tr>
   <tr>
     <td>407</td>
     <td>290</td>
-    <td class="description"><code>'name'</code> table entry for version history</td>
+    <td class="description"><code>'name'</code> 版本历史记录表条目</td>
   </tr>
   <tr>
     <td>409</td>
     <td>71</td>
-    <td class="description"><code>'name'</code> table entry follows</td>
+    <td class="description"><code>'name'</code> 表条目如下</td>
   </tr>
   <tr>
     <td>410</td>
     <td>291</td>
-    <td class="description"><code>'name'</code> table entry for guide for use</td>
+    <td class="description"><code>'name'</code> 使用指南表格条目</td>
   </tr>
   <tr>
     <td>412</td>
     <td>72</td>
-    <td class="description"><code>'name'</code> table entry follows</td>
+    <td class="description"><code>'name'</code> 表条目如下</td>
   </tr>
   <tr>
     <td>413</td>
     <td>292</td>
-    <td class="description"><code>'name'</code> table entry for history of this glyph</td>
+    <td class="description"><code>'name'</code> 此字形历史记录表条目</td>
   </tr>
   <tr>
     <td>415</td>
@@ -1163,199 +1163,199 @@ FeatureInfo 的格式如下：
     <td class="description">Padding</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 13 starts here</td>
+    <td colspan="3">字形 13 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>416</td>
     <td>80</td>
-    <td class="description">Offset to group information for this group</td>
+    <td class="description">该组的组信息的偏移量</td>
   </tr>
   <tr>
     <td>420</td>
     <td>10</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>424</td>
     <td>2</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>426</td>
     <td>0x0073</td>
-    <td class="description">Unicode for 's'</td>
+    <td class="description">'s' 的 Unicode</td>
   </tr>
   <tr>
     <td>428</td>
     <td>0x0074</td>
-    <td class="description">Unicode for 't' (note we don't use the composed 0xFB06 value; these Unicodes are always decomposed)</td>
+    <td class="description">“t”的 Unicode（请注意，我们不使用组合的 0xFB06 值；这些 Unicode 始终会被分解）</td>
   </tr>
   <tr>
     <td>430</td>
     <td>3</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>432</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>433</td>
     <td>2</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>434</td>
     <td>'st'</td>
-    <td class="description">UTF-8 name 'st'</td>
+    <td class="description">UTF-8 名称 'st'</td>
   </tr>
   <tr>
     <td>436</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>437</td>
     <td>3</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>438</td>
     <td>'s_t'</td>
-    <td class="description">UTF-8 name 's_t'</td>
+    <td class="description">UTF-8 名称 's_t'</td>
   </tr>
   <tr>
     <td>441</td>
     <td>127</td>
-    <td class="description">Flags field follows</td>
+    <td class="description">标志字段如下</td>
   </tr>
   <tr>
     <td>442</td>
     <td>0x8000</td>
-    <td class="description">This is the default glyph for the 'st' string</td>
+    <td class="description">这是“st”字符串的默认字形</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">GlyphInfo for glyph 14 starts here</td>
+    <td colspan="3">字形 14 的 GlyphInfo 从这里开始</td>
   </tr>
   <tr>
     <td>444</td>
     <td>80</td>
-    <td class="description">Offset to group information for this group</td>
+    <td class="description">该组的组信息的偏移量</td>
   </tr>
   <tr>
     <td>448</td>
     <td>44</td>
-    <td class="description">Offset in extra info space to FeatureInfo</td>
+    <td class="description">额外信息空间相对于FeatureInfo的偏移量</td>
   </tr>
   <tr>
     <td>452</td>
     <td>2</td>
-    <td class="description">Number of 16-bit Unicode values which follow</td>
+    <td class="description">后面的 16 位 Unicode 值的数量</td>
   </tr>
   <tr>
     <td>454</td>
     <td>0x0073</td>
-    <td class="description">Unicode for 's'</td>
+    <td class="description">'s' 的 Unicode</td>
   </tr>
   <tr>
     <td>456</td>
     <td>0x0074</td>
-    <td class="description">Unicode for 't'</td>
+    <td class="description">'t' 的 Unicode 编码</td>
   </tr>
   <tr>
     <td>458</td>
     <td>2</td>
-    <td class="description">Number of GlyphIdentifiers which follow</td>
+    <td class="description">后面的字形标识符的数量</td>
   </tr>
   <tr>
     <td>460</td>
     <td>1</td>
-    <td class="description">Apple name follows</td>
+    <td class="description">苹果名称如下</td>
   </tr>
   <tr>
     <td>461</td>
     <td>7</td>
-    <td class="description">Length of Apple name</td>
+    <td class="description">苹果名称的长度</td>
   </tr>
   <tr>
     <td>462</td>
     <td>'stfinal'</td>
-    <td class="description">UTF-8 name 'st'</td>
+    <td class="description">UTF-8 名称 'st'</td>
   </tr>
   <tr>
     <td>469</td>
     <td>2</td>
-    <td class="description">Adobe name follows</td>
+    <td class="description">Adobe 名称如下</td>
   </tr>
   <tr>
     <td>470</td>
     <td>9</td>
-    <td class="description">Length of Adobe name</td>
+    <td class="description">Adobe 名称的长度</td>
   </tr>
   <tr>
     <td>471</td>
     <td>'s_t.final'</td>
-    <td class="description">UTF-8 name 's_t.final'</td>
+    <td class="description">UTF-8 名称 's_t.final'</td>
   </tr>
   <tr>
     <td>480</td>
     <td>0</td>
-    <td class="description">Two bytes of padding for long alignment</td>
+    <td class="description">用于长对齐的两个字节填充</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">Extra info space</td>
+    <td colspan="3">额外信息空间</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">FeatureInfo for common ligatures starts here (offset 0)</td>
+    <td colspan="3">常见连字的功能信息从此处开始（偏移量 0）</td>
   </tr>
   <tr>
     <td>482</td>
     <td>0</td>
-    <td class="description">Context is irrelevant for the common ligatures</td>
+    <td class="description">上下文与常用连字无关</td>
   </tr>
   <tr>
     <td>484</td>
     <td>1</td>
-    <td class="description">One AAT-style &lt;type,selector&gt; pair follows</td>
+    <td class="description">接下来是一对 AAT 样式的 <type,selector> 对</td>
   </tr>
   <tr>
     <td>486</td>
     <td>1</td>
-    <td class="description">"Ligature" type</td>
+    <td class="description">“连字”类型</td>
   </tr>
   <tr>
     <td>488</td>
     <td>2</td>
-    <td class="description">"Common ligatures on" selector</td>
+    <td class="description">“通用连字”选择器</td>
   </tr>
   <tr>
     <td>490</td>
     <td>0</td>
-    <td class="description">No OpenType feature tags follow</td>
+    <td class="description">后面没有 OpenType 功能标签</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">FeatureInfo for rare ligatures starts here (offset 10)</td>
+    <td colspan="3">罕见连字的特征信息从这​​里开始（偏移量 10）</td>
   </tr>
   <tr>
     <td>492</td>
     <td>0</td>
-    <td class="description">Context is irrelevant for the rare ligatures</td>
+    <td class="description">上下文与罕见的连字无关</td>
   </tr>
   <tr>
     <td>494</td>
     <td>1</td>
-    <td class="description">One AAT-style &lt;type,selector&gt; pair follows</td>
+    <td class="description">接下来是一对 AAT 样式的 <type,selector> 对</td>
   </tr>
   <tr>
     <td>496</td>
     <td>1</td>
-    <td class="description">"Ligature" type</td>
+    <td class="description">“连字”类型</td>
   </tr>
   <tr>
     <td>498</td>
     <td>4</td>
-    <td class="description">"Rare ligatures on" selector</td>
+    <td class="description">“罕见连字打开”选择器</td>
   </tr>
   <tr>
     <td>500</td>
@@ -1383,93 +1383,93 @@ FeatureInfo 的格式如下：
   <tr>
     <td>510</td>
     <td>1</td>
-    <td class="description">"Ligature" type</td>
+    <td class="description">“连字”类型</td>
   </tr>
   <tr>
     <td>512</td>
     <td>4</td>
-    <td class="description">"Rare ligatures on" selector</td>
+    <td class="description">“罕见连字打开”选择器</td>
   </tr>
   <tr>
     <td>514</td>
     <td>8</td>
-    <td class="description">"Smart swashes" type</td>
+    <td class="description">“智能花饰”类型</td>
   </tr>
   <tr>
     <td>518</td>
     <td>8</td>
-    <td class="description">"Non-final swashes on" selector</td>
+    <td class="description">“非最终花饰开启”选择器</td>
   </tr>
   <tr>
     <td>520</td>
     <td>1</td>
-    <td class="description">One OpenType feature follows</td>
+    <td class="description">接下来是一项 OpenType 功能</td>
   </tr>
   <tr>
     <td>522</td>
     <td>'rlig'</td>
-    <td class="description">"Rare ligatures" OpenType tag</td>
+    <td class="description">“稀有连字”OpenType 标签</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">FeatureInfo for rare final swash ligatures starts here (offset 44)</td>
+    <td colspan="3">罕见的最终花体连字的特征信息从这​​里开始（偏移量 44）</td>
   </tr>
   <tr>
     <td>526</td>
     <td>0x0024</td>
-    <td class="description">Context is word-final or line-final</td>
+    <td class="description">上下文是词末或行末</td>
   </tr>
   <tr>
     <td>528</td>
     <td>3</td>
-    <td class="description">Two AAT-style &lt;type,selector&gt; pairs follow</td>
+    <td class="description">接下来是两个 AAT 样式的 <type,selector> 对</td>
   </tr>
   <tr>
     <td>530</td>
     <td>1</td>
-    <td class="description">"Ligature" type</td>
+    <td class="description">“连字”类型</td>
   </tr>
   <tr>
     <td>532</td>
     <td>4</td>
-    <td class="description">"Rare ligatures on" selector</td>
+    <td class="description">“罕见连字打开”选择器</td>
   </tr>
   <tr>
     <td>534</td>
     <td>8</td>
-    <td class="description">"Smart swashes" type</td>
+    <td class="description">“智能花饰”类型</td>
   </tr>
   <tr>
     <td>536</td>
     <td>2</td>
-    <td class="description">"Word-final swashes on" selector</td>
+    <td class="description">“字尾花饰打开”选择器</td>
   </tr>
   <tr>
     <td>538</td>
     <td>8</td>
-    <td class="description">"Smart swashes" type</td>
+    <td class="description">“智能花饰”类型</td>
   </tr>
   <tr>
     <td>540</td>
     <td>6</td>
-    <td class="description">"Line-final swashes on" selector</td>
+    <td class="description">“行末花饰打开”选择器</td>
   </tr>
   <tr>
     <td>542</td>
     <td>1</td>
-    <td class="description">One OpenType feature follows</td>
+    <td class="description">接下来是一项 OpenType 功能</td>
   </tr>
   <tr>
     <td>544</td>
     <td>'rlig'</td>
-    <td class="description">"Rare ligatures" OpenType tag</td>
+    <td class="description">“稀有连字”OpenType 标签</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">Group information for "st" variants (offset 66)</td>
+    <td colspan="3">“st”变体的组信息（偏移量 66）</td>
   </tr>
   <tr>
     <td>548</td>
     <td>0x4002</td>
-    <td class="description">This is a GlyphGroupOffsetArray with two entries</td>
+    <td class="description">这是一个包含两个条目的 GlyphGroupOffsetArray</td>
   </tr>
   <tr>
     <td>552</td>
@@ -1479,108 +1479,108 @@ FeatureInfo 的格式如下：
   <tr>
     <td>554</td>
     <td>0x00000050</td>
-    <td class="description">Alternate glyphs group for the "st" glyphs</td>
+    <td class="description">“st”字形的替代字形组</td>
   </tr>
   <tr>
     <td>558</td>
     <td>0x00000058</td>
-    <td class="description">Ligature glyph group</td>
+    <td class="description">连字字形组</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">Alternate glyphs for "st" variants (offset 80)</td>
+    <td colspan="3">“st”变体的替代字形（偏移量 80）</td>
   </tr>
   <tr>
     <td>562</td>
     <td>0x0001</td>
-    <td class="description">This is a GlyphGroup containing one GlyphSubgroup and no flags</td>
+    <td class="description">这是一个包含一个 GlyphSubgroup 并且没有标志的 GlyphGroup</td>
   </tr>
   <tr>
     <td>564</td>
     <td>0</td>
-    <td class="description">No name for this group</td>
+    <td class="description">该组没有名称</td>
   </tr>
   <tr>
     <td>566</td>
     <td>3</td>
-    <td class="description">There are three glyphs</td>
+    <td class="description">共有三个字形</td>
   </tr>
   <tr>
     <td>568</td>
     <td>12</td>
-    <td class="description">Glyph 12</td>
+    <td class="description">字形 12</td>
   </tr>
   <tr>
     <td>570</td>
     <td>13</td>
-    <td class="description">Glyph 13</td>
+    <td class="description">字形 13</td>
   </tr>
   <tr>
     <td>572</td>
     <td>14</td>
-    <td class="description">Glyph 14</td>
+    <td class="description">字形 14</td>
   </tr>
   <tr style="font-style: italic;">
-    <td colspan="3">Group information for all ligatures (offset 90)</td>
+    <td colspan="3">所有连字的组信息（偏移量 90）</td>
   </tr>
   <tr>
     <td>574</td>
     <td>0x8003</td>
-    <td class="description">This is a GlyphGroup containing two GlyphSubgroups with preceding flags</td>
+    <td class="description">这是一个 GlyphGroup，包含两个带有前面标志的 GlyphSubgroup</td>
   </tr>
   <tr>
     <td>576</td>
     <td>0x4000</td>
-    <td class="description">This group is one subdivision of a larger group</td>
+    <td class="description">该组是一个较大组的一个细分组</td>
   </tr>
   <tr>
     <td>578</td>
     <td>300</td>
-    <td class="description"><code>'name'</code> table entry for the "Ligatures" string</td>
+    <td class="description">“Ligatures”字符串的 <code>'name'</code> 表条目</td>
   </tr>
   <tr>
     <td>580</td>
     <td>0</td>
-    <td class="description">No actual glyphs; this is the name for the entire set of GlyphSubgroups</td>
+    <td class="description">没有实际的字形；这是整个 GlyphSubgroups 集合的名称</td>
   </tr>
   <tr>
     <td>582</td>
     <td>0x4000</td>
-    <td class="description">This group is one subdivision of a larger group</td>
+    <td class="description">该组是一个较大组的一个细分组</td>
   </tr>
   <tr>
     <td>584</td>
     <td>301</td>
-    <td class="description"><code>'name'</code> table entry for the "Common Ligatures" string</td>
+    <td class="description">“Common Ligatures”字符串的 <code>'name'</code> 表条目</td>
   </tr>
   <tr>
     <td>586</td>
     <td>5</td>
-    <td class="description">Five glyphs in this GlyphSubgroup</td>
+    <td class="description">此 GlyphSubgroup 中有五个字形</td>
   </tr>
   <tr>
     <td>588</td>
     <td>6</td>
-    <td class="description">Glyph 6 (fi)</td>
+    <td class="description">字形 6 (fi)</td>
   </tr>
   <tr>
     <td>590</td>
     <td>7</td>
-    <td class="description">Glyph 7 (fl)</td>
+    <td class="description">字形 7 (fl)</td>
   </tr>
   <tr>
     <td>592</td>
     <td>8</td>
-    <td class="description">Glyph 8 (ff)</td>
+    <td class="description">字形 8 (ff)</td>
   </tr>
   <tr>
     <td>594</td>
     <td>9</td>
-    <td class="description">Glyph 9 (ffi)</td>
+    <td class="description">字形 9 (ffi)</td>
   </tr>
   <tr>
     <td>596</td>
     <td>10</td>
-    <td class="description">Glyph 10 (ffl)</td>
+    <td class="description">字形 10 (ffl)</td>
   </tr>
   <tr>
     <td>598</td>
@@ -1590,32 +1590,32 @@ FeatureInfo 的格式如下：
   <tr>
     <td>600</td>
     <td>302</td>
-    <td class="description"><code>'name'</code> table entry for the "Rare Ligatures" string</td>
+    <td class="description">“Rare Ligatures”字符串的 <code>'name'</code> 表条目</td>
   </tr>
   <tr>
     <td>602</td>
     <td>4</td>
-    <td class="description">Four glyphs in this GlyphSubgroup</td>
+    <td class="description">此 GlyphSubgroup 中的四个字形</td>
   </tr>
   <tr>
     <td>604</td>
     <td>11</td>
-    <td class="description">Glyph 11 (ct)</td>
+    <td class="description">字形 11 (ct)</td>
   </tr>
   <tr>
     <td>606</td>
     <td>12</td>
-    <td class="description">Glyph 13 (slong-t)</td>
+    <td class="description">字形 13 (slong-t)</td>
   </tr>
   <tr>
     <td>608</td>
     <td>13</td>
-    <td class="description">Glyph 13 (st)</td>
+    <td class="description">字形 13 (st)</td>
   </tr>
   <tr>
     <td>610</td>
     <td>14</td>
-    <td class="description">Glyph 14 (s-tswash)</td>
+    <td class="description">字形 14 (s-tswash)</td>
   </tr>
   </tbody>
 </table>
