@@ -362,3 +362,824 @@ AAT 字体功能注册表的早期版本包含许多功能/选择器对，现在
 |NLC 字形|kNLCCharactersSelector|13|日本国家语言委员会 (NLC) 已在 2000 年为许多 JIS 字符定义了新的字形形状。此选择器用于访问这些字形。
 |传统名称|kTraditionalNamesCharactersSelector|14|将字体中的简化形式映射到可用于个人名称的相应传统形式。
 
+### 数字大小写
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kNumberCase|21|独有|
+
+数字大小写与字母大小写无关。小写数字（也称为“传统”或“旧式”）是可能低于基线的数字，而大写数字（也称为“衬线”）则不会低于基线。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|小写数字|kLowerCaseNumbersSelector|0|这些形式的数字可能低于基线。它们有时被称为“传统”或“旧式”数字。|
+|大写数字|kUpperCaseNumbersSelector|1|这些形式的数字不会低于基线。它们有时被称为“衬线”数字。|
+
+### 文本间距
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kTextSpacing|22|独有|
+
+文本间距特征类型用于在字体中的比例、等宽和半宽字符形式之间进行选择。此特征类型的使用是可选的；有关更精确的控制，请参阅假名间距和表意文字间距特征类型。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|比例|kProportionalTextSelector|0|选择字母的比例形式。
+|等宽|kMonospacedTextSelector|1|选择字母的等宽形式。
+|半宽|kHalfWidthTextSelector|2|选择字母的半宽形式。
+|三分之一宽度|kThirdWidthTextSelector|3|选择字母的三分之一宽度形式。
+|四分之一宽度|kQuarterWidthTextSelector|4|选择字母的四分之一宽度形式。
+|替代比例|kAltProportionalTextSelector|5|选择字母的替代比例形式。
+|替代半宽|kAltHalfWidthTextSelector|6|选择字母的替代半宽形式。
+
+### 音译
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kTransliteration|23|独有|
+
+音译特征类型允许使用一种格式的文本以另一种格式显示。例如，将平假名字符串显示为片假名。由于音译通常在字符空间中完成，因此强烈不建议使用。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|无转写|kNoTransliterationSelector|0|表示不应进行转写。
+|汉字转为韩文|<s>kHanjaToHangulSelector</s>|1|表示应将汉字转写为韩文。|
+|平假名转为片假名|<s>kHiraganaToKatakanaSelector</s>|2|表示应将平假名转写为片假名。
+|片假名转为平假名|<s>kKatakanaToHiraganaSelector</s>|3|表示应将片假名转写为平假名。
+|假名转为罗马化|<s>kKanaToRomanizationSelector</s>|4|表示应将平假名和片假名转写为罗马字。
+|罗马化转为平假名|<s>kRomanizationToHiraganaSelector</s>|5|表示应将罗马字转写为平假名。
+|罗马字转写为片假名|<s>kRomanizationToKatakanaSelector</s>|6|表示应将罗马字音译为片假名。
+|汉字转韩文 Alt 1|<s>kHanjaToHangulAltOneSelector</s>|7|这表明具有多种读法的韩文在第二次阅读时应翻译成韩文。
+|汉字转韩文 Alt 2|<s>kHanjaToHangulAltTwoSelector</s>|8|这表明具有多种读法的韩文在第三次阅读时应翻译成韩文。
+|汉字转韩文 Alt 3|<s>kHanjaToHangulAltThreeSelector</s>|9|这表明具有多种读法的韩文在第四次阅读时应翻译成韩文。
+
+### 注释
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kAnnotation|24|独有|
+
+注释特征类型指定基本字母形状的注释（或装饰）。例如，大多数日语字体都包含带圆圈、带括号、后面带有句点等的数字版本。出于兼容性原因，其中许多都单独用 Unicode 编码，但使用此功能可以使用更广泛的带注释的数字集。
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|无注释|kNoAnnotationSelector|0|表示字符应不带注释出现。
+|方框注释|kBoxAnnotationSelector|1|使用由方框装饰包围的字符形式。
+|圆角方框注释|kRoundedBoxAnnotationSelector|2|使用由带圆角的方框装饰包围的字符形式。
+|圆形注释|kCircleAnnotationSelector|3|使用由圆圈包围的字符形式。例如，请参阅 Unicode U+3260 至 U+326F。
+|倒圆注释|kInvertedCircleAnnotationSelector|4|与圆形注释相同，但白色和黑色反转。例如，请参阅 Unicode U+2776 至 U+277F。
+|括号注释|kParenthesisAnnotationSelector|5|使用由括号包围的字符形式。例如，参见 Unicode U+2474 至 U+2487。
+|句点注释|kPeriodAnnotationSelector|6|使用字符后跟句点的形式。例如，参见 Unicode U+2488 至 U+249B。
+|罗马数字注释|kRomanNumeralAnnotationSelector|7|以罗马数字形式显示给定字符。
+|菱形注释|kDiamondAnnotationSelector|8|显示菱形包围的文本。
+|倒置方框注释|kInvertedBoxAnnotationSelector|9|与方框注释相同，但黑白反转。
+|倒置圆角方框注释|kInvertedRoundedBoxAnnotationSelector|10|与圆角方框注释相同，但黑白反转。
+
+### 假名间距
+|功能常数|功能值|功能类型|
+|-|-|-|
+|kKanaSpacing|25|独有|
+
+假名间距功能类型用于选择专门针对日语平假名和片假名字符的宽度。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|全宽|kFullWidthKanaSelector|0|选择全宽形式的假名。
+|比例|kProportionalKanaSelector|1|选择比例形式的假名。
+
+### 表意文字间距
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kIdeographicSpacing|26|独有|
+
+表意文字间距特征类型用于在全宽和比例形式的表意文字（即汉字）之间进行选择。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|全宽|kFullWidthIdeographsSelector|0|选择全宽形式的表意文字。
+|比例|kProportionalIdeographsSelector|1|选择比例形式的表意文字。
+|半宽|kHalfWidthIdeographsSelector|2|选择半宽形式的表意文字。
+
+### Unicode 分解
+|特征常量|特征值|特征类型|
+|-|-|-|
+|kUnicodeDecomposition|27|非独占
+
+此功能用于使用户可以看到各种形式的 Unicode 组合/分解。
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|规范组合|kCanonicalCompositionOnSelector<br>kCanonicalCompositionOffSelector|0|将分解后的 Unicode 显示为完全组合。此选择器通常不应出现在 UI 中。
+|兼容性组合|kCompatibilityCompositionOnSelector<br>kCompatibilityCompositionOffSelector|2|将分解后的兼容性 Unicode 显示为完全组合。此选择器通常不应出现在 UI 中。
+|转码组合|kTranscodingCompositionOnSelector<br>kTranscodingCompositionOffSelector|4|QuickDraw 使用的某些旧 Macintosh 文本编码包含未以 Unicode 编码的字符。为了提供两者之间的往返兼容性，Apple 在其 Unicode 的私有使用区域字符实现中包括与其他字符交互以控制转码过程的字符。此功能/选择器对用于控制是否使用这些转码控件。
+
+### Ruby Kana
+|功能常量|功能值|功能类型|
+|-|-|-|
+|kRubyKana|28|非独占|
+
+日文排版通常使用较小的假名字形（通常为上标形式）来阐明读者可能不熟悉的汉字的含义。这些被称为 ruby​​，来自旧排版术语，表示四点大小的字体。此功能可识别字体中为此用途设计的字形，并用它们替换默认设计。
+
+布局引擎需要缩放和重新定位字形才能生成正确的 ruby​​。此功能本身是不够的。
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|无 Ruby Kana|<s>kNoRubyKanaSelector</s>|0|不使用 ruby​​ 形状
+|Ruby Kana|<s>kRubyKanaSelector</s>|1|使用 ruby​​ 形状
+|Ruby Kana|kRubyKanaOnSelector<br>RubyKanaOffSelector|2|打开或关闭 ruby​​ 形状
+
+### CJK 符号替代
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kCJKSymbolAlternatives|29|独有|
+
+此功能允许选择特定于东亚符号字符的各种替代形式（例如，〠 U+3020 POSTAL MARK FACE）。
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|无 CJK 符号替代|kNoCJKSymbolAlternativesSelector|0|使用标准形式（即，由“cmap”映射到的字符）|
+|CJK 符号 Alt One|kCJKSymbolAltOneSelector|1|使用第一组替代形式|
+|CJK 符号Alt Two|kCJKSymbolAltTwoSelector|2|使用第二组替代形式
+|CJK 符号 Alt Three|kCJKSymbolAltThreeSelector|3|使用第三组替代形式
+|CJK 符号 Alt Four|kCJKSymbolAltFourSelector|4|使用第四组替代形式
+|CJK 符号 Alt Five|kCJKSymbolAltFiveSelector|5|使用第五组替代形式
+
+### 表意文字替代
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kIdeographicAlternatives|30|独有|
+
+此功能允许选择特定于东亚表意文字的各种替代形式（例如，诚 U+8AA0 与説 U+8AAC，尽管这两个已单独编码）。
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|无表意字符替代|kNoIdeographicAlternativesSelector|0|使用标准形式（即，由“cmap”映射到的字符）|
+|表意字符 Alt One|kIdeographicAltOneSelector|1|使用第一组替代形式
+|表意字符 Alt Two|kIdeographicAltTwoSelector|2|使用第二组替代形式
+|表意字符 Alt Three|kIdeographicAltThreeSelector|3|使用第三组替代形式
+|表意字符 Alt Four|kIdeographicAltFourSelector|4|使用第四组替代形式
+|表意字符 Alt Five|kIdeographicAltFiveSelector|5|使用第五组替代形式
+
+### CJK 垂直罗马字位置
+|功能常数|功能值|功能类型|
+|-|-|-|
+|kCJKVerticalRomanPlacement|31|独有|
+
+此功能控制罗马字相对于汉字的定位方式。通过设置基线可以实现相同的效果。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|CJK 垂直罗马字居中|kCJKVerticalRomanCenteredSelector|0|将罗马字形垂直居中，使其中心与表意文字的中心相同|
+|CJK 垂直罗马字H 基线|kCJKVerticalRomanHBaselineSelector|1|对罗马字形使用标准罗马字基线|
+
+### 斜体 CJK 罗马字
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kItalicCJKRoman|32|非排他性
+
+确定罗马字与汉字混合时是否使用斜体字形书写。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|无 CJK 斜体罗马字|<s>kNoCJKItalicRomanSelector</s>|0|不对罗马字使用斜体字形|
+|CJK 斜体罗马字|<s>kCJKItalicRomanSelector</s>|1|对罗马字使用斜体字形|
+|CJK 斜体罗马字|kCJKItalicRomanOnSelector<bt>CJKItalicRomanOffSelector|2|打开或关闭对罗马字使用斜体
+
+### 区分大小写布局
+|功能常数|功能值|功能类型|
+|-|-|-|
+|kCaseSensitiveLayout|33|非独占|
+
+此功能允许在小写文本中发现其他形式的标点符号。例如，如果破折号被小写字母包围时的位置低于被数字或大写字母包围时的位置，则破折号看起来最好。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+区分大小写布局 kCaseSensitiveLayoutOnSelector
+CaseSensitiveLayoutOffSelector 0 打开或关闭区分大小写
+区分大小写间距 kCaseSensitiveSpacingOnSelector
+CaseSensitiveSpacingOffSelector 2 打开或关闭区分大小写的间距
+
+### 替代假名
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kAlternateKana|34|非排他性|
+
+这允许在水平或垂直文本中使用不同形式的假名。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|替代水平假名|kAlternateHorizKanaOnSelector<br>AlternateHorizKanaOffSelector|0|表示应在水平文本中使用平假名和片假名的替代形式。
+|替代垂直假名|kAlternateVertKanaOnSelector<br>AlternateVertKanaOffSelector|2|表示应在垂直文本中使用平假名和片假名的替代形式。
+
+### 样式替代
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kStylisticAlternatives|35|非独占|
+
+此功能允许对字形使用不同的样式替代，并且在很大程度上相当于字符替代功能的非独占版本。它专门用作 OpenType 'ss01' 至 'ss20' 功能的 AAT 等效项。
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|无样式替代|kNoStylisticAlternatesSelector|0|使用标准形式（即，由“cmap”映射到的字符）
+|样式 Alt One|kStylisticAltOneOnSelector<br>StylisticAltOneOffSelector|2|打开或关闭第一组替代|
+|样式 Alt Two|kStylisticAltTwoOnSelector<br>StylisticAltTwoOffSelector|4|打开或关闭第二组替代|
+|样式 Alt Three|kStylisticAltThreeOnSelector<br>StylisticAltThreeOffSelector|6|打开或关闭第三组替代|
+|样式 Alt Four|kStylisticAltFourOnSelector<br>StylisticAltFourOffSelector|8|打开或关闭第四组替代
+|样式 Alt Five|kStylisticAltFiveOnSelector<br>StylisticAltFiveOffSelector|10|打开或关闭第五组替代项|
+|样式 Alt Six|kStylisticAltSixOnSelector<br>StylisticAltSixOffSelector|12|打开或关闭第六组替代项|
+|样式 Alt Seven|kStylisticAltSevenOnSelector<br>StylisticAltSevenOffSelector|14|打开或关闭第七组替代项|
+|样式 Alt Eight|kStylisticAltEightOnSelector<br>StylisticAltEightOffSelector|16|打开或关闭第八组替代项|
+|样式 Alt Nine|kStylisticAltNineOnSelector<br>StylisticAltNineOffSelector|18|打开或关闭第九组替代项|
+|样式 Alt Ten|kStylisticAltTenOnSelector<br>StylisticAltTenOffSelector|20|打开或关闭第十组替代项|
+|样式 Alt Eleven|kStylisticAltElevenOnSelector<br>StylisticAltElevenOffSelector|22|打开或关闭第十一组替代项
+|样式 Alt Twelve|kStylisticAltTwelveOnSelector<br>StylisticAltTwelveOffSelector|24|打开或关闭第十二组替代项|
+|样式 Alt Thirteen|kStylisticAltThirteenOnSelector<br>StylisticAltThirteenOffSelector|26|打开或关闭第十三组替代项
+|样式 Alt Fourteen|kStylisticAltFourteenOnSelector<br>StylisticAltFourteenOffSelector|28|打开或关闭第十四组替代项|
+|样式 Alt Fifteen|kStylisticAltFifteenOnSelector<br>StylisticAltFifteenOffSelector|30|打开或关闭第十五组替代项|
+|样式 Alt Sixteen|kStylisticAltSixteenOnSelector<br>StylisticAltSixteenOffSelector|32|打开或关闭第十六组替代项|
+|样式 Alt Seventeen|kStylisticAltSeventeenOnSelector<br>StylisticAltSeventeenOffSelector|34|打开或关闭第十七组替代项|
+|样式 Alt Eighteen|kStylisticAltEighteenOnSelector<br>StylisticAltEighteenOffSelector|36|打开或关闭第十八组替代项
+|样式 Alt Nineteen|kStylisticAltNineteenOnSelector<br>StylisticAltNineteenOffSelector|38|打开或关闭第十九组替代项|
+|样式 Alt Twenty|kStylisticAltTwentyOnSelector<br>StylisticAltTwentyOffSelector|40|打开或关闭第二十组替代项|
+
+### 上下文替代
+|功能常量|功能值|功能类型|
+|-|-|-|
+|kContextualAlternates|36|非独占|
+
+此功能用于支持上下文相关字形和花饰的替代形状
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|上下文替代|kContextualAlternatesOnSelector<br>ContextualAlternatesOffSelector|0|打开或关闭上下文相关字形的替代|
+|花饰替代|kSwashAlternatesOnSelector<br>SwashAlternatesOffSelector|2|打开或关闭上下文相关花饰的替代|
+|上下文花饰替代|kContextualSwashAlternatesOnSelector<br>ContextualSwashAlternatesOffSelector|4|打开或关闭上下文相关字形和花饰的替代
+
+### 小写
+|功能常数|功能值|功能类型|
+|-|-|-|
+|kLowerCase|37|独有|
+
+此功能取代了字母大小写功能的部分功能。它用于将小写文本的外观更改为小写或小写。[某些字体包含额外的大写字母大小，比常规小写字母更短，并被戏称为小写字母。这种形式最有可能出现在小写 x 高度的设计中，它们比较高的小写字母更能与小写文本协调一致[有关小写字母的示例，请参阅 Emigre 字体系列 Mrs Eaves 和 Filosofia]。）不鼓励显示小写字母的实际大写字形。
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|默认小写|kDefaultLowerCaseSelector|0|使用标准小写字形
+|小写小型大写字母|kLowerCaseSmallCapsSelector|1|将小写字形显示为小型大写字母。（这是显示小型大写字母的最常见方式。）
+|小写小写字母|kLowerCasePetiteCapsSelector|2|将小写字形显示为小写字母
+
+### 大写
+|功能常数|功能值|功能类型|
+|-|-|-|
+|kUpperCase|38|独有|
+
+此功能取代了字母大小写功能的部分功能。它用于将大写文本的外观更改为小写或小写。[某些字体包含额外的大写字母大小，比常规小写字母更短，并被戏称为小写字母。这种形式最有可能出现在小写 x 高度的设计中，它们比较高的小写字母更能与小写文本协调一致[有关小写字母的示例，请参阅 Emigre 字体系列 Mrs Eaves 和 Filosofia]。）不鼓励显示大写字母的实际小写字形。
+
+|选择器名称|选择器常量|选择器值|选择器功能|
+|-|-|-|-|
+|默认大写|kDefaultUpperCaseSelector|0|使用标准大写字形|
+|大写小型大写|kUpperCaseSmallCapsSelector|1|将大写字形显示为小型大写（通常用于首字母缩略词）。|
+|大写小写|kUpperCasePetiteCapsSelector|2|将大写字形显示为小写|
+
+### 语言标记
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kLanguageTag|39|独有|
+
+此功能允许使用特定于语言的字形。除 0 之外的选择器比“ltag”表中的索引多一个，然后将其映射到标准 IETF 语言标记。
+
+例如，如果“ltag”表索引 0 处的语言标记为“sr”（代表塞尔维亚语），则 39/1 的功能/选择器组合会将字形更改为任何特定于塞尔维亚语的形状。
+
+### CJK 罗马字间距
+|特征常数|特征值|特征类型|
+|-|-|-|
+|kCJKRomanSpacing|103|独有
+
+CJK 罗马字间距特征类型用于在 CJK 字体中选择罗马字符的比例形式和半宽形式。
+
+|选择器名称|选择器常数|选择器值|选择器功能|
+|-|-|-|-|
+|半宽|kHalfWidthCJKRomanSelector|0|选择字母的半宽形式。
+|比例|kProportionalCJKRomanSelector|1|选择字母的比例形式。
+|默认罗马字|kDefaultCJKRomanSelector|2|选择字母的默认罗马形式。
+|全宽罗马字|kFullWidthCJKRomanSelector|3|选择字母的全宽罗马形式。
+
+```C
+enum {
+	kAllTypographicFeaturesType	 = 0,
+	kLigaturesType				= 1,
+	kCursiveConnectionType		= 2,
+	kLetterCaseType				 = 3,	/* deprecated - use kLowerCaseType or kUpperCaseType instead */
+	kVerticalSubstitutionType	 = 4,
+	kLinguisticRearrangementType	= 5,
+	kNumberSpacingType			= 6,
+	kSmartSwashType				 = 8,
+	kDiacriticsType				 = 9,
+	kVerticalPositionType		 = 10,
+	kFractionsType				= 11,
+	kOverlappingCharactersType	= 13,
+	kTypographicExtrasType		= 14,
+	kMathematicalExtrasType		 = 15,
+	kOrnamentSetsType			 = 16,
+	kCharacterAlternativesType	= 17,
+	kDesignComplexityType		 = 18,
+	kStyleOptionsType			 = 19,
+	kCharacterShapeType			 = 20,
+	kNumberCaseType				 = 21,
+	kTextSpacingType				= 22,
+	kTransliterationType			= 23,
+	kAnnotationType				 = 24,
+	kKanaSpacingType				= 25,
+	kIdeographicSpacingType		 = 26,
+	kUnicodeDecompositionType	 = 27,
+	kRubyKanaType				 = 28,
+	kCJKSymbolAlternativesType	= 29,
+	kIdeographicAlternativesType	= 30,
+	kCJKVerticalRomanPlacementType = 31,
+	kItalicCJKRomanType			 = 32,
+	kCaseSensitiveLayoutType		= 33,
+	kAlternateKanaType			= 34,
+	kStylisticAlternativesType	= 35,
+	kContextualAlternatesType	 = 36,
+	kLowerCaseType				= 37,
+	kUpperCaseType				= 38,
+	kLanguageTagType				= 39,
+	kCJKRomanSpacingType			= 103,
+	kLastFeatureType				= -1
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kAllTypographicFeaturesType
+ */
+enum {
+	kAllTypeFeaturesOnSelector	= 0,
+	kAllTypeFeaturesOffSelector	 = 1
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kLigaturesType
+ */
+enum {
+	kRequiredLigaturesOnSelector	= 0,
+	kRequiredLigaturesOffSelector = 1,
+	kCommonLigaturesOnSelector	= 2,
+	kCommonLigaturesOffSelector	 = 3,
+	kRareLigaturesOnSelector		= 4,
+	kRareLigaturesOffSelector	 = 5,
+	kLogosOnSelector				= 6,
+	kLogosOffSelector			 = 7,
+	kRebusPicturesOnSelector		= 8,
+	kRebusPicturesOffSelector	 = 9,
+	kDiphthongLigaturesOnSelector = 10,
+	kDiphthongLigaturesOffSelector = 11,
+	kSquaredLigaturesOnSelector	 = 12,
+	kSquaredLigaturesOffSelector	= 13,
+	kAbbrevSquaredLigaturesOnSelector = 14,
+	kAbbrevSquaredLigaturesOffSelector = 15,
+	kSymbolLigaturesOnSelector	= 16,
+	kSymbolLigaturesOffSelector	 = 17,
+	kContextualLigaturesOnSelector = 18,
+	kContextualLigaturesOffSelector = 19,
+	kHistoricalLigaturesOnSelector = 20,
+	kHistoricalLigaturesOffSelector = 21
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kCursiveConnectionType
+ */
+enum {
+	kUnconnectedSelector			= 0,
+	kPartiallyConnectedSelector	 = 1,
+	kCursiveSelector				= 2
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kLetterCaseType
+ */
+enum {
+	kUpperAndLowerCaseSelector	= 0,	/* deprecated */
+	kAllCapsSelector				= 1,	/* deprecated */
+	kAllLowerCaseSelector		 = 2,	/* deprecated */
+	kSmallCapsSelector			= 3,	/* deprecated */
+	kInitialCapsSelector			= 4,	/* deprecated */
+	kInitialCapsAndSmallCapsSelector = 5	/* deprecated */
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kVerticalSubstitutionType
+ */
+enum {
+	kSubstituteVerticalFormsOnSelector = 0,
+	kSubstituteVerticalFormsOffSelector = 1
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kLinguisticRearrangementType
+ */
+enum {
+	kLinguisticRearrangementOnSelector = 0,
+	kLinguisticRearrangementOffSelector = 1
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kNumberSpacingType
+ */
+enum {
+	kMonospacedNumbersSelector	= 0,
+	kProportionalNumbersSelector	= 1,
+	kThirdWidthNumbersSelector	= 2,
+	kQuarterWidthNumbersSelector	= 3
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kSmartSwashType
+ */
+enum {
+	kWordInitialSwashesOnSelector = 0,
+	kWordInitialSwashesOffSelector = 1,
+	kWordFinalSwashesOnSelector	 = 2,
+	kWordFinalSwashesOffSelector	= 3,
+	kLineInitialSwashesOnSelector = 4,
+	kLineInitialSwashesOffSelector = 5,
+	kLineFinalSwashesOnSelector	 = 6,
+	kLineFinalSwashesOffSelector	= 7,
+	kNonFinalSwashesOnSelector	= 8,
+	kNonFinalSwashesOffSelector	 = 9
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kDiacriticsType
+ */
+enum {
+	kShowDiacriticsSelector		 = 0,
+	kHideDiacriticsSelector		 = 1,
+	kDecomposeDiacriticsSelector	= 2
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kVerticalPositionType
+ */
+enum {
+	kNormalPositionSelector		 = 0,
+	kSuperiorsSelector			= 1,
+	kInferiorsSelector			= 2,
+	kOrdinalsSelector			 = 3,
+	kScientificInferiorsSelector	= 4
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kFractionsType
+ */
+enum {
+	kNoFractionsSelector			= 0,
+	kVerticalFractionsSelector	= 1,
+	kDiagonalFractionsSelector	= 2
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kOverlappingCharactersType
+ */
+enum {
+	kPreventOverlapOnSelector	 = 0,
+	kPreventOverlapOffSelector	= 1
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kTypographicExtrasType
+ */
+enum {
+	kHyphensToEmDashOnSelector	= 0,
+	kHyphensToEmDashOffSelector	 = 1,
+	kHyphenToEnDashOnSelector	 = 2,
+	kHyphenToEnDashOffSelector	= 3,
+	kSlashedZeroOnSelector		= 4,
+	kSlashedZeroOffSelector		 = 5,
+	kFormInterrobangOnSelector	= 6,
+	kFormInterrobangOffSelector	 = 7,
+	kSmartQuotesOnSelector		= 8,
+	kSmartQuotesOffSelector		 = 9,
+	kPeriodsToEllipsisOnSelector	= 10,
+	kPeriodsToEllipsisOffSelector = 11
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kMathematicalExtrasType
+ */
+enum {
+	kHyphenToMinusOnSelector		= 0,
+	kHyphenToMinusOffSelector	 = 1,
+	kAsteriskToMultiplyOnSelector = 2,
+	kAsteriskToMultiplyOffSelector = 3,
+	kSlashToDivideOnSelector		= 4,
+	kSlashToDivideOffSelector	 = 5,
+	kInequalityLigaturesOnSelector = 6,
+	kInequalityLigaturesOffSelector = 7,
+	kExponentsOnSelector			= 8,
+	kExponentsOffSelector		 = 9,
+	kMathematicalGreekOnSelector	= 10,
+	kMathematicalGreekOffSelector = 11
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kOrnamentSetsType
+ */
+enum {
+	kNoOrnamentsSelector			= 0,
+	kDingbatsSelector			 = 1,
+	kPiCharactersSelector		 = 2,
+	kFleuronsSelector			 = 3,
+	kDecorativeBordersSelector	= 4,
+	kInternationalSymbolsSelector = 5,
+	kMathSymbolsSelector			= 6
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kCharacterAlternativesType
+ */
+enum {
+	kNoAlternatesSelector		 = 0
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kDesignComplexityType
+ */
+enum {
+	kDesignLevel1Selector		 = 0,
+	kDesignLevel2Selector		 = 1,
+	kDesignLevel3Selector		 = 2,
+	kDesignLevel4Selector		 = 3,
+	kDesignLevel5Selector		 = 4
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kStyleOptionsType
+ */
+enum {
+	kNoStyleOptionsSelector		 = 0,
+	kDisplayTextSelector			= 1,
+	kEngravedTextSelector		 = 2,
+	kIlluminatedCapsSelector		= 3,
+	kTitlingCapsSelector			= 4,
+	kTallCapsSelector			 = 5
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kCharacterShapeType
+ */
+enum {
+	kTraditionalCharactersSelector = 0,
+	kSimplifiedCharactersSelector = 1,
+	kJIS1978CharactersSelector	= 2,
+	kJIS1983CharactersSelector	= 3,
+	kJIS1990CharactersSelector	= 4,
+	kTraditionalAltOneSelector	= 5,
+	kTraditionalAltTwoSelector	= 6,
+	kTraditionalAltThreeSelector	= 7,
+	kTraditionalAltFourSelector	 = 8,
+	kTraditionalAltFiveSelector	 = 9,
+	kExpertCharactersSelector	 = 10,
+	kJIS2004CharactersSelector	= 11,
+	kHojoCharactersSelector		 = 12,
+	kNLCCharactersSelector		= 13,
+	kTraditionalNamesCharactersSelector = 14
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kNumberCaseType
+ */
+enum {
+	kLowerCaseNumbersSelector	 = 0,
+	kUpperCaseNumbersSelector	 = 1
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kTextSpacingType
+ */
+enum {
+	kProportionalTextSelector	 = 0,
+	kMonospacedTextSelector		 = 1,
+	kHalfWidthTextSelector		= 2,
+	kThirdWidthTextSelector		 = 3,
+	kQuarterWidthTextSelector	 = 4,
+	kAltProportionalTextSelector	= 5,
+	kAltHalfWidthTextSelector	 = 6
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kTransliterationType
+ */
+enum {
+	kNoTransliterationSelector	= 0,
+	kHanjaToHangulSelector		= 1,
+	kHiraganaToKatakanaSelector	 = 2,
+	kKatakanaToHiraganaSelector	 = 3,
+	kKanaToRomanizationSelector	 = 4,
+	kRomanizationToHiraganaSelector = 5,
+	kRomanizationToKatakanaSelector = 6,
+	kHanjaToHangulAltOneSelector	= 7,
+	kHanjaToHangulAltTwoSelector	= 8,
+	kHanjaToHangulAltThreeSelector = 9
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kAnnotationType
+ */
+enum {
+	kNoAnnotationSelector		 = 0,
+	kBoxAnnotationSelector		= 1,
+	kRoundedBoxAnnotationSelector = 2,
+	kCircleAnnotationSelector	 = 3,
+	kInvertedCircleAnnotationSelector = 4,
+	kParenthesisAnnotationSelector = 5,
+	kPeriodAnnotationSelector	 = 6,
+	kRomanNumeralAnnotationSelector = 7,
+	kDiamondAnnotationSelector	= 8,
+	kInvertedBoxAnnotationSelector = 9,
+	kInvertedRoundedBoxAnnotationSelector = 10
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kKanaSpacingType
+ */
+enum {
+	kFullWidthKanaSelector		= 0,
+	kProportionalKanaSelector	 = 1
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kIdeographicSpacingType
+ */
+enum {
+	kFullWidthIdeographsSelector	= 0,
+	kProportionalIdeographsSelector = 1,
+	kHalfWidthIdeographsSelector	= 2
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kUnicodeDecompositionType
+ */
+enum {
+	kCanonicalCompositionOnSelector = 0,
+	kCanonicalCompositionOffSelector = 1,
+	kCompatibilityCompositionOnSelector = 2,
+	kCompatibilityCompositionOffSelector = 3,
+	kTranscodingCompositionOnSelector = 4,
+	kTranscodingCompositionOffSelector = 5
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kRubyKanaType
+ */
+enum {
+	kNoRubyKanaSelector			 = 0,	/* deprecated - use kRubyKanaOffSelector instead */
+	kRubyKanaSelector			 = 1,	/* deprecated - use kRubyKanaOnSelector instead */
+	kRubyKanaOnSelector			 = 2,
+	kRubyKanaOffSelector			= 3
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kCJKSymbolAlternativesType
+ */
+enum {
+	kNoCJKSymbolAlternativesSelector = 0,
+	kCJKSymbolAltOneSelector		= 1,
+	kCJKSymbolAltTwoSelector		= 2,
+	kCJKSymbolAltThreeSelector	= 3,
+	kCJKSymbolAltFourSelector	 = 4,
+	kCJKSymbolAltFiveSelector	 = 5
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kIdeographicAlternativesType
+ */
+enum {
+	kNoIdeographicAlternativesSelector = 0,
+	kIdeographicAltOneSelector	= 1,
+	kIdeographicAltTwoSelector	= 2,
+	kIdeographicAltThreeSelector	= 3,
+	kIdeographicAltFourSelector	 = 4,
+	kIdeographicAltFiveSelector	 = 5
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kCJKVerticalRomanPlacementType
+ */
+enum {
+	kCJKVerticalRomanCenteredSelector = 0,
+	kCJKVerticalRomanHBaselineSelector = 1
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kItalicCJKRomanType
+ */
+enum {
+	kNoCJKItalicRomanSelector	 = 0,	/* deprecated - use kCJKItalicRomanOffSelector instead */
+	kCJKItalicRomanSelector		 = 1,	/* deprecated - use kCJKItalicRomanOnSelector instead */
+	kCJKItalicRomanOnSelector	 = 2,
+	kCJKItalicRomanOffSelector	= 3
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kCaseSensitiveLayoutType
+ */
+enum {
+	kCaseSensitiveLayoutOnSelector = 0,
+	kCaseSensitiveLayoutOffSelector = 1,
+	kCaseSensitiveSpacingOnSelector = 2,
+	kCaseSensitiveSpacingOffSelector = 3
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kAlternateKanaType
+ */
+enum {
+	kAlternateHorizKanaOnSelector = 0,
+	kAlternateHorizKanaOffSelector = 1,
+	kAlternateVertKanaOnSelector	= 2,
+	kAlternateVertKanaOffSelector = 3
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kStylisticAlternativesType
+ */
+enum {
+	kNoStylisticAlternatesSelector = 0,
+	kStylisticAltOneOnSelector	= 2,
+	kStylisticAltOneOffSelector	 = 3,
+	kStylisticAltTwoOnSelector	= 4,
+	kStylisticAltTwoOffSelector	 = 5,
+	kStylisticAltThreeOnSelector	= 6,
+	kStylisticAltThreeOffSelector = 7,
+	kStylisticAltFourOnSelector	 = 8,
+	kStylisticAltFourOffSelector	= 9,
+	kStylisticAltFiveOnSelector	 = 10,
+	kStylisticAltFiveOffSelector	= 11,
+	kStylisticAltSixOnSelector	= 12,
+	kStylisticAltSixOffSelector	 = 13,
+	kStylisticAltSevenOnSelector	= 14,
+	kStylisticAltSevenOffSelector = 15,
+	kStylisticAltEightOnSelector	= 16,
+	kStylisticAltEightOffSelector = 17,
+	kStylisticAltNineOnSelector	 = 18,
+	kStylisticAltNineOffSelector	= 19,
+	kStylisticAltTenOnSelector	= 20,
+	kStylisticAltTenOffSelector	 = 21,
+	kStylisticAltElevenOnSelector = 22,
+	kStylisticAltElevenOffSelector = 23,
+	kStylisticAltTwelveOnSelector = 24,
+	kStylisticAltTwelveOffSelector = 25,
+	kStylisticAltThirteenOnSelector = 26,
+	kStylisticAltThirteenOffSelector = 27,
+	kStylisticAltFourteenOnSelector = 28,
+	kStylisticAltFourteenOffSelector = 29,
+	kStylisticAltFifteenOnSelector = 30,
+	kStylisticAltFifteenOffSelector = 31,
+	kStylisticAltSixteenOnSelector = 32,
+	kStylisticAltSixteenOffSelector = 33,
+	kStylisticAltSeventeenOnSelector = 34,
+	kStylisticAltSeventeenOffSelector = 35,
+	kStylisticAltEighteenOnSelector = 36,
+	kStylisticAltEighteenOffSelector = 37,
+	kStylisticAltNineteenOnSelector = 38,
+	kStylisticAltNineteenOffSelector = 39,
+	kStylisticAltTwentyOnSelector = 40,
+	kStylisticAltTwentyOffSelector = 41
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kContextualAlternatesType
+ */
+enum {
+	kContextualAlternatesOnSelector = 0,
+	kContextualAlternatesOffSelector = 1,
+	kSwashAlternatesOnSelector	= 2,
+	kSwashAlternatesOffSelector	 = 3,
+	kContextualSwashAlternatesOnSelector = 4,
+	kContextualSwashAlternatesOffSelector = 5
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kLowerCaseType
+ */
+enum {
+	kDefaultLowerCaseSelector	 = 0,
+	kLowerCaseSmallCapsSelector	 = 1,
+	kLowerCasePetiteCapsSelector	= 2
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kUpperCaseType
+ */
+enum {
+	kDefaultUpperCaseSelector	 = 0,
+	kUpperCaseSmallCapsSelector	 = 1,
+	kUpperCasePetiteCapsSelector	= 2
+};
+/*
+ *	Summary:
+ *	Selectors for feature type kCJKRomanSpacingType
+ */
+enum {
+	kHalfWidthCJKRomanSelector	= 0,
+	kProportionalCJKRomanSelector = 1,
+	kDefaultCJKRomanSelector		= 2,
+	kFullWidthCJKRomanSelector	= 3
+};
+```
