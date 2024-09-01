@@ -71,6 +71,7 @@ platformID 和 platformSpecificID 字段使用与“名称”表中的等效字�
 **Unicode 平台特定的编码标识符**
 
 |特定于平台的 ID 代码(Platform-specific ID code)|含义|
+|-|-|
 |0| 版本1.0	(Version 1.0 semantics)|
 |1| 版本1.1	(Version 1.1 semantics)|
 |2|	ISO 10646 1993 semantics (deprecated)|
