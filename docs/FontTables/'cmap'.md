@@ -483,7 +483,8 @@ Unicode 值范围按 startUnicodeValue 的递增顺序排序。 范围不得重�
 **非默认 UVS 表头**
 |类型|名称|描述|
 |-|-|-|
-|uint32|numUVSMappings|跟随的 UVS 映射数
+|uint32|numUVSMappings|跟随的 UVS 映射数|
+
 紧随其后的是“numUVSMappings”UVS 映射。
 
 **UVS表**
