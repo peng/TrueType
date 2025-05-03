@@ -309,7 +309,7 @@ minMemType42、maxMemType42、minMemType1 和 maxMemType1 条目是必需的，�
 |-|-|-|
 |uint16|numberOfGlyphs 字形数量|
 |uint16|glyphNameIndex[numberOfGlyphs]|此字形在“post”字符串表中的序数。这不是偏移量。
-Pascal|字符串名称[numberNewGlyphs]|长度为字节的字形名称 [变量]（Pascal 字符串）
+|Pascal|names[numberNewGlyphs]|长度为字节的字形名称 [变量]（Pascal 字符串）
 
 ## 'post' 格式 2.5
 
@@ -328,7 +328,7 @@ offset[2] 索引 A，2 + 35 = 37 是 A 的标准索引
 |类型|名称|描述|
 |-|-|-|
 |uint16|numberOfGlyphs|字形数量
-int8|offset[字形数量|图形索引与字形标准顺序之间的差异
+int8|offset[字形数量]|图形索引与字形标准顺序之间的差异
 
 当 OS X 8.5 发布时，MacRoman 字符集被重新定义，用欧元取代通用货币符号。但是，为了避免破坏使用它的字体和软件，Macintosh 的标准字形排序并未更新。字体供应商应尽可能更新其字体以包含欧元，以便在 OS X 8.5 及更高版本上正常运行。带有欧元的字体不能使用“post”格式 1 或 2.5。
 
