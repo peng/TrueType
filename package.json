@@ -6,10 +6,7 @@
   "repository": "git@github.com:peng/TrueType.git",
   "author": "peng <414326615@qq.com>",
   "devDependencies": {
-    "@vuepress/bundler-vite": "^2.0.0-rc.26",
-    "@vuepress/theme-default": "^2.0.0-rc.120",
-    "sass-embedded": "^1.93.3",
-    "vuepress": "^2.0.0"
+    "vuepress": "^1.9.7"
   },
   "scripts": {
     "docs:dev": "vuepress dev docs",
