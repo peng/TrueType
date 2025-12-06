@@ -1491,7 +1491,7 @@ IP[] 指令的效果如下图所示。 它沿着自由向量移动点 p，直到
 
 将指定的点移动到指定的两条线的交点。
 
-弹出 A 行的端点 a<sup>0</sup> 和 a<sup>1</sup>，然后是 B 行的端点 b<sup>0</sup> 和 b<sup>1</sup>，然后是点 p。 将点 p 置于直线 A 和 B 的交点处。点 a<sup>0</sup> 和 a<sup>1</sup> 定义直线 A。类似地，b<sup>0</sup> 和 b<sup>1</rpe> 定义直线 B。ISECT 忽略移动点 p 中的自由向量。
+弹出 A 行的端点 a<sup>0</sup> 和 a<sup>1</sup>，然后是 B 行的端点 b<sup>0</sup> 和 b<sup>1</sup>，然后是点 p。 将点 p 置于直线 A 和 B 的交点处。点 a<sup>0</sup> 和 a<sup>1</sup> 定义直线 A。类似地，b<sup>0</sup> 和 b<sup>1</sup> 定义直线 B。ISECT 忽略移动点 p 中的自由向量。
 
 在平行线 A 和 B 的退化情况下，该点位于中间。 那是。
 
@@ -1951,6 +1951,7 @@ MDRP[]指令也可以设置为使用最小距离值。 最小距离设置两点�
     <td>代码范围</td>
     <td>0x8C</td>
   </tr>
+  <tr>
     <td>Pops 弹出</td>
     <td>e2：堆栈元素 e1：堆栈元素</td>
   </tr>
@@ -1973,6 +1974,7 @@ MDRP[]指令也可以设置为使用最小距离值。 最小距离设置两点�
     <td>代码范围</td>
     <td>0x26</td>
   </tr>
+  <tr>
     <td>Pops 弹出</td>
     <td>k：堆栈元素</td>
   </tr>
@@ -2093,6 +2095,7 @@ MIRP[] 可用于在阴影区域创建点。
     <td>代码范围</td>
     <td>0x4B</td>
   </tr>
+  <tr>
     <td>Pops 弹出</td>
     <td>-</td>
   </tr>
@@ -2123,6 +2126,7 @@ MIRP[] 可用于在阴影区域创建点。
     <td>代码范围</td>
     <td>0x4C</td>
   </tr>
+  <tr>
     <td>Pops 弹出</td>
     <td>-</td>
   </tr>
@@ -2195,10 +2199,11 @@ MSIRP[] 可用于在阴影区域创建点。
     <td>代码范围</td>
     <td>0x63</td>
   </tr>
+  <tr>
     <td rowspan="2">Pops 弹出</td>
     <td>n2：乘数（F26Dot6</td>
   </tr>
-  </tr>
+  <tr>
     <td>n1：被乘数（F26Dot6）</td>
   </tr>
   <tr>
@@ -2220,6 +2225,7 @@ MSIRP[] 可用于在阴影区域创建点。
     <td>代码范围</td>
     <td>0x65</td>
   </tr>
+  <tr>
     <td>Pops 弹出</td>
     <td>n：像素坐标（F26Dot6）</td>
   </tr>
@@ -2239,10 +2245,11 @@ MSIRP[] 可用于在阴影区域创建点。
     <td>代码范围</td>
     <td>0x63</td>
   </tr>
+  <tr>
     <td rowspan="2">Pops 弹出</td>
     <td>n2：乘数（F26Dot6</td>
   </tr>
-  </tr>
+  <tr>
     <td>n1：被乘数（F26Dot6）</td>
   </tr>
   <tr>
@@ -2265,6 +2272,7 @@ MSIRP[] 可用于在阴影区域创建点。
     <td>代码范围</td>
     <td>0x5C</td>
   </tr>
+  <tr>
     <td>Pops 弹出</td>
     <td>e：栈元素</td>
   </tr>
@@ -2285,10 +2293,11 @@ MSIRP[] 可用于在阴影区域创建点。
     <td>代码范围</td>
     <td>0x40</td>
   </tr>
+  <tr>
     <td rowspan="2">From IS</td>
     <td>n：要推送的字节数（1 个字节解释为整数）</td>
   </tr>
-  </tr>
+  <tr>
     <td>b1, b2,...bn：n 个字节的序列</td>
   </tr>
   <tr>
@@ -2314,10 +2323,11 @@ MSIRP[] 可用于在阴影区域创建点。
     <td>代码范围</td>
     <td>0x41</td>
   </tr>
+  <tr>
     <td rowspan="2">From IS</td>
     <td>n：要压入的字数（1 个字节代表整数）</td>
   </tr>
-  </tr>
+  <tr>
     <td>w1, w2,...wn：由字节对组成的 n 个字序列，高字节首先出现</td>
   </tr>
   <tr>
@@ -2615,6 +2625,7 @@ NROUND[ab] 因其与 ROUND[ab] 的关系而得名。 它执行与 ROUND[ab] 相�
   <tr>
     <td>c：第三个堆栈元素</td>
   </tr>
+  <tr>
     <td>相关说明</td>
     <td>MINDEX[ ]</td>
   </tr>

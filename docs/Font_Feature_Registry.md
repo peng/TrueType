@@ -540,7 +540,7 @@ AAT 字体功能注册表的早期版本包含许多功能/选择器对，现在
 |-|-|-|-|
 |无 CJK 斜体罗马字|<s>kNoCJKItalicRomanSelector</s>|0|不对罗马字使用斜体字形|
 |CJK 斜体罗马字|<s>kCJKItalicRomanSelector</s>|1|对罗马字使用斜体字形|
-|CJK 斜体罗马字|kCJKItalicRomanOnSelector<bt>CJKItalicRomanOffSelector|2|打开或关闭对罗马字使用斜体
+|CJK 斜体罗马字|kCJKItalicRomanOnSelector<br>CJKItalicRomanOffSelector|2|打开或关闭对罗马字使用斜体
 
 ### 区分大小写布局
 |功能常数|功能值|功能类型|
