@@ -52,7 +52,7 @@
     <td>坐标数据的最大 y</td>
   </tr>
   <tr>
-    <td colspan='3' >(here follow the data for the simple or compound glyph)</td>
+    <td colspan='3' >(以下是简单或复合字形的数据)</td>
   </tr>
 </table>
 <!-- |类型|名称|描述|
