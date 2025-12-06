@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>图形状态 | font 文件格式文档</title>
+    <meta name="generator" content="VuePress 1.9.10">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/assets/css/0.styles.f3e2e2a4.css" as="style"><link rel="preload" href="/assets/js/app.3d2140d5.js" as="script"><link rel="preload" href="/assets/js/2.f8441915.js" as="script"><link rel="preload" href="/assets/js/1.582e94f5.js" as="script"><link rel="preload" href="/assets/js/79.edc771eb.js" as="script"><link rel="prefetch" href="/assets/js/10.b393b446.js"><link rel="prefetch" href="/assets/js/11.5a457bc7.js"><link rel="prefetch" href="/assets/js/12.7aecb990.js"><link rel="prefetch" href="/assets/js/13.00d89951.js"><link rel="prefetch" href="/assets/js/14.d1e48fa8.js"><link rel="prefetch" href="/assets/js/15.90af1873.js"><link rel="prefetch" href="/assets/js/16.a7651ec8.js"><link rel="prefetch" href="/assets/js/17.a185dc0e.js"><link rel="prefetch" href="/assets/js/18.ff39eba5.js"><link rel="prefetch" href="/assets/js/19.bbe5f3a4.js"><link rel="prefetch" href="/assets/js/20.92bb85ea.js"><link rel="prefetch" href="/assets/js/21.89c39ef2.js"><link rel="prefetch" href="/assets/js/22.9a29a812.js"><link rel="prefetch" href="/assets/js/23.e4a664d9.js"><link rel="prefetch" href="/assets/js/24.e685798b.js"><link rel="prefetch" href="/assets/js/25.bd68738b.js"><link rel="prefetch" href="/assets/js/26.b6a14cdc.js"><link rel="prefetch" href="/assets/js/27.f81f4537.js"><link rel="prefetch" href="/assets/js/28.cd3e5a39.js"><link rel="prefetch" href="/assets/js/29.a08271da.js"><link rel="prefetch" href="/assets/js/3.4141285c.js"><link rel="prefetch" href="/assets/js/30.2c7d1669.js"><link rel="prefetch" href="/assets/js/31.1b4e43be.js"><link rel="prefetch" href="/assets/js/32.618fc57e.js"><link rel="prefetch" href="/assets/js/33.feaf54cf.js"><link rel="prefetch" href="/assets/js/34.c86bb99f.js"><link rel="prefetch" href="/assets/js/35.6fd5a963.js"><link rel="prefetch" href="/assets/js/36.48d65487.js"><link rel="prefetch" href="/assets/js/37.14d9e218.js"><link rel="prefetch" href="/assets/js/38.1c314a9c.js"><link rel="prefetch" href="/assets/js/39.0acd89f7.js"><link rel="prefetch" href="/assets/js/4.576c71c9.js"><link rel="prefetch" href="/assets/js/40.5bed0b53.js"><link rel="prefetch" href="/assets/js/41.08127eec.js"><link rel="prefetch" href="/assets/js/42.0fa512a0.js"><link rel="prefetch" href="/assets/js/43.b25ecd5e.js"><link rel="prefetch" href="/assets/js/44.9e045584.js"><link rel="prefetch" href="/assets/js/45.35dff803.js"><link rel="prefetch" href="/assets/js/46.caa37496.js"><link rel="prefetch" href="/assets/js/47.2bac7876.js"><link rel="prefetch" href="/assets/js/48.89e74766.js"><link rel="prefetch" href="/assets/js/49.dc64dfc0.js"><link rel="prefetch" href="/assets/js/5.41baf38a.js"><link rel="prefetch" href="/assets/js/50.9d771830.js"><link rel="prefetch" href="/assets/js/51.89c7c756.js"><link rel="prefetch" href="/assets/js/52.ed2c723c.js"><link rel="prefetch" href="/assets/js/53.0ff0981b.js"><link rel="prefetch" href="/assets/js/54.aed93d66.js"><link rel="prefetch" href="/assets/js/55.b6551b4c.js"><link rel="prefetch" href="/assets/js/56.b1ffe5ad.js"><link rel="prefetch" href="/assets/js/57.dea5e4bc.js"><link rel="prefetch" href="/assets/js/58.065b8c48.js"><link rel="prefetch" href="/assets/js/59.70fa3ae8.js"><link rel="prefetch" href="/assets/js/6.69372c5f.js"><link rel="prefetch" href="/assets/js/60.1324f38a.js"><link rel="prefetch" href="/assets/js/61.3acd18ae.js"><link rel="prefetch" href="/assets/js/62.cae1f42b.js"><link rel="prefetch" href="/assets/js/63.66e024d6.js"><link rel="prefetch" href="/assets/js/64.2f32262d.js"><link rel="prefetch" href="/assets/js/65.244bcf27.js"><link rel="prefetch" href="/assets/js/66.8e44c432.js"><link rel="prefetch" href="/assets/js/67.f3459c71.js"><link rel="prefetch" href="/assets/js/68.9c8b61f2.js"><link rel="prefetch" href="/assets/js/69.334b1f04.js"><link rel="prefetch" href="/assets/js/7.30f4e943.js"><link rel="prefetch" href="/assets/js/70.0776e0e2.js"><link rel="prefetch" href="/assets/js/71.b55530c1.js"><link rel="prefetch" href="/assets/js/72.a575b0d5.js"><link rel="prefetch" href="/assets/js/73.0b48d692.js"><link rel="prefetch" href="/assets/js/74.58899fc5.js"><link rel="prefetch" href="/assets/js/75.afcacd50.js"><link rel="prefetch" href="/assets/js/76.4050c59a.js"><link rel="prefetch" href="/assets/js/77.b853a020.js"><link rel="prefetch" href="/assets/js/78.213a8ca8.js"><link rel="prefetch" href="/assets/js/80.3a34f317.js"><link rel="prefetch" href="/assets/js/81.50b34910.js"><link rel="prefetch" href="/assets/js/82.efd990de.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.64a68e64.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.f3e2e2a4.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">font 文件格式文档</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <ul class="sidebar-links"><li><a href="/Digitizing_Letterform_Designs.html" class="sidebar-link">数字化字体设计</a></li><li><a href="/Converting_Outlines.html" class="sidebar-link">将轮廓转换为 TrueType 格式</a></li><li><a href="/instructing_fonts.html" class="sidebar-link">字体教程</a></li><li><a href="/Font_Engine.html" class="sidebar-link">字体引擎</a></li><li><a href="/Font_Feature_Registry.html" class="sidebar-link">字体功能注册表</a></li><li><a href="/Glyph_Mappings.html" class="sidebar-link">字符代码/字形映射</a></li><li><a href="/Graphics_State.html" aria-current="page" class="active sidebar-link">图形状态</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/Graphics_State.html#介绍" class="sidebar-link">介绍</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#自动翻转" class="sidebar-link">自动翻转</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#控制切入值" class="sidebar-link">控制切入值</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#基础增量" class="sidebar-link">基础增量</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#增量偏移" class="sidebar-link">增量偏移</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#双投影矢量" class="sidebar-link">双投影矢量</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#自由向量" class="sidebar-link">自由向量</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#指示控制" class="sidebar-link">指示控制</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#loop-循环" class="sidebar-link">loop 循环</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#最小距离" class="sidebar-link">最小距离</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#投影矢量" class="sidebar-link">投影矢量</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#圆形状态" class="sidebar-link">圆形状态</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#rp0" class="sidebar-link">rp0</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#rp1" class="sidebar-link">rp1</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#rp2" class="sidebar-link">rp2</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#scan-control" class="sidebar-link">scan control</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#单宽度切入" class="sidebar-link">单宽度切入</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#zp0" class="sidebar-link">zp0</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#zp1" class="sidebar-link">zp1</a></li><li class="sidebar-sub-header"><a href="/Graphics_State.html#zp2" class="sidebar-link">zp2</a></li></ul></li><li><a href="/Instruction_Set.html" class="sidebar-link">指令系统</a></li><li><a href="/Instruction_Set_Summary.html" class="sidebar-link">指令集摘要</a></li><li><a href="/words.html" class="sidebar-link">专有名词解释</a></li><li><section class="sidebar-group collapsable depth-0"><a href="/FontTables/FontTables" class="sidebar-heading clickable"><span>字体表</span> <span class="arrow right"></span></a> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="图形状态"><a href="#图形状态" class="header-anchor">#</a> 图形状态</h1> <h2 id="介绍"><a href="#介绍" class="header-anchor">#</a> 介绍</h2> <p>图形状态变量建立了执行 TrueType 指令的上下文。 本章按字母顺序列出了构成图形状态的变量，并简要描述了它们的用途以及理解其作用所需的基本事实。 特别是它提供了有关每个变量的默认值、用于设置其值的指令以及受其设置影响的指令列表的信息。 在第 2 章“字体引擎”中可以找到对图形状态变量作用的全面讨论。</p> <p>大多数图形状态变量都有一个默认值，如下所示。 该值在第一次访问特定字体时建立，并在任何字形的解释开始时再次建立。</p> <p>可以使用指令更改图形状态变量的默认值。 如果在控制值程序中更改了该值，则该值将成为新的默认值。 如果状态变量的值被与特定字形相关联的指令更改，则新值不是新的默认值，并且仅适用于该字形。</p> <h2 id="自动翻转"><a href="#自动翻转" class="header-anchor">#</a> 自动翻转</h2> <div class="language-text extra-class"><pre class="language-text"><code>Default TRUE
+
+Set with		FLIPOFF[]
+                     FLIPON[]
+
+Affects MIRP[]
+</code></pre></div><p>控制是否更改控制值表条目的符号以匹配与其进行比较的实际距离测量值的符号。 将自动翻转设置为 TRUE 可以通过单个控制值表条目来控制使用或针对投影矢量测量的距离。 当自动翻转设置为 FALSE 时，必须使用投影矢量测量距离。</p> <h2 id="控制切入值"><a href="#控制切入值" class="header-anchor">#</a> 控制切入值</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 17/16 pixels (F26Dot6)
+
+Set with		LCVTCI[]
+
+Affects MIAP[]
+                  MIRP[]
+</code></pre></div><p>将控制值表条目的正则化效果限制为表值与从原始轮廓获取的测量值之间的差异足够小的情况。</p> <h2 id="基础增量"><a href="#基础增量" class="header-anchor">#</a> 基础增量</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 9
+
+Set with		SDB[]
+
+Affects DELTAP1[]
+            DELTAP2[]
+            DELTAP3[]
+            DELTAC1[]
+            DELTAC2[]
+            DELTAC3[]
+
+</code></pre></div><p>建立用于计算给定 DELTAC[] 或 DELTAP[] 指令将应用的点大小范围的基值。 下面给出的公式用于计算各种 DELTA 指令的范围。</p> <div class="language- extra-class"><pre class="language-text"><code>DELTAC1		 DELTAP1		 (delta_base) through (delta_base + 15)
+	 DELTAC2		 DELTAP2		 (delta_base + 16) through (delta_base + 31)
+	 DELTAC3		 DELTAP3		 (delta_base + 32) through (delta_base + 47)
+   
+</code></pre></div><h2 id="增量偏移"><a href="#增量偏移" class="header-anchor">#</a> 增量偏移</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 3
+
+Set with		SDS[]
+
+Affects DELTAP1[]
+            DELTAP2[]
+            DELTAP3[]
+            DELTAC1[]
+            DELTAC2[]
+            DELTAC3[]
+</code></pre></div><p>确定 DELTAC[] 或 DELTAP[] 指令中的移动范围和最小移动幅度（步长）。 更改 delta shift 的值可以权衡点移动的精细控制与移动范围。 低增量偏移有利于运动范围而不是精细控制。 高增量偏移有利于对运动范围的精细控制。 该步长的值为幂增量偏移的 1/2。 运动范围的计算方法是将允许的步数 (16) 乘以步数。</p> <p>Delta shift 的合法范围是零到六。 负值是非法的。</p> <h2 id="双投影矢量"><a href="#双投影矢量" class="header-anchor">#</a> 双投影矢量</h2> <div class="language- extra-class"><pre class="language-text"><code>Default none
+
+Set with		SDPVTL[]
+
+Affects IP[]
+            GC[]
+            MD[]
+            MDRP[]
+            MIRP[]
+
+</code></pre></div><p>第二个投影矢量设置为由两点的原始轮廓位置定义的线。 当需要在执行任何指令之前测量与缩放轮廓的距离时，使用双投影矢量。</p> <h2 id="自由向量"><a href="#自由向量" class="header-anchor">#</a> 自由向量</h2> <div class="language- extra-class"><pre class="language-text"><code>Default x-axis
+
+Set with		SFVTCA[]
+            SFVTL[]
+            SFTPV[]
+            SVTCA[]
+            SFVFS[]
+Affects ALIGNPTS[]
+            ALIGNRP[]
+            DELTAP1[]
+            DELTAP2[]
+            DELTAP3[]
+            IP[]
+            MDAP[]
+            MDRP[]
+            MIAP[]
+            MIRP[]
+            MSIRP[]
+            ROUND[]
+            SCFS[]
+            SHC[]
+            SHPIX[]
+            SHZ[]
+            UTP[]
+</code></pre></div><p>一个单位矢量，它建立一个轴，点可以沿着该轴移动。</p> <h2 id="指示控制"><a href="#指示控制" class="header-anchor">#</a> 指示控制</h2> <div class="language- extra-class"><pre class="language-text"><code>Default		 0
+
+Set with				INSTCTRL[]
+
+Affects all	 instructions
+</code></pre></div><p>可以在某些情况下关闭指令。 当设置为 TRUE 时，将不执行任何指令。</p> <h2 id="loop-循环"><a href="#loop-循环" class="header-anchor">#</a> loop 循环</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 1
+
+Set with		SLOOP[]
+
+Affects ALIGNRP[]
+            FLIPPT[]
+            IP[]
+            SHP[]
+            SHPIX[]
+</code></pre></div><p>可以将某些指令重复指定的次数。 默认值 1 确保除非更改 loop 的值，否则这些指令将执行一次。</p> <h2 id="最小距离"><a href="#最小距离" class="header-anchor">#</a> 最小距离</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 1 pixel (F26Dot6)
+
+Set with		SMD[]
+
+Affects MDRP[]
+            MIRP[]
+
+</code></pre></div><p>建立距离四舍五入的最小可能值。</p> <h2 id="投影矢量"><a href="#投影矢量" class="header-anchor">#</a> 投影矢量</h2> <div class="language- extra-class"><pre class="language-text"><code>
+Default x-axis
+
+Set with		SPVTCA[]
+
+            SPVTL[]
+            SVTCA[]
+            SPVFS[]
+
+Affects ALIGNPTS[]
+            ALIGNRP[]
+            DELTAP1[]
+            DELTAP2[]
+            DELTAP3[]
+            GC[]
+            IP[]
+            MD[]
+            MDAP[]
+            MDRP[]
+            MIAP[]
+            MIRP[]
+            MSIRP[]
+            SCFS[]
+            SHC[]
+            SHP[]
+            SHZ[]
+
+</code></pre></div><p>一个单位向量，其方向建立了一个轴，沿着该轴测量距离。</p> <h2 id="圆形状态"><a href="#圆形状态" class="header-anchor">#</a> 圆形状态</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 1 (grid)
+Set with		RDTG[]
+            ROFF[]
+            RTDG[]
+            RTG[]
+            RTHG[]
+            RUTG[]
+            SROUND[]
+            S45ROUND[]
+
+Affects EVEN[]
+            ODD[]
+            MDAP[]
+            MIAP[]
+            MDRP[]
+            MIRP[]
+            ROUND[]
+</code></pre></div><p>确定值的舍入方式。 可以使用 SROUND 或 S45ROUND 指令设置为多种预定义状态或自定义状态。</p> <h2 id="rp0"><a href="#rp0" class="header-anchor">#</a> rp0</h2> <div class="language- extra-class"><pre class="language-text"><code>
+Default 0
+Set with		SRP0[], MDRP[], MIAP[], MSIRP[]
+
+Affects ALIGNRP[]
+            MDRP[]
+            MIRP[]
+            MSIRP[]
+
+</code></pre></div><p>三个参考点中的第一个。 引用一个点编号，该编号与区域名称一起指定字形区域或模糊区域中的一个点。</p> <h2 id="rp1"><a href="#rp1" class="header-anchor">#</a> rp1</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 0
+
+Set with		SRP1[], MDAP[], MDRP[], MIRP[]
+Affects IP[]
+            SHC[]
+            SHP[]
+            SHZ[]
+</code></pre></div><p>三个参考点中的第二个。 引用一个点编号，该编号与区域名称一起指定字形区域或模糊区域中的一个点。</p> <h2 id="rp2"><a href="#rp2" class="header-anchor">#</a> rp2</h2> <div class="language- extra-class"><pre class="language-text"><code>Default				 0
+Set with		SRP2[], MDRP[], MIRP[]
+Affects IP[]
+            SHC[]
+            SHP[]
+            SHZ[]
+</code></pre></div><p>三个参考点中的第三个。 引用一个点编号，该编号与区域名称一起指定字形区域或模糊区域中的一个点。</p> <h2 id="scan-control"><a href="#scan-control" class="header-anchor">#</a> scan control</h2> <div class="language- extra-class"><pre class="language-text"><code>Default FALSE
+Set with		SCANCTRL[]
+</code></pre></div><p>确定解释器是否将为当前字形激活丢弃控制。 压降控制模式的使用取决于以下三个条件的当前普遍组合：</p> <ol><li>字形是否旋转？</li> <li>字形是否被拉伸？</li> <li>当前每个像素设置是否小于指定阈值？</li></ol> <p>如果上述条件之一为假，也可以阻止 dropout 控制。</p> <h2 id="单宽度切入"><a href="#单宽度切入" class="header-anchor">#</a> 单宽度切入</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 0 pixels (F26Dot6)
+    Set with		SSWCI[]
+    Affects MDRP[]
+                MIRP[]
+</code></pre></div><p>解释器将替换 CVT 距离或实际距离以支持单一宽度值的距离差。</p> <h2 id="zp0"><a href="#zp0" class="header-anchor">#</a> zp0</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 1
+Set with		SZP0[]
+            SZPS[]
+Affects ALIGNPTS[]
+            ALIGNRP[]
+            DELTAP1[]
+            DELTAP2[]
+            DELTAP3[]
+            FLIPPT[]
+            FLIPRGOFF[]
+            FLIPRGON[]
+            IP[]
+            ISECT[]
+            MD[]
+            MDAP[]
+            MDRP[]
+            MIAP[]
+            MIRP[]
+            MSIRP
+            SHC[]
+            SHP[]
+            UTP[]
+</code></pre></div><p>三个区域指针中的第一个。 可以设置为引用字形区域 (Z0) 或模糊区域 (Z1)。</p> <h2 id="zp1"><a href="#zp1" class="header-anchor">#</a> zp1</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 1
+Set with		SZP1[]
+            SZPS[]
+
+Affects ALIGNPTS[]
+            ALIGNRP[]
+            IP[]
+            ISECT[]
+            MD[]
+            MDRP[]
+            MIRP[]
+            MSIRP[]
+            SDPVTL[]
+            SFVTL[]
+            SHC[]
+            SHP[]
+            SHZ[]
+            SPVTL[]
+</code></pre></div><p>三个区域指针中的第二个。 可以设置为引用模糊区域 (Z0) 或字形区域 (Z1)。</p> <h2 id="zp2"><a href="#zp2" class="header-anchor">#</a> zp2</h2> <div class="language- extra-class"><pre class="language-text"><code>Default 1
+Set with		SZP2[]
+            SZPS[]
+
+Affects GC[]
+            IP[]
+            ISECT[]
+            IUP[]
+            SCFS[]
+            SDPVTL[]
+            SFVTL[]
+            SHC[]
+            SHP[]
+            SHPIX[]
+            SPVTL[]
+</code></pre></div><p>三个区域指针中的第三个。 可以设置为引用模糊区域 (Z0) 或字形区域 (Z1)。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/Glyph_Mappings.html" class="prev">
+        字符代码/字形映射
+      </a></span> <span class="next"><a href="/Instruction_Set.html">
+        指令系统
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.3d2140d5.js" defer></script><script src="/assets/js/2.f8441915.js" defer></script><script src="/assets/js/1.582e94f5.js" defer></script><script src="/assets/js/79.edc771eb.js" defer></script>
+  </body>
+</html>
