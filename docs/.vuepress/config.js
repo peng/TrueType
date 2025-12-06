@@ -1,5 +1,6 @@
 module.exports = {
   title: 'font 文件格式文档',
+  base: '/TrueType/',
   description: '',
   themeConfig: {
     sidebar: [
