@@ -1,7 +1,28 @@
+/* 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JMT1RK7SVS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-JMT1RK7SVS');
+</script>
+*/
+
 module.exports = {
   title: 'font 文件格式文档',
   // base: '/TrueType/',
   description: '',
+  head: [
+    ['script', { src: 'https://www.googletagmanager.com/gtag/js?id=G-JMT1RK7SVS', async: true }],
+    ['script', {}, `
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);} 
+  gtag('js', new Date());
+  gtag('config', 'G-JMT1RK7SVS');
+    `]
+  ],
   themeConfig: {
     sidebar: [
           { title: '数字化字体设计', path: '/Digitizing_Letterform_Designs' },
