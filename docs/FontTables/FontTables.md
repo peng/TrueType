@@ -99,8 +99,8 @@ Additional可以定义其他表来支持其他平台，例如OpenType，或提�
 |类型|名称(Name)|描述|
 |-|-|-|
 |uint32 32整型|scaler type 缩放器类型|一个标签，指示用于光栅化此字体的OFA缩放器；有关详细信息，请参阅下面的缩放器类型上的注释。|
-|uint16 16整型|numTables 数字表|表的序号|
-|uint16 16整型|searchRange 搜索范围|最大 2的numTables次幂*16  `2^numTables*16`|
+|uint16 16整型|numTables |表的数量|
+|uint16 16整型|searchRange 搜索范围|(最大 2 的 n 次幂的值小于等于 numTables)*16  `(2^n)*16`|
 |uint16 16整型|entrySelector 入口选择器|log2(最大 2的numTables次幂*16) `log2(2^numTables*16)`|
 |uint16	16整型|rangeShift 位移范围|numTables*16-searchRange|
 
