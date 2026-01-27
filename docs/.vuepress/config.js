@@ -11,7 +11,7 @@
 */
 
 module.exports = {
-  title: 'font 文件格式文档',
+  title: '字体标准',
   // base: '/TrueType/',
   description: '',
   head: [

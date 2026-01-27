@@ -1,5 +1,4 @@
 {
   "https.proxy": "http://127.0.0.1:7890",
   "commentTranslate.source": "Google",
-  "git.enableCommitSigning": true,
 }
